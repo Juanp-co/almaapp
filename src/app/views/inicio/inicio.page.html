@@ -1,0 +1,76 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>inicio</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+
+  <ion-row class="fondoCool ion-justify-content-end ion-padding ">
+    <ion-col size="8" class="ion-margin-top ion-padding-top">
+      <br><br><br><br>
+      <ion-text color="light" class="titulo1">Binevenido</ion-text> <br>
+      <ion-text color="light" class="titulo2">Usuario anonimo</ion-text>
+    </ion-col>
+    <ion-col size="4">
+      <img src="assets/logo.png" class="logo">
+    </ion-col>
+  </ion-row>
+
+
+  <div *ngIf="!login" class="ion-margin-top ion-padding-top">
+    <br><br><br>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <h4>
+          <ion-text color="primary">
+            Inicio de sesión
+          </ion-text>
+        </h4>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="8">
+        <ion-item>
+          <ion-label position="floating">Usuario</ion-label>
+          <ion-input [(ngModel)]="user"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="8">
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="pass"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ion-margin-top">
+      <ion-col size="auto">
+        <ion-button expand="block" color="primary" (click)="ingresar()">
+          Ingresar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+
+
+  </div>
+
+  <div *ngIf="login"  class="ion-margin-top ion-padding-top">
+    <br>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="5"
+        *ngFor="let item of opciones;let i = index"
+        class="ion-text-center ion-margin-top ion-padding-top"
+        style="cursor: pointer;" (click)="irMenu(i)"
+        >
+        <img [src]="item.imagen" alt="" > <br>
+        <ion-text color="medium" class="ion-padding-top">{{item.titulo}}</ion-text>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+</ion-content>

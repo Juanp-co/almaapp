@@ -24,3 +24,19 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.img-fluid{
+  width: 100% !important;
+  height: auto !important;
+}
+
+.titulo1{
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.titulo2{
+  font-size: 1.2em;
+  font-weight: 400;
+}
