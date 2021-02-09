@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
+import {AxiosService} from '../../services/axios.service';
+import {CookiesService} from '../../services/cookies.service';
 
 @Component({
   selector: 'app-inicio',
@@ -9,65 +11,104 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class InicioPage implements OnInit {
 
-  login = false
-
-  user = undefined
-  pass = undefined
+  login = false;
+  userData: any = null;
+  user = 'CC12345678';
+  pass = 'password';
 
   opciones = [
-    { titulo:"Red padres", imagen:"assets/icon/red.svg" },
-    { titulo:"Ofrendas", imagen:"assets/icon/ofrenda.svg" },
-    { titulo:"Disipulado", imagen:"assets/icon/escuela.svg" },
-    { titulo:"Reportes", imagen:"assets/icon/reportes.svg" },
-    { titulo:"Calendario", imagen:"assets/icon/calendario.svg" }
-  ]
+    { titulo: 'Red padres', imagen: 'assets/icon/red.svg', url: 'padres' },
+    { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
+    { titulo: 'Disipulado', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
+    { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
+    { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
+    { titulo: 'Salir', imagen: 'assets/icon/calendario.svg', url: null }
+  ];
 
   constructor(
-    public globalSer:GlobalService,
-    public navCtrl:NavController
+    public globalSer: GlobalService,
+    public navCtrl: NavController,
+    public axios: AxiosService,
+    public cookieService: CookiesService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const token = this.cookieService.getCookie('token');
+    if (token) {
+      this.login = true;
+      const data = this.cookieService.getCookie('data');
+      console.log('data', data);
 
-  }
+      if (!data) {
+        await this.globalSer.presentLoading();
+        const res: any = await this.axios.getData('/user');
 
-  async ingresar(){
-    if(this.pass && this.user){
-
-      this.globalSer.presentLoading().then(()=> {
-
-        setTimeout(() => {
-          this.login = true
-          this.globalSer.presentAlert('Info', "Ingreso exitoso!")
-          this.globalSer.dismissLoading()
-        }, 3000);
-
-      })
-
-
-    } else {
-      this.globalSer.presentAlert('Alerta', "Ingresa usuario y contraseña!")
+        if (res && res.success) {
+          this.cookieService.setCookie('data', res.data.data);
+          this.userData = res.data.data;
+          await this.globalSer.dismissLoading();
+        }
+        else {
+          if (res.status && res.status === 401) {
+            this.cookieService.removeCookie('token');
+            this.login = false;
+          }
+          await this.globalSer.dismissLoading();
+          await this.globalSer.presentAlert('Alerta', res.error);
+        }
+      }
+      else {
+        this.userData = JSON.parse(data);
+      }
     }
   }
 
-  irMenu(num){
-    num += 1
-    switch (num) {
-      case 1:
-        this.navCtrl.navigateForward('padres')
-        break;
-      case 2:
-        this.navCtrl.navigateForward('ofrenda')
-        break;
-      case 3:
-        this.navCtrl.navigateForward('escuela')
-        break;
-      case 4:
-        this.navCtrl.navigateForward('estadistica')
-        break;
-      case 5:
-        this.navCtrl.navigateForward('eventos')
-        break;
+  async ingresar() {
+    if (this.pass && this.user) {
+      await this.globalSer.presentLoading();
+
+      const res: any = await this.axios.postData(
+        '/login',
+        { document: this.user, password: this.pass }
+        );
+
+      if (res && res.success) {
+        const { data, token } = res.data;
+        this.cookieService.setCookie('token', token);
+        this.cookieService.setCookie('data', data);
+        this.userData = data;
+
+        this.login = true;
+        this.user = null;
+        this.pass = null;
+        await this.globalSer.dismissLoading();
+        // await this.globalSer.presentAlert('Info', 'Ingreso exitoso!');
+      }
+      else {
+        this.user = null;
+        this.pass = null;
+        await this.globalSer.dismissLoading();
+        await this.globalSer.presentAlert('Alerta', res.error);
+      }
+    } else {
+      await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su usuario y contraseña.');
+    }
+  }
+
+  async irMenu(num){
+    // logout
+    if (num === 5) {
+      await this.globalSer.presentLoading();
+      await this.axios.deleteData('/logout');
+      this.login = false;
+      this.cookieService.removeCookie('token');
+      this.cookieService.removeCookie('data');
+      this.userData = null;
+      await this.globalSer.dismissLoading();
+    }
+    else {
+      const opt = this.opciones[num] || null;
+      await this.navCtrl.navigateForward(opt ? opt.url : 'inicio');
     }
   }
 
