@@ -8,12 +8,15 @@ import { EscuelaPageRoutingModule } from './escuela-routing.module';
 
 import { EscuelaPage } from './escuela.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EscuelaPageRoutingModule
+    EscuelaPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [EscuelaPage]
 })

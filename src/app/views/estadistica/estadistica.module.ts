@@ -8,12 +8,15 @@ import { EstadisticaPageRoutingModule } from './estadistica-routing.module';
 
 import { EstadisticaPage } from './estadistica.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EstadisticaPageRoutingModule
+    EstadisticaPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [EstadisticaPage]
 })
