@@ -8,12 +8,15 @@ import { PadresPageRoutingModule } from './padres-routing.module';
 
 import { PadresPage } from './padres.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PadresPageRoutingModule
+    PadresPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [PadresPage]
 })

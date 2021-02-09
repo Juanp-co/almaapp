@@ -25,7 +25,6 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
 .img-fluid{
   width: 100% !important;
   height: auto !important;
@@ -39,4 +38,16 @@
 .titulo2{
   font-size: 1.2em;
   font-weight: 400;
+}
+
+.fondoCool{
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png");
+  background-size: cover;
+  background-position: center center;
+  // -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
+  // clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
+}
+
+.logo-2{
+  margin: 0 auto !important;
 }

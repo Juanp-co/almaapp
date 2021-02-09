@@ -8,12 +8,15 @@ import { OfrendaPageRoutingModule } from './ofrenda-routing.module';
 
 import { OfrendaPage } from './ofrenda.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OfrendaPageRoutingModule
+    OfrendaPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [OfrendaPage]
 })
