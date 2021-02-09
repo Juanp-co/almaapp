@@ -9,30 +9,26 @@ export class GlobalService {
   loading;
 
   constructor(
-    public alertCtrl:AlertController,
-    public loadingCtrl:LoadingController
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) { }
 
-
-  async presentAlert(titulo, mensaje) {
+  async presentAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
-      header: titulo,
-      message: mensaje,
+      header,
+      message,
       buttons: ['OK']
-    })
+    });
     await alert.present();
   }
 
-
   async presentLoading() {
-    this.loading = await this.loadingCtrl.create({
-      message: 'Cargando...'
-    });
+    this.loading = await this.loadingCtrl.create({ message: 'Cargando...' });
     return this.loading.present();
   }
 
-  dismissLoading(){
-    this.loading.dismiss()
+  async dismissLoading(){
+    await this.loading.dismiss();
   }
 
 }
