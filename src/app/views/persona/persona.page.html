@@ -1,12 +1,13 @@
 <ion-content>
   <ion-header>
-    <app-minheader title="Perfil"></app-minheader>
+    <app-minheader title="Detalles usuario"></app-minheader>
   </ion-header>
+
   <div class="ion-padding-start ion-padding-end" *ngIf="userData">
     <ion-row class="ion-margin-top ion-padding-top">
       <ion-col size="12">
-        <!--<ion-text>Perfil personal</ion-text><br/>-->
-        <ion-text class="ion-margin-top titulo1">{{userData.names}} {{userData.lastNames}}</ion-text>
+        <ion-text class="ion-margin-top"><h3>{{userData.names}} {{userData.lastNames}}</h3></ion-text>
+        <div class="separator"></div>
       </ion-col>
       <ion-col size="6">
         <ion-text><b>Teléfono:</b></ion-text>
@@ -56,88 +57,28 @@
       <ion-col size="6">
         <ion-text>{{userData.department || 'No indicado'}}</ion-text>
       </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-margin-top ion-padding-top">
-      <ion-col size="6">
-        <ion-button
-          expand="block"
-          color="{{showReferrals ? 'primary' : 'light'}}"
-          (click)="setShowReferrals(true)"
-        >
-          Núcleo familiar
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button
-          expand="block"
-          color="{{!showReferrals ? 'primary' : 'light'}}"
-          (click)="setShowReferrals(false)"
-        >
-          Educación
-        </ion-button>
+      <ion-col size="12" class="ion-no-margin">
+        <div class="separator"></div>
       </ion-col>
     </ion-row>
-
     <ion-row>
-      <div *ngIf="showReferrals">
-        <ion-col size="12">
-          <div *ngIf="groupData; else noGroup">
-            <p class="subTitulo1">{{groupData.name}} ({{ groupData.members ? groupData.members.length : 0 }})</p>
-            <ion-list *ngFor='let member of groupData.members'>
-              <ion-item>
-                <!--<ion-img class="pictureIcon" [src]="course.banner" slot="start"></ion-img>-->
-                <ion-text>
-                  <b>{{ member.names }} {{ member.lastNames }}</b>
-                  <p>{{ member.direction }}</p>
-                </ion-text>
-                <ion-button color="light" slot="end" expand="block" (click)="goToDetails('persona', member._id)" >
-                  <ion-icon name="people-outline"></ion-icon>
-                </ion-button>
-              </ion-item>
-            </ion-list>
-          </div>
-          <ng-template #noGroup>
-            <ion-card class="ion-no-padding">
-              <ion-text>
-                <p class="ion-text-center">No pertenece a ningún grupo familiar.</p>
-              </ion-text>
-            </ion-card>
-          </ng-template>
-        </ion-col>
-      </div>
-      <div *ngIf="!showReferrals;">
-        <ion-col size="12">
-          <div *ngIf="coursesList && coursesList.length > 0; else noCourses">
-            <ion-list *ngFor='let course of coursesList'>
-              <ion-item>
-                <ion-img class="pictureIcon" [src]="course.banner" slot="start"></ion-img>
-                <ion-text>
-                  <br>
-                  <b>{{ course.title }}</b>
-                  <p>{{ course.description.substr(0, 30) }} ...</p>
-                </ion-text>
-                <ion-button color="light" slot="end" expand="block" (click)="goToDetails('cursos', course.slug)">
-                  <ion-icon name="link-outline"></ion-icon>
-                </ion-button>
-              </ion-item>
-            </ion-list>
-          </div>
-          <ng-template #noCourses>
-            <ion-card class="ion-no-padding">
-              <ion-text>
-                <p class="ion-text-center">No posee ningún curso en su perfil.</p>
-              </ion-text>
-            </ion-card>
-          </ng-template>
-        </ion-col>
-      </div>
+      <ion-col size="6">
+        <!--<ion-text>-->
+          <!--<h4 class="ion-text-center"></h4>-->
+        <!--</ion-text>-->
+        <ion-text color="dark">
+          <h2 class="numberTitle">{{ totalCourses }}</h2>
+        </ion-text>
+        <ion-img class="pictureLogo" [src]="'/assets/icon/escuela.svg'"></ion-img>
+        <p class="ion-text-center">Cursos</p>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text color="dark">
+          <h2 class="numberTitle">{{ totalReferrals }}</h2>
+        </ion-text>
+        <ion-img class="pictureLogo" [src]="'/assets/icon/red.svg'"></ion-img>
+        <p class="ion-text-center">Hijos espirituales</p>
+      </ion-col>
     </ion-row>
   </div>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color='primary' (click)='goToEdit()'>
-      <ion-icon name="create-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { PersonaService } from './persona.service';
+// import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
+import {AlertController, NavController} from '@ionic/angular';
 import { CookiesService } from '../../services/cookies.service';
 import { GlobalService } from '../../services/global.service';
+import {AxiosService} from '../../services/axios.service';
 
 @Component({
   selector: 'app-persona',
@@ -13,42 +14,53 @@ import { GlobalService } from '../../services/global.service';
 export class PersonaPage implements OnInit {
 
   userData: any;
-  groupData: any = null;
-  coursesList: any = [];
-  showReferrals = true;
+  id: any = null;
+  totalCourses = 0;
+  totalReferrals = 0;
+  path = '/user/referrals';
 
   constructor(
-    public globalSer: GlobalService,
-    public navCtrl: NavController,
-    public personaService: PersonaService,
-    public cookieService: CookiesService,
-    private router: Router
+    private activateRoute: ActivatedRoute,
+    private alertConCtrl: AlertController,
+    private axios: AxiosService,
+    private cookieService: CookiesService,
+    private globalSer: GlobalService,
+    private navCtrl: NavController,
+    // private router: Router,
   ) { }
 
   async ngOnInit() {
-    // await this.getData();
-  }
-
-  async ionViewDidEnter() {
-    await this.getData();
-  }
-
-  async getData() {
     const token = this.cookieService.getCookie('token');
     if (token) {
-      this.userData = await this.personaService.getProfileData();
-      if (this.userData) {
-        this.groupData = await this.personaService.getGroup();
-        this.coursesList = await this.personaService.getCourses();
-        await this.globalSer.dismissLoading();
+      await this.activateRoute.paramMap.subscribe(paramMap => {
+        this.id = paramMap.get('placeId');
+      });
+      this.activateRoute.queryParams.subscribe(params => {
+        if (params.group) this.path = '/user/group';
+      });
+
+      if (this.id) {
+        await this.globalSer.presentLoading();
+        const res: any = await this.axios.getData(`${this.path}/${this.id}`);
+
+        if (res && res.success) {
+          const { data } = res.data;
+          this.userData = data.member || null;
+          this.totalCourses = data.totalCourses || 0;
+          this.totalReferrals = data.totalReferrals || 0;
+          await this.globalSer.dismissLoading();
+        }
+        else {
+          await this.globalSer.dismissLoading();
+          await this.globalSer.presentAlert('Error', res.error);
+        }
       }
       else {
-        await this.errorSession();
+        await this.globalSer.presentAlert('Error', 'Error al obtener el parámetro a consultar.');
+        await this.navCtrl.navigateBack(['/']);
       }
     }
-    else {
-      await this.errorSession();
-    }
+    else await this.errorSession();
   }
 
   async errorSession() {
@@ -56,19 +68,6 @@ export class PersonaPage implements OnInit {
     this.globalSer.clearAllData();
     await this.globalSer.dismissLoading();
     await this.navCtrl.navigateBack(['/']);
-  }
-
-  async goToEdit() {
-    await this.router.navigate(['persona/editar']);
-  }
-
-  async goToDetails(path: string, id: string) {
-    // await this.router.navigate(['persona/editar']);
-    console.log('path', path, id);
-  }
-
-  setShowReferrals(value: boolean) {
-    this.showReferrals = value;
   }
 
 }

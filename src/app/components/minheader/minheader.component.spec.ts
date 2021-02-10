@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { MinheaderComponent } from './minheader.component';
@@ -7,7 +7,7 @@ describe('MinheaderComponent', () => {
   let component: MinheaderComponent;
   let fixture: ComponentFixture<MinheaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MinheaderComponent ],
       imports: [IonicModule.forRoot()]
