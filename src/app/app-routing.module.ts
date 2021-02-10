@@ -23,20 +23,11 @@ const routes: Routes = [
     path: 'persona',
     children: [
       {
-        path: '',
+        path: ':placeId',
         loadChildren: () => import('./views/persona/persona.module').then( m => m.PersonaPageModule)
-      },
-      {
-        path: 'editar',
-        loadChildren: () => import('./views/persona/editar-persona/editar-persona.module').then( m => m.EditarPersonaPageModule)
       }
     ]
-
   },
-  // {
-  //   path: 'editar-persona',
-  //   loadChildren: () => import('./views/persona/editar-persona/editar-persona.module').then(m => m.EditarPersonaPageModule)
-  // },
   {
     path: 'escuela',
     loadChildren: () => import('./views/escuela/escuela.module').then( m => m.EscuelaPageModule)
@@ -68,6 +59,10 @@ const routes: Routes = [
   {
     path: 'ofrenda',
     loadChildren: () => import('./views/ofrenda/ofrenda.module').then( m => m.OfrendaPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./views/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
 ];
 

@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MinheaderComponent } from './minheader/minheader.component'
+import { MinheaderComponent } from './minheader/minheader.component';
+import { PersoncardComponent } from './personcard/personcard.component';
 
 @NgModule({
   declarations: [
-    MinheaderComponent
+    MinheaderComponent,
+    PersoncardComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    MinheaderComponent
+    MinheaderComponent,
+    PersoncardComponent
   ]
 })
 export class ComponentsModule { }

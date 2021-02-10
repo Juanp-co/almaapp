@@ -22,7 +22,7 @@ export class InicioPage implements OnInit {
     { titulo: 'Disipulado', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
     { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
-    { titulo: 'Perfil', imagen: 'assets/icon/calendario.svg', url: 'persona' },
+    { titulo: 'Perfil', imagen: 'assets/icon/calendario.svg', url: 'perfil' },
     { titulo: 'Salir', imagen: 'assets/icon/calendario.svg', url: null }
   ];
 
@@ -38,7 +38,6 @@ export class InicioPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    console.log('ionViewWillEnter');
     await this.getDataLogin();
   }
 

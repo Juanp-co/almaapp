@@ -1,0 +1,25 @@
+<ion-row *ngIf="member">
+  <ion-col size="2">
+    <ion-img class="pictureIcon" [src]="member.picture || '/assets/icon/avatar.svg'"></ion-img>
+  </ion-col>
+  <ion-col size="7">
+    <ion-text>
+      <b>{{ member.names || '' }} {{ member.lastNames || '' }}</b>
+      <br/>
+      {{ member.direction || 'No indicada' }}
+    </ion-text>
+  </ion-col>
+  <ion-col>
+    <div *ngIf="showButton; else noButton">
+      <ion-button color="light" expand="block" (click)="goToDetails('persona', member._id)" *ngIf="member._id">
+        <ion-icon name="people-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <ng-template #noButton>
+      <br/>
+    </ng-template>
+  </ion-col>
+  <ion-col size="12" class="ion-no-margin">
+    <div class="separator"></div>
+  </ion-col>
+</ion-row>

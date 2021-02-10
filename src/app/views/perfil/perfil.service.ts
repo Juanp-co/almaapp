@@ -8,7 +8,7 @@ import {GlobalService} from '../../services/global.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonaService {
+export class PerfilService {
 
   constructor(
     private globalSer: GlobalService,

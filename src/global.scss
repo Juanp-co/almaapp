@@ -30,6 +30,19 @@ b {
   color: #4d4d4d;
 }
 
+.numberTitle {
+  text-align: center !important;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.separator {
+  width: 100% !important;
+  //height: 1px;
+  border: 1px solid #acacac;
+  margin: 5px auto !important;
+}
+
 .img-fluid{
   width: 100% !important;
   height: auto !important;
@@ -63,4 +76,10 @@ b {
 
 .pictureIcon {
   width: 45px !important;
+  margin: 0 auto !important;
+}
+
+.pictureLogo {
+  width: 65px !important;
+  margin: 0 auto !important;
 }

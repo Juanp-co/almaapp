@@ -1,0 +1,139 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Perfil"></app-minheader>
+  </ion-header>
+  <div class="ion-padding-start ion-padding-end" *ngIf="userData">
+    <ion-row class="ion-margin-top ion-padding-top">
+      <ion-col size="12">
+        <!--<ion-text>Perfil personal</ion-text><br/>-->
+        <ion-text class="ion-margin-top"><h3>{{userData.names}} {{userData.lastNames}}</h3></ion-text>
+        <div class="separator"></div>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Teléfono:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.phone || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Correo electrónico:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.email || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Fecha de nacimiento:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Estado civil:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Dirección:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.direction || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Barrio:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.locality || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Cuidad:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.city || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Departamento:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.department || 'No indicado'}}</ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top ion-padding-top">
+      <ion-col size="6">
+        <ion-button
+          expand="block"
+          color="{{showGroup ? 'primary' : 'light'}}"
+          (click)="setShowReferrals(true)"
+        >
+          Núcleo familiar
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button
+          expand="block"
+          color="{{!showGroup ? 'primary' : 'light'}}"
+          (click)="setShowReferrals(false)"
+        >
+          Educación
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <div *ngIf="showGroup">
+        <ion-col size="12">
+          <div *ngIf="groupData; else noGroup">
+            <ion-text>
+              <h4>{{groupData.name || 'Error'}} ({{ groupData.members ? groupData.members.length : 0 }})</h4>
+            </ion-text>
+            <div class="separator"></div>
+            <ion-list *ngFor='let member of groupData.members'>
+              <app-personcard [data]="member" getGroup="true"></app-personcard>
+            </ion-list>
+          </div>
+          <ng-template #noGroup>
+            <ion-card class="ion-no-padding">
+              <ion-text>
+                <p class="ion-text-center">No pertenece a ningún grupo familiar.</p>
+              </ion-text>
+            </ion-card>
+          </ng-template>
+        </ion-col>
+      </div>
+      <div *ngIf="!showGroup;">
+        <ion-col size="12">
+          <div *ngIf="coursesList && coursesList.length > 0; else noCourses">
+            <ion-list *ngFor='let course of coursesList'>
+              <ion-item>
+                <ion-img class="pictureIcon" [src]="course.banner" slot="start"></ion-img>
+                <ion-text>
+                  <br>
+                  <b>{{ course.title }}</b>
+                  <p>{{ course.description.substr(0, 30) }} ...</p>
+                </ion-text>
+                <ion-button color="light" slot="end" expand="block" (click)="goToDetails('cursos', course.slug)">
+                  <ion-icon name="link-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-list>
+          </div>
+          <ng-template #noCourses>
+            <ion-card class="ion-no-padding">
+              <ion-text>
+                <p class="ion-text-center">No posee ningún curso en su perfil.</p>
+              </ion-text>
+            </ion-card>
+          </ng-template>
+        </ion-col>
+      </div>
+    </ion-row>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color='primary' (click)='goToEdit()'>
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
