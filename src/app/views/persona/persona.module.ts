@@ -8,12 +8,15 @@ import { PersonaPageRoutingModule } from './persona-routing.module';
 
 import { PersonaPage } from './persona.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PersonaPageRoutingModule
+    PersonaPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [PersonaPage]
 })

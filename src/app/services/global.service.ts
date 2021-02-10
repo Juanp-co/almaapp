@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController } from '@ionic/angular';
+import {CookiesService} from './cookies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class GlobalService {
 
   constructor(
     public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public cookieService: CookiesService
   ) { }
 
   async presentAlert(header: string, message: string) {
@@ -29,6 +31,11 @@ export class GlobalService {
 
   async dismissLoading(){
     await this.loading.dismiss();
+  }
+
+  clearAllData() {
+    this.cookieService.removeCookie('token');
+    this.cookieService.removeCookie('data');
   }
 
 }

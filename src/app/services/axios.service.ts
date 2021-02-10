@@ -13,7 +13,6 @@ export class AxiosService {
       baseURL: environment.urlApi,
       withCredentials: false
     });
-
     this.setToken();
   }
 
@@ -65,6 +64,7 @@ export class AxiosService {
 
   async getData(endpoint: string, data: any = {}) {
     try {
+      this.setToken();
       const res = await this.axios.get(endpoint, { params: data });
       return { success: true, data: res.data };
     }
@@ -73,6 +73,7 @@ export class AxiosService {
 
   async postData(endpoint: string, data: any = {}) {
     try {
+      this.setToken();
       const res = await this.axios.post(endpoint, data);
       return { success: true, data: res.data };
     }
@@ -81,6 +82,7 @@ export class AxiosService {
 
   async putData(endpoint: string, data: any = {}) {
     try{
+      this.setToken();
       const res = await this.axios.put(endpoint, data);
       return { success: true, data: res.data };
     }
@@ -89,6 +91,7 @@ export class AxiosService {
 
   async deleteData(endpoint: string) {
     try {
+      this.setToken();
       const res = await this.axios.delete(endpoint);
       return { success: true, data: res.data };
     }
