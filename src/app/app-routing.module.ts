@@ -20,9 +20,23 @@ const routes: Routes = [
     loadChildren: () => import('./views/persona/persona.module').then( m => m.PersonaPageModule)
   },
   {
-    path: 'editar-persona',
-    loadChildren: () => import('./views/editar-persona/editar-persona.module').then( m => m.EditarPersonaPageModule)
+    path: 'persona',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./views/persona/persona.module').then( m => m.PersonaPageModule)
+      },
+      {
+        path: 'editar',
+        loadChildren: () => import('./views/persona/editar-persona/editar-persona.module').then( m => m.EditarPersonaPageModule)
+      }
+    ]
+
   },
+  // {
+  //   path: 'editar-persona',
+  //   loadChildren: () => import('./views/persona/editar-persona/editar-persona.module').then(m => m.EditarPersonaPageModule)
+  // },
   {
     path: 'escuela',
     loadChildren: () => import('./views/escuela/escuela.module').then( m => m.EscuelaPageModule)

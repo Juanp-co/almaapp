@@ -22,6 +22,7 @@ export class InicioPage implements OnInit {
     { titulo: 'Disipulado', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
     { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
+    { titulo: 'Perfil', imagen: 'assets/icon/calendario.svg', url: 'persona' },
     { titulo: 'Salir', imagen: 'assets/icon/calendario.svg', url: null }
   ];
 
@@ -33,14 +34,21 @@ export class InicioPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // await this.getDataLogin();
+  }
+
+  async ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+    await this.getDataLogin();
+  }
+
+  async getDataLogin() {
     const token = this.cookieService.getCookie('token');
     if (token) {
       this.login = true;
       const data = this.cookieService.getCookie('data');
-      console.log('data', data);
 
       if (!data) {
-        await this.globalSer.presentLoading();
         const res: any = await this.axios.getData('/user');
 
         if (res && res.success) {
@@ -60,6 +68,9 @@ export class InicioPage implements OnInit {
       else {
         this.userData = JSON.parse(data);
       }
+    }
+    else {
+      this.login = false;
     }
   }
 
@@ -97,7 +108,7 @@ export class InicioPage implements OnInit {
 
   async irMenu(num){
     // logout
-    if (num === 5) {
+    if (num === 6) {
       await this.globalSer.presentLoading();
       await this.axios.deleteData('/logout');
       this.login = false;
@@ -108,7 +119,7 @@ export class InicioPage implements OnInit {
     }
     else {
       const opt = this.opciones[num] || null;
-      await this.navCtrl.navigateForward(opt ? opt.url : 'inicio');
+      await this.navCtrl.navigateForward(opt ? opt.url : '-7inicio');
     }
   }
 
