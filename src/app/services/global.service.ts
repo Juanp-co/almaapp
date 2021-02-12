@@ -24,8 +24,8 @@ export class GlobalService {
     await alert.present();
   }
 
-  async presentLoading() {
-    this.loading = await this.loadingCtrl.create({ message: 'Cargando...' });
+  async presentLoading(message: string | null = null )  {
+    this.loading = await this.loadingCtrl.create({ message: message || 'Cargando...' });
     return this.loading.present();
   }
 

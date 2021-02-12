@@ -35,27 +35,13 @@ export class PerfilService {
   }
 
   async getGroup() {
-    // await this.globalSer.presentLoading();
     const res: any = await this.axios.getData('/user/group');
-
-    if (res && res.success) {
-      // await this.globalSer.dismissLoading();
-      return res.data.group;
-    }
-
-    return null;
+    return res && res.success ? res.data.group : null;
   }
 
   async getCourses() {
-    // await this.globalSer.presentLoading();
     const res: any = await this.axios.getData('/user/courses');
-
-    if (res && res.success) {
-      // await this.globalSer.dismissLoading();
-      return res.data.courses;
-    }
-
-    return [];
+    return res && res.success ? res.data.courses : [];
   }
 
 
