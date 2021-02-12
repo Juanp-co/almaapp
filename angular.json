@@ -16,7 +16,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "axios",
-              "js-cookie"
+              "js-cookie",
+              "lodash"
             ],
             "outputPath": "www",
             "index": "src/index.html",

@@ -3,17 +3,10 @@
     <app-minheader title="Perfil"></app-minheader>
   </ion-header>
   <div class="ion-padding-start ion-padding-end" *ngIf="userData">
-    <ion-row class="ion-margin-top ion-padding-top">
+    <ion-row>
       <ion-col size="12">
-        <!--<ion-text>Perfil personal</ion-text><br/>-->
-        <ion-text class="ion-margin-top"><h3>{{userData.names}} {{userData.lastNames}}</h3></ion-text>
+        <ion-text><h3>{{userData.names}} {{userData.lastNames}}</h3></ion-text>
         <div class="separator"></div>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Teléfono:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.phone || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
         <ion-text><b>Correo electrónico:</b></ion-text>
@@ -22,28 +15,77 @@
         <ion-text>{{userData.email || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text><b>Fecha de nacimiento:</b></ion-text>
+        <ion-text><b>Teléfono:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.phone || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Fecha de nac.:</b></ion-text>
       </ion-col>
       <ion-col size="6">
         <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Sexo:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.gender || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
         <ion-text><b>Estado civil:</b></ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+        <ion-text>{{userData.civilStatus || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text><b>Dirección:</b></ion-text>
+        <ion-text><b>Nivel educativo:</b></ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text>{{userData.direction || 'No indicado'}}</ion-text>
+        <ion-text>{{userData.educationLevel || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text><b>Barrio:</b></ion-text>
+        <ion-text><b>Profesión:</b></ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text>{{userData.locality || 'No indicado'}}</ion-text>
+        <ion-text>{{userData.profession || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Tipo de sangre:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.bloodType || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Empresa:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.company ? 'Si' : 'No'}}</ion-text>
+      </ion-col>
+      <div *ngIf="userData.company">
+        <ion-col size="6">
+          <ion-text><b>Tipo de empresa:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.companyType}}</ion-text>
+        </ion-col>
+      </div>
+      <ion-col size="6">
+        <ion-text><b>Bautizado:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.baptized ? 'Si' : 'No'}}</ion-text>
+      </ion-col>
+
+      <ion-col size="12">
+        <div class="separator"></div>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-text><b>Departamento:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.department || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
         <ion-text><b>Cuidad:</b></ion-text>
@@ -52,10 +94,16 @@
         <ion-text>{{userData.city || 'No indicado'}}</ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text><b>Departamento:</b></ion-text>
+        <ion-text><b>Barrio:</b></ion-text>
       </ion-col>
       <ion-col size="6">
-        <ion-text>{{userData.department || 'No indicado'}}</ion-text>
+        <ion-text>{{userData.locality || 'No indicado'}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>Dirección:</b></ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text>{{userData.direction || 'No indicado'}}</ion-text>
       </ion-col>
     </ion-row>
 
