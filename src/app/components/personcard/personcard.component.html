@@ -1,6 +1,8 @@
 <ion-row *ngIf="member">
-  <ion-col size="2">
-    <ion-img class="pictureIcon" [src]="member.picture || '/assets/icon/avatar.svg'"></ion-img>
+  <ion-col size="3" class="ion-justify-content-center">
+    <ion-avatar>
+      <ion-img class="pictureIcon" [src]="member.picture || '/assets/icon/avatar.svg'"></ion-img>
+    </ion-avatar>
   </ion-col>
   <ion-col size="7">
     <ion-text>
@@ -9,9 +11,9 @@
       {{ member.direction || 'No indicada' }}
     </ion-text>
   </ion-col>
-  <ion-col>
+  <ion-col size="2">
     <div *ngIf="showButton; else noButton">
-      <ion-button color="light" expand="block" (click)="goToDetails('persona', member._id)" *ngIf="member._id">
+      <ion-button color="light" (click)="goToDetails('persona', member._id)" *ngIf="member._id">
         <ion-icon name="people-outline"></ion-icon>
       </ion-button>
     </div>

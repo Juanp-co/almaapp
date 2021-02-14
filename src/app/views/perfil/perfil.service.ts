@@ -28,6 +28,10 @@ export class PerfilService {
       return res.data.data;
     }
     else {
+      if (res.status && res.status === 401) {
+        this.cookieService.removeCookie('token');
+        return { error: 401 };
+      }
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('Alerta', res.error);
       return null;

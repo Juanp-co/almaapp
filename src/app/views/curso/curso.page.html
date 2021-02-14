@@ -1,9 +1,50 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>curso</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-header>
+    <app-minheader title="Curso"></app-minheader>
+  </ion-header>
 
+  <ion-card *ngIf="course">
+    <ion-img class="banner" [src]="course.banner"></ion-img>
+    <ion-card-header>
+      <ion-row>
+        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
+          <ion-item (click)="showLikesOrComments('likes')">
+            <ion-icon name="heart"></ion-icon>&nbsp;
+            <ion-badge color="primary">{{ course.likes.length }}</ion-badge>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
+          <ion-item (click)="showLikesOrComments('unlikes')">
+            <ion-icon name="heart-dislike"></ion-icon>&nbsp;
+            <ion-badge color="secondary">{{ course.unlikes.length }}</ion-badge>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
+          <ion-item (click)="showLikesOrComments('comments')">
+            <ion-icon name="text"></ion-icon>&nbsp;
+            <ion-badge color="medium">{{ course.comments.length }}</ion-badge>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" class="ion-no-padding ion-no-margin ion-justify-content-center">
+          <ion-card-subtitle class="ion-margin-top">{{ course.speaker }}</ion-card-subtitle>
+          <ion-card-title>{{ course.title }}</ion-card-title>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="course.description">
+      <div [innerHTML]="course.description"></div>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>Contenido</ion-card-subtitle>
+      <ion-list *ngFor='let temary of course.temary'>
+        <ion-item button (click)="goToTemary(temary._id)" class="">
+          <ion-icon name="albums" slot="start"></ion-icon>
+          <ion-label>{{ temary.title }}</ion-label>
+          <ion-badge slot="end">{{ temary.content.length }}</ion-badge>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

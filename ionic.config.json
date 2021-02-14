@@ -1,5 +1,7 @@
 {
   "name": "almaapp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
