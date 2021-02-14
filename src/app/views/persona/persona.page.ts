@@ -25,15 +25,14 @@ export class PersonaPage implements OnInit {
     private axios: AxiosService,
     private cookieService: CookiesService,
     private globalSer: GlobalService,
-    private navCtrl: NavController,
-    // private router: Router,
+    private navCtrl: NavController
   ) { }
 
   async ngOnInit() {
     const token = this.cookieService.getCookie('token');
     if (token) {
       await this.activateRoute.paramMap.subscribe(paramMap => {
-        this.id = paramMap.get('placeId');
+        this.id = paramMap.get('personId');
       });
       this.activateRoute.queryParams.subscribe(params => {
         if (params.group) this.path = '/user/group';
@@ -60,14 +59,7 @@ export class PersonaPage implements OnInit {
         await this.navCtrl.navigateBack(['/']);
       }
     }
-    else await this.errorSession();
-  }
-
-  async errorSession() {
-    await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-    this.globalSer.clearAllData();
-    await this.globalSer.dismissLoading();
-    await this.navCtrl.navigateBack(['/']);
+    else await this.globalSer.errorSession();
   }
 
 }

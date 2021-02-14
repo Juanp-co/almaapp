@@ -14,32 +14,21 @@ export class PadresPage implements OnInit {
   referrals: any[] = [];
 
   constructor(
-    public globalSer: GlobalService,
-    public navCtrl: NavController,
-    public padreService: PadresService,
-    public cookieService: CookiesService,
-    private router: Router
+    private globalSer: GlobalService,
+    private navCtrl: NavController,
+    private padreService: PadresService,
+    private cookieService: CookiesService,
   ) { }
 
   async ngOnInit() {
     await this.getData();
   }
 
-
   async getData() {
     const token = this.cookieService.getCookie('token');
     if (token) {
       this.referrals = await this.padreService.getReferrals();
     }
-    else {
-      await this.errorSession();
-    }
-  }
-
-  async errorSession() {
-    await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-    this.globalSer.clearAllData();
-    await this.globalSer.dismissLoading();
-    await this.navCtrl.navigateBack(['/']);
+    else await this.globalSer.errorSession();
   }
 }

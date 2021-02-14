@@ -17,32 +17,25 @@ const routes: Routes = [
   },
   {
     path: 'persona',
-    loadChildren: () => import('./views/persona/persona.module').then( m => m.PersonaPageModule)
-  },
-  {
-    path: 'persona',
     children: [
       {
-        path: ':placeId',
+        path: ':personId',
         loadChildren: () => import('./views/persona/persona.module').then( m => m.PersonaPageModule)
+      }
+    ]
+  },
+  {
+    path: 'curso',
+    children: [
+      {
+        path: ':slug',
+        loadChildren: () => import('./views/curso/curso.module').then( m => m.CursoPageModule)
       }
     ]
   },
   {
     path: 'escuela',
     loadChildren: () => import('./views/escuela/escuela.module').then( m => m.EscuelaPageModule)
-  },
-  {
-    path: 'curso',
-    loadChildren: () => import('./views/curso/curso.module').then( m => m.CursoPageModule)
-  },
-  {
-    path: 'clase-video',
-    loadChildren: () => import('./views/clase-video/clase-video.module').then( m => m.ClaseVideoPageModule)
-  },
-  {
-    path: 'clase',
-    loadChildren: () => import('./views/clase/clase.module').then( m => m.ClasePageModule)
   },
   {
     path: 'examen',
@@ -64,6 +57,14 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./views/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
+  {
+    path: 'contenido-clase',
+    loadChildren: () => import('./views/modals/contenido-clase/contenido-clase.module').then( m => m.ContenidoClasePageModule)
+  },
+  // {
+  //   path: 'contenido-clase',
+  //   loadChildren: () => import('./views/modal/contenido-clase/contenido-clase.module').then( m => m.ContenidoClasePageModule)
+  // },
 ];
 
 @NgModule({

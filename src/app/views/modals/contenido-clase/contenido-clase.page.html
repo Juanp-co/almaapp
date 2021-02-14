@@ -1,0 +1,26 @@
+<ion-content *ngIf="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="light" (click)="closeModal()">
+          <ion-icon name="close" color="dark"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-text class="ion-margin-top ion-margin-bottom">Tema</ion-text>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ content.title }}</ion-card-title>
+    </ion-card-header>
+    <div *ngIf="content.urlVideo">
+      <app-video-player urlVideo="{{content.urlVideo}}"></app-video-player>
+    </div>
+
+    <ion-card-content *ngIf="content.description">
+      <div [innerHTML]="content.description"></div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
