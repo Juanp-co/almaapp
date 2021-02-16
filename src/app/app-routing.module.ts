@@ -61,10 +61,10 @@ const routes: Routes = [
     path: 'contenido-clase',
     loadChildren: () => import('./views/modals/contenido-clase/contenido-clase.module').then( m => m.ContenidoClasePageModule)
   },
-  // {
-  //   path: 'contenido-clase',
-  //   loadChildren: () => import('./views/modal/contenido-clase/contenido-clase.module').then( m => m.ContenidoClasePageModule)
-  // },
+  {
+    path: 'examen',
+    loadChildren: () => import('./views/modals/examen/examen.module').then( m => m.ExamenPageModule)
+  },
 ];
 
 @NgModule({
