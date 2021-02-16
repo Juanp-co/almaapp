@@ -58,7 +58,7 @@ export class VideoPlayerComponent implements OnInit, AfterContentInit {
 
   async destroyYoutubePlayerPluginWeb() {
     await YoutubePlayerWeb.destroy('youtube-player')
-      .catch(e => console.log('e', e));
+      .catch(e => console.error('e', e));
   }
 
   async initializeYoutubePlayerPluginNative() {

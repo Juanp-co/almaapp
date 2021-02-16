@@ -6,18 +6,17 @@ import {GlobalService} from '../../../services/global.service';
 @Injectable({
   providedIn: 'root'
 })
-export class TemarioService {
+export class ExamenService {
+
   constructor(
     private globalSer: GlobalService,
     private axios: AxiosService,
     private cookieService: CookiesService
   ) { }
 
-  async getTheme(slug: string, themeId: string) {
-    const res: any = await this.axios.getData(`/courses/${slug}/theme/${themeId}`);
-    if (res && res.success) {
-      return res.data.theme;
-    }
+  async getTestTheme(slug: string, themeId: string) {
+    const res: any = await this.axios.getData(`/courses/${slug}/theme/${themeId}/test`);
+    if (res && res.success) return res.data.test;
     else {
       if (res.status && res.status === 401) {
         this.cookieService.removeCookie('token');
@@ -28,16 +27,9 @@ export class TemarioService {
     }
   }
 
-  async updateHistorical(slug: string, temaryId: string, contentId: string, action: string): Promise<number|null> {
-    const res: any = await this.axios.putData(
-      `/courses/${slug}/theme/${temaryId}/content/${contentId}/${action}`,
-    );
-    return res && res.success && res.data && res.data.updated ? 2 : null;
-  }
-
-  async getTestTheme(slug: string, themeId: string) {
-    const res: any = await this.axios.getData(`/courses/${slug}/theme/${themeId}/test`);
-    if (res && res.success) return res.data.test;
+  async sendAnswer(slug: string, themeId: string, data) {
+    const res: any = await this.axios.postData(`/courses/${slug}/theme/${themeId}/test`, { data });
+    if (res && res.success) return res.data;
     else {
       if (res.status && res.status === 401) {
         this.cookieService.removeCookie('token');
