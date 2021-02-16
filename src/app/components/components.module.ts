@@ -6,6 +6,7 @@ import { PersoncardComponent } from './personcard/personcard.component';
 import { CoursecardComponent } from './coursecard/coursecard.component';
 import { PersoncardtwoComponent } from './personcardtwo/personcardtwo.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
+import { EventcardComponent } from './eventcard/eventcard.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
     CoursecardComponent,
     PersoncardtwoComponent,
     VideoPlayerComponent,
+    EventcardComponent,
   ],
   imports: [
     CommonModule
@@ -24,6 +26,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
     CoursecardComponent,
     PersoncardtwoComponent,
     VideoPlayerComponent,
+    EventcardComponent,
   ]
 })
 export class ComponentsModule { }

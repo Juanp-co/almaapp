@@ -17,7 +17,9 @@
             "allowedCommonJsDependencies": [
               "axios",
               "js-cookie",
-              "lodash"
+              "lodash",
+              "dayjs/locale/es",
+              "dayjs"
             ],
             "outputPath": "www",
             "index": "src/index.html",

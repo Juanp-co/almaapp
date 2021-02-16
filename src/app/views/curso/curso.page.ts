@@ -33,7 +33,10 @@ export class CursoPage implements OnInit {
       await this.globalSer.presentLoading();
       const data: any = await this.coursesService.getCourse(this.slug);
 
-      if (data && !data.error) this.course = data as ICursoData;
+      if (data && !data.error) {
+        this.course = data as ICursoData;
+        await this.globalSer.dismissLoading();
+      }
       else if (data && data.error) await this.globalSer.errorSession();
       else await this.globalSer.dismissLoading();
     }
