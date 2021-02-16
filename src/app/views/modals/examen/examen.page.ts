@@ -10,10 +10,10 @@ import {IExamen, IExamenFinalizado} from './examen.model';
   templateUrl: './examen.page.html',
   styleUrls: ['./examen.page.scss'],
 })
-export class ExamenPage implements OnInit, {
-  slug: string | null = null;
-  themeId: string | null = null;
-  test: IExamen[] | null = null;
+export class ExamenPage implements OnInit {
+  slug: any = null;
+  themeId: any = null;
+  test: any = null;
   totalsViews = 0;
   viewSelected = 0;
   questions: any = [];
