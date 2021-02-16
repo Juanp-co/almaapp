@@ -27,15 +27,6 @@ export class GlobalService {
     await alert.present();
   }
 
-  async presentAlertConfirm(header: string, message: string) {
-    const alert = await this.alertCtrl.create({
-      header,
-      message,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
   async presentLoading(message: string | null = null )  {
     this.loading = await this.loadingCtrl.create({ message: message || 'Cargando...' });
     return this.loading.present();
