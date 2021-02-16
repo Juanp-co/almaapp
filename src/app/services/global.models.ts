@@ -3,6 +3,7 @@ export interface IUserSimpleInfo {
   document: string;
   names: string;
   lastNames: string;
+  gender: number | null;
 }
 
 export interface ILikesAndUnlikes {

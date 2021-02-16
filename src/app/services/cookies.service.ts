@@ -9,6 +9,8 @@ export class CookiesService {
   constructor() { }
 
   getCookie(key: string) {
+    const data = cookie.get(key);
+    if (data && data.indexOf('{') > -1) return JSON.parse(data);
     return cookie.get(key) || null;
   }
 

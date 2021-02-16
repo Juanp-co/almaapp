@@ -1,7 +1,9 @@
 <ion-card *ngIf="person">
   <ion-row class="ion-no-margin ion-no-padding">
     <ion-col size="3">
-      <ion-img class="pictureIcon" [src]="'/assets/icon/avatar.svg'"></ion-img>
+      <ion-avatar>
+        <ion-img src="/assets/icon/{{person.gender ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
+      </ion-avatar>
     </ion-col>
     <ion-col size="9">
       <ion-text><p><b>{{ person.names }} {{ person.lastNames }}</b></p></ion-text>

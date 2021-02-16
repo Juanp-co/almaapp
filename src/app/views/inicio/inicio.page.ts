@@ -65,7 +65,7 @@ export class InicioPage implements OnInit {
         }
       }
       else {
-        this.userData = JSON.parse(data);
+        this.userData = data;
       }
     }
     else {

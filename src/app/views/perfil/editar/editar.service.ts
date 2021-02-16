@@ -34,7 +34,7 @@ export class EditarService {
     if (res && res.success) {
       let userData: any = this.cookieService.getCookie('data');
       if (userData) {
-        userData = JSON.parse(userData);
+        // userData = JSON.parse(userData);
         userData = {...userData, ...res.data.data};
       }
       this.cookieService.setCookie('data', userData);

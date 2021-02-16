@@ -20,7 +20,7 @@ export class CursoService {
     const res: any = await this.axios.getData(`/courses/${slug}`);
     if (res && res.success) {
       await this.globalSer.dismissLoading();
-      return res.data.course;
+      return res.data;
     }
     else {
       if (res.status && res.status === 401) {

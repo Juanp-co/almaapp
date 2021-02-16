@@ -6,6 +6,7 @@ import {TemarioService} from './temario.service';
 import {ContenidoClasePage} from '../../modals/contenido-clase/contenido-clase.page';
 import {ExamenPage} from '../../modals/examen/examen.page';
 import {ITemario, ITemarioContent} from './temario.model';
+import {CookiesService} from '../../../services/cookies.service';
 
 @Component({
   selector: 'app-temario',
@@ -17,15 +18,18 @@ export class TemarioPage implements OnInit {
   slug: string | null = null;
   themeId: string | null = null;
   theme: ITemario | null = null;
+  dataCourseUser: any = null;
 
   constructor(
     private activateRoute: ActivatedRoute,
+    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private temaryService: TemarioService,
     private modalController: ModalController,
     private router: Router,
-  ) { }
+  ) {
+  }
 
   async ngOnInit() {
     this.slug = this.activateRoute.snapshot.paramMap.get('slug');
@@ -37,6 +41,7 @@ export class TemarioPage implements OnInit {
 
       if (data && !data.error) {
         this.theme = data as ITemario;
+        this.dataCourseUser = this.cookiesService.getCookie(this.slug);
         await this.globalSer.dismissLoading();
       }
       else if (data && data.error) await this.globalSer.errorSession();
@@ -73,7 +78,14 @@ export class TemarioPage implements OnInit {
         if (view) this.theme.content[i].view = view;
         let accumulated = 0;
         this.theme.content.forEach(c => { if (c.view === 2) accumulated++; });
-        if (accumulated === this.theme.content.length) this.theme.view = 2;
+        this.theme.view = accumulated === this.theme.content.length ? 2 : 1;
+        if (this.dataCourseUser){
+          const index = this.dataCourseUser.temary.findIndex((d: any) => d.temaryId === this.themeId);
+          if (index > -1) {
+            this.dataCourseUser.temary[index].view = this.theme.view;
+            this.cookiesService.setCookie(this.slug, this.dataCourseUser);
+          }
+        }
       });
 
       await this.globalSer.dismissLoading();

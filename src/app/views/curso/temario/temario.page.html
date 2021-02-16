@@ -36,8 +36,29 @@
       <ion-list *ngFor='let content of theme.content; let i=index'>
         <!--<ion-item button (click)="goToClass(i)">-->
         <ion-item button (click)="openClassModal(i)">
-          <ion-icon name="{{ content.urlVideo ? 'videoCam' : 'document-text' }}" slot="start"></ion-icon>
-          <ion-label>{{ content.title }}</ion-label>
+          <ion-avatar slot="start">
+            <ion-img src="/assets/icon/{{content.view === 2 ? 'clase_video' : 'clase_video_gris'}}.svg" *ngIf="content.urlVideo"></ion-img>
+            <ion-img src="/assets/icon/{{content.view === 2 ? 'clase_texto' : 'clase_texto_gris'}}.svg" *ngIf="!content.urlVideo"></ion-img>
+          </ion-avatar>
+          <ion-text><b>{{ content.title }}</b></ion-text>
+
+          <ion-icon
+            name="time-outline"
+            slot="end"
+            *ngIf="content.view === 0"
+          ></ion-icon>
+          <ion-icon
+            name="eye-outline"
+            slot="end"
+            *ngIf="content.view === 1"
+          ></ion-icon>
+          <ion-icon
+            name="checkmark-done-outline"
+            slot="end"
+            *ngIf="content.view === 2"
+          ></ion-icon>
+          <!--<ion-icon name="checkmark-done-outline" slot="end" *ngIf="content.view === 2"></ion-icon>-->
+          <!--<ion-icon name="time-outline" slot="end" *ngIf="content.view !== 2"></ion-icon>-->
         </ion-item>
       </ion-list>
     </ion-card-content>
