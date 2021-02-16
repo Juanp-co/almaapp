@@ -55,9 +55,8 @@ export class EditarPage implements OnInit {
     await this.globalSer.presentLoading();
     const token = this.cookieService.getCookie('token');
     if (token) {
-      let userData: IEditar | any = this.cookieService.getCookie('data');
+      const userData: IEditar | any = this.cookieService.getCookie('data');
       if (userData) {
-        userData = JSON.parse(userData);
         this.formData = {...userData} as IEditar;
         this.formData.company = this.formData.company ? 'Si' : 'No';
         this.formData.baptized = this.formData.baptized ? 'Si' : 'No';

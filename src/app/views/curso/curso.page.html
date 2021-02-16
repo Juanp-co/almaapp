@@ -1,6 +1,6 @@
 <ion-content>
   <ion-header>
-    <app-minheader title="Curso"></app-minheader>
+    <app-minheader title="Curso" slugValue="{{slug}}"></app-minheader>
   </ion-header>
 
   <ion-card *ngIf="course">
@@ -38,11 +38,29 @@
 
     <ion-card-content>
       <ion-card-subtitle>Contenido</ion-card-subtitle>
-      <ion-list *ngFor='let temary of course.temary'>
+      <ion-list *ngFor='let temary of course.temary; let i=index'>
         <ion-item button (click)="goToTemary(temary._id)" class="">
-          <ion-icon name="albums" slot="start"></ion-icon>
-          <ion-label>{{ temary.title }}</ion-label>
-          <ion-badge slot="end">{{ temary.content.length }}</ion-badge>
+          <ion-icon
+            name="albums"
+            color="{{ dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 2 ? 'success' : '' }}"
+            slot="start"
+          ></ion-icon>
+          <ion-label>{{ temary.title }} ({{ temary.content.length }})</ion-label>
+          <ion-icon
+            name="time-outline"
+            slot="end"
+            *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 0"
+          ></ion-icon>
+          <ion-icon
+            name="eye-outline"
+            slot="end"
+            *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 1"
+          ></ion-icon>
+          <ion-icon
+            name="checkmark-done-outline"
+            slot="end"
+            *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 2"
+          ></ion-icon>
         </ion-item>
       </ion-list>
     </ion-card-content>

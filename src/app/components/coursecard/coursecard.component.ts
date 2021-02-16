@@ -25,4 +25,8 @@ export class CoursecardComponent implements OnInit {
     }
   }
 
+  async goToDetails() {
+    await this.router.navigate([`curso/${this.course.slug}`]);
+  }
+
 }
