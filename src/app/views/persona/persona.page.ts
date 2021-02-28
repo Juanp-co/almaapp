@@ -5,6 +5,8 @@ import {AlertController, NavController} from '@ionic/angular';
 import { CookiesService } from '../../services/cookies.service';
 import { GlobalService } from '../../services/global.service';
 import {AxiosService} from '../../services/axios.service';
+import {departments} from '../../../Utils/locations.data';
+import {civilStatus, gender} from '../../../Utils/profile.data';
 
 @Component({
   selector: 'app-persona',
@@ -45,6 +47,15 @@ export class PersonaPage implements OnInit {
         if (res && res.success) {
           const { data } = res.data;
           this.userData = data.member || null;
+          this.userData.civilStatus = civilStatus[this.userData.civilStatus] || null;
+          this.userData.gender = gender[this.userData.gender] || null;
+          if (this.userData.department) {
+            const depto = departments[this.userData.department] || null;
+            if (depto) {
+              this.userData.department = depto.department;
+              if (this.userData.city) this.userData.city = depto.cities[this.userData.city] || null;
+            }
+          }
           this.totalCourses = data.totalCourses || 0;
           this.totalReferrals = data.totalReferrals || 0;
           await this.globalSer.dismissLoading();

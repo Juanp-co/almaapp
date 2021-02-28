@@ -1,19 +1,19 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CoursesimplecardComponent } from './coursesimplecard.component';
+import { ModalPasswordPage } from './modal-password.page';
 
-describe('CoursesimplecardComponent', () => {
-  let component: CoursesimplecardComponent;
-  let fixture: ComponentFixture<CoursesimplecardComponent>;
+describe('ModalPasswordPage', () => {
+  let component: ModalPasswordPage;
+  let fixture: ComponentFixture<ModalPasswordPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesimplecardComponent ],
+      declarations: [ ModalPasswordPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CoursesimplecardComponent);
+    fixture = TestBed.createComponent(ModalPasswordPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

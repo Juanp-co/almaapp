@@ -5,18 +5,10 @@
         <ion-row>
           <ion-col class="ion-margin-top ion-margin-bottom">
             <ion-buttons>
-              <ion-button
-                color="light"
-                (click)="getQuestionsFromList()"
-                *ngIf="!finishedTest.msg && viewSelected > 0 && viewSelected <= totalsViews"
-              >
+              <ion-button color="light" (click)="getQuestionsFromList()" *ngIf="!finishedTest.msg && viewSelected > 0 && viewSelected <= totalsViews">
                 <ion-icon name="arrow-back-outline"></ion-icon>
               </ion-button>
-              <ion-button
-                color="light"
-                (click)="!finishedTest.msg ? dismiss() : closeModal()"
-                *ngIf="viewSelected === 0 || finishedTest.msg"
-              >
+              <ion-button color="light" (click)="!finishedTest.msg ? dismiss() : closeModal()" *ngIf="viewSelected === 0 || finishedTest.msg">
                 <ion-icon name="close"></ion-icon>
               </ion-button>
             </ion-buttons>
@@ -38,7 +30,6 @@
         <ion-card-header>
           <ion-card-title>{{ item.title }}</ion-card-title>
         </ion-card-header>
-
         <ion-card-content>
           <div *ngIf="item.description" [innerHTML]="item.description"></div>
 
@@ -80,12 +71,7 @@
               </ion-item>
             </ion-list>
           </div>
-        </ion-card-content>
-        <ion-card-content>
           <ion-text *ngIf="item.require"><i>(*) Obligatoria </i></ion-text>
-          <div *ngIf="item.extra">
-            <div [innerHTML]="item.extra"></div>
-          </div>
         </ion-card-content>
       </ion-card>
     </ion-list>
@@ -94,21 +80,13 @@
         <div *ngIf="viewSelected === 0; else nextButtons">
           <ion-row>
             <ion-col size="6">
-              <ion-button
-                color="light"
-                expand="full"
-                (click)="dismiss()"
-              >
-                SALIR
+              <ion-button color="light" expand="block" (click)="dismiss()">
+                <ion-text>SALIR</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size="6">
-              <ion-button
-                color="primary"
-                expand="full"
-                (click)="getQuestionsFromList(true)"
-              >
-                SIGUIENTE
+              <ion-button color="primary" expand="block" (click)="getQuestionsFromList(true)">
+                <ion-text>SIGUIENTE</ion-text>
               </ion-button>
             </ion-col>
           </ion-row>
@@ -116,30 +94,18 @@
         <ng-template #nextButtons>
           <ion-row>
             <ion-col size="6">
-              <ion-button
-                color="light"
-                expand="full"
-                (click)="getQuestionsFromList()"
-              >
-                ATRÁS
+              <ion-button color="light" expand="block" (click)="getQuestionsFromList()">
+                <ion-text>ATRÁS</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size="6" *ngIf="viewSelected > 0 && viewSelected < totalsViews">
-              <ion-button
-                color="primary"
-                expand="full"
-                (click)="getQuestionsFromList(true)"
-              >
-                SIGUIENTE
+              <ion-button color="primary" expand="block" (click)="getQuestionsFromList(true)">
+                <ion-text>SIGUIENTE</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size="6" *ngIf="viewSelected === totalsViews">
-              <ion-button
-                color="primary"
-                expand="full"
-                (click)="finishTest()"
-              >
-                FINALIZAR
+              <ion-button color="primary" expand="block" (click)="finishTest()">
+                <ion-text>FINALIZAR</ion-text>
               </ion-button>
             </ion-col>
           </ion-row>
@@ -171,11 +137,8 @@
             </ion-row>
           </ion-col>
           <ion-col size="12" class="ion-justify-content-center">
-            <ion-button
-              expand="full"
-              (click)="closeModal()"
-            >
-              CERRAR EXAMEN
+            <ion-button expand="block" (click)="closeModal()">
+              <ion-text>CERRAR EXAMEN</ion-text>
             </ion-button>
           </ion-col>
         </ion-row>

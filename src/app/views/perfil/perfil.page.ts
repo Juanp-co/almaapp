@@ -8,6 +8,8 @@ import {PerfilService} from './perfil.service';
 import {IEditar} from './editar/editar.model';
 import {departments} from '../../../Utils/locations.data';
 import {bloodType, civilStatus, companyType, gender, educationLevels, professions} from '../../../Utils/profile.data';
+import {ModalContenidoTemaPage} from '../curso/modal-contenido-tema/modal-contenido-tema.page';
+import {ModalPasswordPage} from './modal-password/modal-password.page';
 
 @Component({
   selector: 'app-perfil',
@@ -17,9 +19,6 @@ import {bloodType, civilStatus, companyType, gender, educationLevels, profession
 export class PerfilPage implements OnInit {
 
   userData: IEditar | null = null;
-  groupData: any = null;
-  coursesList: any = [];
-  showGroup = true;
   views: any = {
     info: { show: true, title: 'Mis datos', data: null },
     courses: { show: false, title: 'Mis cursos', data: [] },
@@ -86,14 +85,13 @@ export class PerfilPage implements OnInit {
     await this.router.navigate(['perfil/editar']);
   }
 
-  async goToDetails(path: string, id: string) {
-    // await this.router.navigate(['persona/editar']);
-    console.log('path', path, id);
-  }
-
   setShowGroup(value = false) {
     this.views.group.show = value;
     this.views.courses.show = !value;
+  }
+
+  async openChangePasswordModal() {
+    await this.globalSer.loadModal(ModalPasswordPage, {}, false);
   }
 
 }

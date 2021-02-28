@@ -3,82 +3,97 @@
     <app-minheader title="Detalles usuario"></app-minheader>
   </ion-header>
 
-  <div class="ion-padding-start ion-padding-end" *ngIf="userData">
-    <ion-row class="ion-margin-top ion-padding-top">
-      <ion-col size="12">
-        <ion-text class="ion-margin-top"><h3>{{userData.names}} {{userData.lastNames}}</h3></ion-text>
-        <div class="separator"></div>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Teléfono:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.phone || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Correo electrónico:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.email || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Fecha de nacimiento:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Estado civil:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Dirección:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.direction || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Barrio:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.locality || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Cuidad:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.city || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Departamento:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.department || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="12" class="ion-no-margin">
-        <div class="separator"></div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <!--<ion-text>-->
-          <!--<h4 class="ion-text-center"></h4>-->
-        <!--</ion-text>-->
-        <ion-text color="dark">
-          <h2 class="numberTitle">{{ totalCourses }}</h2>
-        </ion-text>
-        <ion-img class="pictureLogo" [src]="'/assets/icon/escuela.svg'"></ion-img>
-        <p class="ion-text-center">Cursos</p>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text color="dark">
-          <h2 class="numberTitle">{{ totalReferrals }}</h2>
-        </ion-text>
-        <ion-img class="pictureLogo" [src]="'/assets/icon/red.svg'"></ion-img>
-        <p class="ion-text-center">Hijos espirituales</p>
-      </ion-col>
-    </ion-row>
-  </div>
+  <ion-card *ngIf="userData">
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="6">
+          <ion-text><b>Nombres:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.names || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Apellidos:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.lastNames || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Teléfono:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.phone || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Correo electrónico:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.email || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Fecha de nac.:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Sexo:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Estado civil:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Departamento:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.department || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Cuidad:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.city || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Barrio:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.locality || 'No indicado'}}</ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text><b>Dirección:</b></ion-text>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text>{{userData.direction || 'No indicado'}}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="6">
+          <ion-text color="dark">
+            <h2 class="numberTitle">{{ totalCourses }}</h2>
+          </ion-text>
+          <ion-img class="pictureLogo" [src]="'/assets/icon/escuela.svg'"></ion-img>
+          <p class="ion-text-center">Cursos</p>
+        </ion-col>
+        <ion-col size="6">
+          <ion-text color="dark">
+            <h2 class="numberTitle">{{ totalReferrals }}</h2>
+          </ion-text>
+          <ion-img class="pictureLogo" [src]="'/assets/icon/red.svg'"></ion-img>
+          <p class="ion-text-center">Hijos espirituales</p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

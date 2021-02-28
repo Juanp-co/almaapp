@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'editar',
     loadChildren: () => import('./editar/editar.module').then( m => m.EditarPageModule)
+  },
+  {
+    path: 'modal-password',
+    loadChildren: () => import('./modal-password/modal-password.module').then( m => m.ModalPasswordPageModule)
   }
 ];
 

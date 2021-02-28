@@ -11,9 +11,7 @@
   </ion-row>
 
   <div *ngIf="referrals && referrals.length > 0; else noReferrals">
-    <ion-list *ngFor='let referred of referrals'>
-      <app-personcard [data]="referred"></app-personcard>
-    </ion-list>
+    <app-personcard  *ngFor='let referred of referrals' [data]="referred"></app-personcard>
   </div>
   <ng-template #noReferrals>
     <ion-card class="ion-no-padding">

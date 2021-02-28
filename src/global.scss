@@ -32,7 +32,7 @@ b {
 
 .numberTitle {
   text-align: center !important;
-  font-size: 2em;
+  font-size: 2em !important;
   font-weight: 600;
 }
 
@@ -71,8 +71,8 @@ b {
 }
 
 .logo-2{
-  width: auto !important;
-  height: 60px !important;
+  width: 100% !important;
+  height: auto !important;
   margin: auto !important;
 }
 
