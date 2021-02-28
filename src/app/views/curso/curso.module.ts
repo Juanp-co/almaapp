@@ -9,7 +9,6 @@ import { CursoPageRoutingModule } from './curso-routing.module';
 import { CursoPage } from './curso.page';
 
 import { ComponentsModule } from '../../components/components.module';
-import { LikesModalPageModule } from '../modals/likes-modal/likes-modal.module';
 
 @NgModule({
   imports: [
@@ -18,7 +17,6 @@ import { LikesModalPageModule } from '../modals/likes-modal/likes-modal.module';
     IonicModule,
     CursoPageRoutingModule,
     ComponentsModule,
-    LikesModalPageModule
   ],
   declarations: [CursoPage]
 })

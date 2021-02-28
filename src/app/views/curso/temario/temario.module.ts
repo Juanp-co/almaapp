@@ -9,7 +9,6 @@ import { TemarioPageRoutingModule } from './temario-routing.module';
 import { TemarioPage } from './temario.page';
 
 import { ComponentsModule } from '../../../components/components.module';
-import { LikesModalPageModule } from '../../modals/likes-modal/likes-modal.module';
 
 @NgModule({
   imports: [
@@ -18,7 +17,6 @@ import { LikesModalPageModule } from '../../modals/likes-modal/likes-modal.modul
     IonicModule,
     TemarioPageRoutingModule,
     ComponentsModule,
-    LikesModalPageModule,
   ],
   declarations: [TemarioPage]
 })

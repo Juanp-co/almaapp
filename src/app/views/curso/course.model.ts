@@ -1,5 +1,3 @@
-import { IComments, ILikesAndUnlikes } from '../../services/global.models';
-
 export interface ICursoContent {
   _id: string;
   title: string | null;
@@ -18,6 +16,22 @@ export interface ICursoTemary {
   content: ICursoContent[];
 }
 
+export interface ICursoTemarioExtended {
+  _id: string;
+  title: string;
+  description: string | null;
+  urlVideo: string | null;
+  view: number;
+}
+
+export interface ICursoTemarioContent {
+  _id: string;
+  title: string;
+  description: string | null;
+  view: number;
+  content: ICursoTemarioExtended[];
+}
+
 export interface ICursoData {
   _id: string;
   slug: string;
@@ -27,22 +41,23 @@ export interface ICursoData {
   banner: string | null;
   levels: ICursoLevels[];
   speaker: string;
-  speakerPosition: number | null;
+  speakerPosition: string;
   temary: ICursoTemary[];
-  comments: IComments[];
-  likes: ILikesAndUnlikes[];
-  unlikes: ILikesAndUnlikes[];
 }
 
-// export interface ICursoUserData {
-//   approved: boolean;
-//   created_at: string;
-//   temary: string | null;
-//   updated_at: string | null;
-//   _id: string;
-// }
+export interface ICursoExamen {
+  _id: string;
+  title: string;
+  description: string | null;
+  extra: string | null;
+  inputType: string;
+  placeholder: string | null;
+  require: boolean;
+  values: string[] | null;
+}
 
-// export interface ICurso {
-//   course: ICursoData;
-//   dataCourseUser: ICursoUserData | null;
-// }
+export interface ICursoExamenFinalizado {
+  msg: string | null;
+  average: number;
+  approved: boolean;
+}

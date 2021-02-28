@@ -1,13 +1,6 @@
 <ion-content *ngIf="content">
   <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button color="light" (click)="closeModal()">
-          <ion-icon name="close" color="dark"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-text class="ion-margin-top ion-margin-bottom">Tema</ion-text>
-    </ion-toolbar>
+    <app-minheader title="Visor de contenido" [modal]="true"></app-minheader>
   </ion-header>
 
   <ion-card>
@@ -24,7 +17,8 @@
 
     <ion-card-content>
 
-      <ion-button color="light" expand="full" (click)="closeModal()">
+      <ion-button color="primary" expand="full" (click)="closeModal()">
+        <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
         Finalizar contenido
       </ion-button>
     </ion-card-content>

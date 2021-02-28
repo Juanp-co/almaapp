@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LikesModalPageRoutingModule } from './likes-modal-routing.module';
+import { ModalExamenTemaPageRoutingModule } from './modal-examen-tema-routing.module';
 
-import { LikesModalPage } from './likes-modal.page';
+import { ModalExamenTemaPage } from './modal-examen-tema.page';
 import {ComponentsModule} from '../../../components/components.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import {ComponentsModule} from '../../../components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    LikesModalPageRoutingModule,
-    ComponentsModule
+    ModalExamenTemaPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [LikesModalPage]
+  declarations: [ModalExamenTemaPage]
 })
-export class LikesModalPageModule {}
+export class ModalExamenTemaPageModule {}

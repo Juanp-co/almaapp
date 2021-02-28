@@ -38,10 +38,6 @@ const routes: Routes = [
     loadChildren: () => import('./views/escuela/escuela.module').then( m => m.EscuelaPageModule)
   },
   {
-    path: 'examen',
-    loadChildren: () => import('./views/examen/examen.module').then( m => m.ExamenPageModule)
-  },
-  {
     path: 'eventos',
     loadChildren: () => import('./views/eventos/eventos.module').then( m => m.EventosPageModule)
   },
@@ -56,14 +52,6 @@ const routes: Routes = [
   {
     path: 'perfil',
     loadChildren: () => import('./views/perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
-  {
-    path: 'contenido-clase',
-    loadChildren: () => import('./views/modals/contenido-clase/contenido-clase.module').then( m => m.ContenidoClasePageModule)
-  },
-  {
-    path: 'examen',
-    loadChildren: () => import('./views/modals/examen/examen.module').then( m => m.ExamenPageModule)
   },
 ];
 

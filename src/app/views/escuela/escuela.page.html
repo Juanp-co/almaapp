@@ -3,23 +3,82 @@
     <app-minheader title="Escuela"></app-minheader>
   </ion-header>
 
-  <ion-list *ngFor='let course of courses'>
-    <ion-card *ngIf="course" button (click)="goToDetails(course.slug)">
-      <ion-img class="banner" [src]="course.banner"></ion-img>
-      <ion-card-header>
-        <ion-card-subtitle>Por: {{ course.speaker }}</ion-card-subtitle>
-        <ion-card-title>{{ course.title }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-text *ngIf="course.description">{{ course.description.substr(0, 150) }}</ion-text>
-        <ion-button color="primary" expand="block" (click)="goToDetails(course.slug)">
-          <ion-text>
-            <ion-icon name="open-outline"></ion-icon>
-            Ver detalles
-          </ion-text>
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+  <div class="ion-margin">
+    <ion-button color="light" (click)="setSortOrder()">
+      <ion-icon name="arrow-up-outline" *ngIf="queryParams.value === 1"></ion-icon>
+      <ion-icon name="arrow-down-outline" *ngIf="queryParams.value === -1"></ion-icon>&nbsp;
+      <ion-text>{{ queryParams.value === 1 ? 'ASC' : 'DES' }}</ion-text>
+    </ion-button>
+    <ion-button color="light" (click)="setQueryValues()">
+      <ion-icon name="filter-outline"></ion-icon>&nbsp;
+      <ion-text>{{ queryParams.limit }}</ion-text>
+    </ion-button>
+    <ion-button color="light" (click)="setShowSearch()">
+      <ion-icon name="search-outline" slot="start" *ngIf="!showSearch"></ion-icon>
+      <ion-icon name="close-outline" slot="start" *ngIf="showSearch"></ion-icon>
+      <ion-text>Buscar</ion-text>
+    </ion-button>
+  </div>
 
-  </ion-list>
+  <ion-card *ngIf="showSearch">
+    <ion-card-content>
+      <ion-toolbar>
+        <ion-button color="light" (click)="queryParams.title = null; findData(true)" slot="start" *ngIf="queryParams.title">
+          <ion-icon name="backspace-outline"></ion-icon>
+        </ion-button>
+        <ion-item>
+          <ion-label position="floating" color="medium">Buscar por título</ion-label>
+          <ion-input
+            [(ngModel)]="queryParams.title"
+            autocomplete="off"
+            class="ion-text-uppercase"
+          ></ion-input>
+        </ion-item>
+        <ion-button color="light" (click)="findData()" slot="end" [disabled]="!queryParams.title">
+          <ion-icon name="search-outline"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="courses !== null">
+
+    <div *ngIf="courses && courses.length > 0; else noCourses" >
+      <ion-list *ngFor='let course of courses'>
+        <ion-card *ngIf="course" button (click)="goToDetails(course.slug)">
+          <ion-img class="banner" [src]="course.banner"></ion-img>
+          <ion-card-header>
+            <ion-card-subtitle>Por: {{ course.speaker }}</ion-card-subtitle>
+            <ion-card-title>{{ course.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-text *ngIf="course.description">{{ course.description }}</ion-text>
+            <ion-button class="ion-margin-top" color="primary" expand="block" (click)="goToDetails(course.slug)">
+              <ion-text>
+                <ion-icon name="open-outline"></ion-icon>
+                Ver detalles
+              </ion-text>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </div>
+
+    <div class="ion-margin-top" *ngIf="courses && courses.length > 0 && pages > 0">
+      <app-paginator
+        [totalPages]="pages"
+        [currentPage]="queryParams.page"
+        [handlePage]="handlePage"
+      ></app-paginator>
+    </div>
+
+    <ng-template #noCourses>
+      <ion-card class="ion-margin-top ion-margin-bottom ion-no-padding">
+        <ion-text>
+          <p class="ion-text-center" *ngIf="!queryParams.title">Por ahora no existen cursos disponibles.</p>
+          <p class="ion-text-center" *ngIf="queryParams.title">No se encontraron resultados</p>
+        </ion-text>
+      </ion-card>
+    </ng-template>
+  </div>
 </ion-content>

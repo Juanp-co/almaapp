@@ -82,7 +82,6 @@ export class EventosPage implements OnInit {
           text: 'Ok',
           handler: (selectedValue) => {
             this.queryParams.value = selectedValue;
-            console.log('this.queryParams.value', this.queryParams.value);
           }
         }
       ]

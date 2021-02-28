@@ -5,37 +5,21 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-row>
-        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-item (click)="showLikesOrComments('likes')">
-            <ion-icon name="heart"></ion-icon>&nbsp;
-            <ion-badge color="primary">{{ theme.likes.length }}</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-item (click)="showLikesOrComments('unlikes')">
-            <ion-icon name="heart-dislike"></ion-icon>&nbsp;
-            <ion-badge color="secondary">{{ theme.unlikes.length }}</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-item (click)="showLikesOrComments('comments')">
-            <ion-icon name="text"></ion-icon>&nbsp;
-            <ion-badge color="medium">{{ theme.comments.length }}</ion-badge>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+      <ion-card-title class="">Descripción</ion-card-title>
     </ion-card-header>
-
-    <ion-card-content *ngIf="theme.description">
+    <ion-card-content>
       <div [innerHTML]="theme.description"></div>
     </ion-card-content>
+  </ion-card>
 
+  <ion-card *ngIf="theme.content && theme.content.length > 0">
+    <ion-card-header>
+      <ion-card-title>Contenido</ion-card-title>
+    </ion-card-header>
     <ion-card-content>
-      <ion-card-subtitle>Contenido</ion-card-subtitle>
       <ion-list *ngFor='let content of theme.content; let i=index'>
         <!--<ion-item button (click)="goToClass(i)">-->
-        <ion-item button (click)="openClassModal(i)">
+        <ion-item class="ion-no-padding ion-no-margin" button (click)="openClassModal(i)">
           <ion-avatar slot="start">
             <ion-img src="/assets/icon/{{content.view === 2 ? 'clase_video' : 'clase_video_gris'}}.svg" *ngIf="content.urlVideo"></ion-img>
             <ion-img src="/assets/icon/{{content.view === 2 ? 'clase_texto' : 'clase_texto_gris'}}.svg" *ngIf="!content.urlVideo"></ion-img>
@@ -57,17 +41,28 @@
             slot="end"
             *ngIf="content.view === 2"
           ></ion-icon>
-          <!--<ion-icon name="checkmark-done-outline" slot="end" *ngIf="content.view === 2"></ion-icon>-->
-          <!--<ion-icon name="time-outline" slot="end" *ngIf="content.view !== 2"></ion-icon>-->
         </ion-item>
       </ion-list>
     </ion-card-content>
 
-    <ion-card-content *ngIf="theme.view === 2">
-      <ion-card-subtitle>Prueba</ion-card-subtitle>
-      <ion-button expand="block" color="primary" (click)="openTestModal()">
-        Presentar exámen
-      </ion-button>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Examen</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text *ngIf="theme.view !== 2">
+            Complete el listado de contenidos del tema para poder presentar la prueba.
+          </ion-text>
+          <ion-button expand="block" color="primary" (click)="openTestModal()" *ngIf="theme.view === 2">
+            Presentar exámen
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
+
   </ion-card>
 </ion-content>

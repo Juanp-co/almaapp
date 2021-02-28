@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ContenidoClasePageRoutingModule } from './contenido-clase-routing.module';
+import { ModalContenidoTemaPageRoutingModule } from './modal-contenido-tema-routing.module';
 
-import { ContenidoClasePage } from './contenido-clase.page';
+import { ModalContenidoTemaPage } from './modal-contenido-tema.page';
 import {ComponentsModule} from '../../../components/components.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import {ComponentsModule} from '../../../components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ContenidoClasePageRoutingModule,
-    ComponentsModule
+    ModalContenidoTemaPageRoutingModule,
+    ComponentsModule,
   ],
-  declarations: [ContenidoClasePage]
+  declarations: [ModalContenidoTemaPage]
 })
-export class ContenidoClasePageModule {}
+export class ModalContenidoTemaPageModule {}

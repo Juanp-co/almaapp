@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/es';
-import {IUserSimpleInfo} from '../../services/global.models';
 
 @Component({
   selector: 'app-personcardtwo',
@@ -13,7 +12,13 @@ import {IUserSimpleInfo} from '../../services/global.models';
 export class PersoncardtwoComponent implements OnInit {
 
   @Input() data: any;
-  person: IUserSimpleInfo | null = null;
+  person: {
+    _id: string;
+    document: string;
+    names: string;
+    lastNames: string;
+    gender: number | null;
+  } | null = null;
   comment: string | null = null;
   date: string = null;
 
