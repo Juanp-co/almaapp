@@ -57,8 +57,8 @@
     </ion-row>
   </div>
 
-  <div *ngIf="login"  class="ion-margin-top ion-padding-top">
-    <br>
+  <div *ngIf="login"  class="ion-margin-top ion-padding-top ion-margin-bottom ion-padding-bottom">
+    <br/>
     <ion-row class="ion-justify-content-center">
       <ion-col size="5"
         *ngFor="let item of opciones; let i = index"
@@ -70,7 +70,22 @@
         <ion-text color="medium" class="ion-padding-top">{{item.titulo}}</ion-text>
       </ion-col>
     </ion-row>
-
+    <br/>
   </div>
+
+
+
+  <!-- fab placed in the center of the content with a list on each side -->
+  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="goToProfile()">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!--<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="login">-->
+    <!--<ion-fab-button>-->
+      <!--<ion-icon name="add"></ion-icon>-->
+    <!--</ion-fab-button>-->
+  <!--</ion-fab>-->
 
 </ion-content>

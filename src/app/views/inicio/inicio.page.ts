@@ -22,15 +22,14 @@ export class InicioPage implements OnInit {
     { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
     { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
-    { titulo: 'Perfil', imagen: 'assets/icon/calendario.svg', url: 'perfil' },
     { titulo: 'Salir', imagen: 'assets/icon/calendario.svg', url: null }
   ];
 
   constructor(
-    public globalSer: GlobalService,
-    public navCtrl: NavController,
     public axios: AxiosService,
-    public cookieService: CookiesService
+    public cookieService: CookiesService,
+    public globalSer: GlobalService,
+    public navCtrl: NavController
   ) { }
 
   async ngOnInit() {
@@ -64,13 +63,9 @@ export class InicioPage implements OnInit {
           await this.globalSer.presentAlert('Alerta', res.error);
         }
       }
-      else {
-        this.userData = data;
-      }
+      else this.userData = data;
     }
-    else {
-      this.login = false;
-    }
+    else this.login = false;
   }
 
   async ingresar() {
@@ -106,20 +101,32 @@ export class InicioPage implements OnInit {
   }
 
   async irMenu(num){
-    // logout
-    if (num === 6) {
-      await this.globalSer.presentLoading();
-      await this.axios.deleteData('/logout');
-      this.login = false;
-      this.cookieService.removeCookie('token');
-      this.cookieService.removeCookie('data');
-      this.userData = null;
-      await this.globalSer.dismissLoading();
+
+
+    const opt = this.opciones[num] || null;
+
+    if (opt) {
+      if (!opt.url) {
+        const action = async () => {
+          await this.globalSer.presentLoading();
+          this.userData = null;
+          await this.globalSer.clearAllData();
+          this.axios.deleteData('/logout');
+          this.login = false;
+          await this.globalSer.dismissLoading();
+        };
+        await this.globalSer.alertConfirm({
+          header: 'Cerrar sesión',
+          message: '¿Está seguro qué desea finalizar la sesión?',
+          confirmAction: () => action()
+        });
+      }
+      else await this.navCtrl.navigateForward(opt.url);
     }
-    else {
-      const opt = this.opciones[num] || null;
-      await this.navCtrl.navigateForward(opt ? opt.url : '-7inicio');
-    }
+  }
+
+  async goToProfile() {
+    await this.navCtrl.navigateForward('/perfil');
   }
 
 }
