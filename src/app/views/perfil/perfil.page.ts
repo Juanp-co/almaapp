@@ -20,6 +20,11 @@ export class PerfilPage implements OnInit {
   groupData: any = null;
   coursesList: any = [];
   showGroup = true;
+  views: any = {
+    info: { show: true, title: 'Mis datos', data: null },
+    courses: { show: false, title: 'Mis cursos', data: [] },
+    group: { show: true, title: 'Núcleo familiar', data: null },
+  };
 
   constructor(
     private globalSer: GlobalService,
@@ -27,46 +32,54 @@ export class PerfilPage implements OnInit {
     private perfilService: PerfilService,
     private cookieService: CookiesService,
     private router: Router
-  ) { }
+  ) {
+    // check if exist session
+    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
+  }
 
   async ngOnInit() { }
 
   async ionViewDidEnter() {
-    await this.getData();
+    // check if exist session
+    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
+    else await this.getData();
   }
 
   async getData() {
-    const token = this.cookieService.getCookie('token');
-    if (token) {
-      this.userData = await this.perfilService.getProfileData();
-      if (this.userData) {
-        let depto: any = null;
-        this.groupData = await this.perfilService.getGroup();
-        this.coursesList = await this.perfilService.getCourses();
-        this.userData.birthday = dayjs(this.userData.birthday).format('DD-MM-YYYY');
-        this.userData.bloodType = bloodType[this.userData.bloodType] || null;
-        this.userData.profession = professions[this.userData.profession] || null;
-        this.userData.educationLevel = educationLevels[this.userData.educationLevel] || null;
-        this.userData.companyType = companyType[this.userData.companyType] || null;
-        this.userData.civilStatus = civilStatus[this.userData.civilStatus] || null;
-        this.userData.gender = gender[this.userData.gender] || null;
-        if (this.userData.department) {
-          depto = departments[this.userData.department] || null;
-          this.userData.department = depto ? depto.department : null;
+    await this.globalSer.presentLoading('Cargando ...');
+    const data = await this.perfilService.getProfileData();
+
+    if (data && !data.error) {
+      this.cookieService.setCookie('data', data);
+      this.userData = data;
+      this.views.group.data = await this.perfilService.getGroup();
+      this.views.courses.data = await this.perfilService.getCourses();
+      this.userData.birthday = dayjs(this.userData.birthday).format('DD-MM-YYYY');
+      this.userData.bloodType = bloodType[this.userData.bloodType] || null;
+      this.userData.profession = professions[this.userData.profession] || null;
+      this.userData.educationLevel = educationLevels[this.userData.educationLevel] || null;
+      this.userData.companyType = companyType[this.userData.companyType] || null;
+      this.userData.civilStatus = civilStatus[this.userData.civilStatus] || null;
+      this.userData.gender = gender[this.userData.gender] || null;
+      if (this.userData.department) {
+        const depto = departments[this.userData.department] || null;
+        if (depto) {
+          this.userData.department = depto.department;
+          if (this.userData.city) this.userData.city = depto.cities[this.userData.city] || null;
         }
-        if (this.userData.city) this.userData.city = depto ? depto.cities[this.userData.city] : null;
-        await this.globalSer.dismissLoading();
       }
-      else await this.errorSession();
+      this.views.info.data = this.userData;
+      await this.globalSer.dismissLoading();
     }
-    else await this.errorSession();
+    else if (data && data.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
   }
 
-  async errorSession() {
-    await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-    this.globalSer.clearAllData();
-    await this.globalSer.dismissLoading();
-    await this.navCtrl.navigateBack(['/']);
+  setShowView(input: string) {
+    this.views[input].show = !this.views[input].show;
   }
 
   async goToEdit() {
@@ -78,8 +91,9 @@ export class PerfilPage implements OnInit {
     console.log('path', path, id);
   }
 
-  setShowReferrals(value: boolean) {
-    this.showGroup = value;
+  setShowGroup(value = false) {
+    this.views.group.show = value;
+    this.views.courses.show = !value;
   }
 
 }

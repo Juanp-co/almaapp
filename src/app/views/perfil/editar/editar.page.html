@@ -171,12 +171,15 @@
               <ion-input [(ngModel)]="formData.direction" autocomplete="off" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
-          <ion-col size="auto" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom">
-            <ion-button
-              expand="block"
-              color="primary"
-              (click)="updateData()"
-            >
+        </ion-row>
+        <ion-row class="ion-margin-top ion-margin-bottom">
+          <ion-col size="6">
+            <ion-button expand="block" color="light" (click)="back()">
+              Cancelar
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" color="primary" (click)="confirmUpdate()">
               Actualizar perfil
             </ion-button>
           </ion-col>

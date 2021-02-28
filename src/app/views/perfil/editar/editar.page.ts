@@ -68,6 +68,10 @@ export class EditarPage implements OnInit {
     else await this.errorSession();
   }
 
+  async back() {
+    await this.navCtrl.back();
+  }
+
   getCity(clearCity = false) {
     const filter = this.editarService.departmentsList[this.formData.department] || null;
     if (filter) this.cities = filter.cities || [];
@@ -87,6 +91,10 @@ export class EditarPage implements OnInit {
     await this.navCtrl.navigateBack(['/']);
   }
 
+  /*
+    Alerts
+   */
+
   async showAlertList(input: string, nameArray: string, selected: any = null) {
     const inputs: any = [];
     for (const [i, value] of this[nameArray].entries()) {
@@ -99,27 +107,15 @@ export class EditarPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
-      header: 'Seleccione',
-      inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData[input] = selectedValue;
-            if (input === 'department') this.getCity(true);
-          }
-        }
-      ]
-    });
+    const updateData = (selectedValue: any) => {
+      this.formData[input] = selectedValue;
+      if (input === 'department') this.getCity(true);
+    };
 
-    await alert.present();
+    await this.globalSer.alertWithList({
+      inputs,
+      confirmAction: updateData
+    });
   }
 
   async showAlertYesOrNotList(input: string, selected: any = null) {
@@ -134,25 +130,17 @@ export class EditarPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
-      header: 'Seleccione',
-      inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => { this.formData[input] = selectedValue; }
-        }
-      ]
-    });
+    const updateData = (selectedValue: any) => { this.formData[input] = selectedValue; };
 
-    await alert.present();
+    await this.globalSer.alertWithList({
+      inputs,
+      confirmAction: updateData
+    });
   }
+
+  /*
+    Update
+   */
 
   validateData(): string|null {
     const { formData } = this;
@@ -182,25 +170,38 @@ export class EditarPage implements OnInit {
   async updateData() {
     const validated = this.validateData();
 
-    if (validated) {
-      await this.globalSer.presentAlert('Alerta', validated);
-    }
+    if (validated) await this.globalSer.presentAlert('Alerta', validated);
     else {
-
+      await this.globalSer.presentLoading('Actualizando perfil, por favor espere ...');
       const data: any = Object.assign({}, this.formData);
-
       data.company = data.company === 'Si';
       data.baptized = data.baptized === 'Si';
-
       const updated = await this.editarService.updateProfile(data);
 
       if (updated && !updated.error) {
+        const userData = this.cookieService.getCookie('data');
+        if (userData) this.cookieService.setCookie('data', {...userData, ...updated});
+        await this.globalSer.dismissLoading();
         await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
-        await this.navCtrl.back();
       }
-      else if (updated.error) {
-        await this.errorSession();
+      else if (updated && updated.error) {
+        await this.globalSer.dismissLoading();
+        await this.globalSer.errorSession();
       }
+      else await this.globalSer.dismissLoading();
+    }
+  }
+
+  async confirmUpdate() {
+    const validated = this.validateData();
+
+    if (validated) await this.globalSer.presentAlert('Alerta', validated);
+    else {
+      await this.globalSer.alertConfirm({
+        header: 'Actualizar perfil',
+        message: '¿Está seguro qué desea actualizar los datos de su perfil?',
+        confirmAction: () => this.updateData()
+      });
     }
   }
 

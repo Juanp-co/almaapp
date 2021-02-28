@@ -2,174 +2,215 @@
   <ion-header>
     <app-minheader title="Perfil"></app-minheader>
   </ion-header>
-  <div class="ion-padding-start ion-padding-end" *ngIf="userData">
-    <ion-row>
-      <ion-col size="12">
-        <ion-text><h3>{{userData.names}} {{userData.lastNames}}</h3></ion-text>
-        <div class="separator"></div>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Correo electrónico:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.email || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Teléfono:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.phone || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Fecha de nac.:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.birthday || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Sexo:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.gender || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Estado civil:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.civilStatus || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Nivel educativo:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.educationLevel || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Profesión:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.profession || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Tipo de sangre:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.bloodType || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Empresa:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.company ? 'Si' : 'No'}}</ion-text>
-      </ion-col>
-      <div *ngIf="userData.company">
-        <ion-col size="6">
-          <ion-text><b>Tipo de empresa:</b></ion-text>
-        </ion-col>
-        <ion-col size="6">
-          <ion-text>{{userData.companyType}}</ion-text>
-        </ion-col>
-      </div>
-      <ion-col size="6">
-        <ion-text><b>Bautizado:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.baptized ? 'Si' : 'No'}}</ion-text>
-      </ion-col>
 
-      <ion-col size="12">
-        <div class="separator"></div>
-      </ion-col>
+  <div *ngIf="userData; else loadingData">
 
+    <ion-card>
+      <ion-card-header class="ion-no-padding" color="primary">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button (click)="setShowView('info')">
+              <ion-icon name="chevron-{{views.info.show ? 'up' : 'down' }}-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>{{ views.info.title }}</ion-title>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
+        <ion-row class="ion-margin-top" *ngIf="views.info.data">
+          <ion-col size="6">
+            <ion-text><b>Nombre(s):</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Apellidos:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Correo electrónico:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Teléfono:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Fecha de nac.:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Sexo:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Estado civil:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Nivel educativo:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.educationLevel || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Profesión:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.profession || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Tipo de sangre:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.bloodType || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Empresa:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.company ? 'Si' : 'No'}}</ion-text>
+          </ion-col>
+          <div *ngIf="views.info.data.company">
+            <ion-col size="6">
+              <ion-text><b>Tipo de empresa:</b></ion-text>
+            </ion-col>
+            <ion-col size="6">
+              <ion-text>{{views.info.data.companyType}}</ion-text>
+            </ion-col>
+          </div>
+          <ion-col size="6">
+            <ion-text><b>Bautizado:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.baptized ? 'Si' : 'No'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Departamento:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.department || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Cuidad:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.city || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Barrio:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.locality || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text><b>Dirección:</b></ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-row *ngIf="userData" class="ion-margin-top ion-padding">
       <ion-col size="6">
-        <ion-text><b>Departamento:</b></ion-text>
+        <ion-button
+          expand="block"
+          color="{{views.group.show ? 'primary' : 'light'}}"
+          (click)="setShowGroup(true)"
+        >
+          Núcleo familiar
+        </ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-text>{{userData.department || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Cuidad:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.city || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Barrio:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.locality || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text><b>Dirección:</b></ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-text>{{userData.direction || 'No indicado'}}</ion-text>
+        <ion-button
+          expand="block"
+          color="{{views.courses.show ? 'primary' : 'light'}}"
+          (click)="setShowGroup()"
+        >
+          Educación
+        </ion-button>
       </ion-col>
     </ion-row>
-  </div>
 
-  <ion-row *ngIf="userData" class="ion-margin-top ion-padding-top ion-margin-start ion-margin-end">
-    <ion-col size="6">
-      <ion-button
-        expand="block"
-        color="{{showGroup ? 'primary' : 'light'}}"
-        (click)="setShowReferrals(true)"
-      >
-        Núcleo familiar
-      </ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button
-        expand="block"
-        color="{{!showGroup ? 'primary' : 'light'}}"
-        (click)="setShowReferrals(false)"
-      >
-        Educación
-      </ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-card class="{{views.group.show ? '' : 'ion-hide'}}">
+      <div *ngIf="views.group.data; else noGroup">
+        <ion-card-header class="ion-no-padding ion-margin-top ion-margin-start ion-margin-end">
+          <ion-row class="ion-margin-top" *ngIf="views.group.data; else noGroup">
+            <ion-col size="9">
+              <ion-text class="toSmall">Nombre del grupo</ion-text><br/>
+              <ion-text><span class="titles">{{views.group.data.name || 'No indicado'}}</span></ion-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-text class="toSmall">Miembros</ion-text><br/>
+              <ion-text><span class="titles">{{ views.group.data.members ? views.group.data.members.length : 0 }}</span></ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content class="ion-margin-top ion-no-padding">
+          <ion-row class="ion-margin-top" *ngIf="views.group.data; else noGroup">
+            <ion-col class="ion-no-margin ion-no-padding" size="12">
+              <app-personcard *ngFor='let member of views.group.data.members' [data]="member" getGroup="true"></app-personcard>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </div>
+      <!--<div class="ion-margin-top">-->
+      <!--</div>-->
+      <ng-template #noGroup>
+        <ion-card-content class="ion-margin-top ion-no-padding">
+          <div class="ion-margin-top">
+            <ion-text>
+              <p class="ion-text-center">No pertenece a ningún grupo familiar.</p>
+            </ion-text>
+          </div>
+        </ion-card-content>
+      </ng-template>
+    </ion-card>
 
-  <div *ngIf="userData && showGroup">
-    <div *ngIf="groupData; else noGroup">
-      <ion-row class="ion-margin-start ion-margin-end">
-        <ion-col>
-          <ion-text>
-            <h5>{{groupData.name || 'Error'}} ({{ groupData.members ? groupData.members.length : 0 }})</h5>
-          </ion-text>
-          <div class="separator"></div>
+    <div class="{{views.courses.show ? '' : 'ion-hide'}} ion-margin-bottom ion-padding-bottom">
+      <ion-row class="ion-margin-top ion-no-padding" *ngIf="views.courses.data && views.courses.data.length > 0; else noCourses">
+        <ion-col class="ion-no-margin ion-no-padding" size="12">
+          <app-coursecard *ngFor='let course of views.courses.data' [data]="course"></app-coursecard>
         </ion-col>
       </ion-row>
-      <div *ngFor='let member of groupData.members'>
-        <app-personcard [data]="member" getGroup="true"></app-personcard>
-      </div>
-    </div>
-    <ng-template #noGroup>
-      <ion-card class="ion-no-padding">
-        <ion-text>
-          <p class="ion-text-center">No pertenece a ningún grupo familiar.</p>
-        </ion-text>
-      </ion-card>
-    </ng-template>
-  </div>
-
-  <ion-row *ngIf="userData && !showGroup">
-    <ion-col size="12">
-      <div *ngIf="coursesList && coursesList.length > 0; else noCourses">
-        <ion-list *ngFor='let course of coursesList'>
-          <app-coursecard [data]="course"></app-coursecard>
-        </ion-list>
-      </div>
+      <!--<div class="ion-margin-top">-->
+      <!--</div>-->
       <ng-template #noCourses>
-        <ion-card class="ion-no-padding">
+        <div class="ion-margin-top">
           <ion-text>
             <p class="ion-text-center">No posee ningún curso en su perfil.</p>
           </ion-text>
-        </ion-card>
+        </div>
       </ng-template>
-    </ion-col>
-  </ion-row>
+    </div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  </div>
+
+
+  <ng-template #loadingData>
+    <ion-card>
+      <ion-card-content class="ion-margin-top ion-margin-bottom">
+        <ion-text><p class="ion-text-center">Cargando ...</p></ion-text>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
     <ion-fab-button color='primary' (click)='goToEdit()'>
       <ion-icon name="create-outline"></ion-icon>
     </ion-fab-button>

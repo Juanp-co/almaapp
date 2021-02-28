@@ -21,34 +21,14 @@ export class EditarService {
   genderList: string[] = gender;
 
   constructor(
-    private globalSer: GlobalService,
-    private navCtrl: NavController,
     private axios: AxiosService,
-    private cookieService: CookiesService,
+    private globalSer: GlobalService,
   ) { }
 
   async updateProfile(data: any): Promise<any | null> {
-    await this.globalSer.presentLoading('Actualizando perfil, por favor espere ...');
     const res: any = await this.axios.putData('/user', data);
 
-    if (res && res.success) {
-      let userData: any = this.cookieService.getCookie('data');
-      if (userData) {
-        // userData = JSON.parse(userData);
-        userData = {...userData, ...res.data.data};
-      }
-      this.cookieService.setCookie('data', userData);
-      await this.globalSer.dismissLoading();
-      return res.data.data;
-    }
-    else {
-      if (res.status && res.status === 401) {
-        this.cookieService.removeCookie('token');
-        return { error: 401 };
-      }
-      await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', res.error);
-      return null;
-    }
+    if (res && res.success) return res.data.data;
+    return this.globalSer.altResponse(res);
   }
 }

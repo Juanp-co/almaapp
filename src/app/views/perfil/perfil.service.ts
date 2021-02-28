@@ -11,31 +11,15 @@ import {GlobalService} from '../../services/global.service';
 export class PerfilService {
 
   constructor(
-    private globalSer: GlobalService,
-    private navCtrl: NavController,
     private axios: AxiosService,
-    private cookieService: CookiesService,
-    private router: Router
+    private globalSer: GlobalService
   ) { }
 
   async getProfileData() {
-    await this.globalSer.presentLoading();
     const res: any = await this.axios.getData('/user');
 
-    if (res && res.success) {
-      this.cookieService.setCookie('data', res.data.data);
-      await this.globalSer.dismissLoading();
-      return res.data.data;
-    }
-    else {
-      if (res.status && res.status === 401) {
-        this.cookieService.removeCookie('token');
-        return { error: 401 };
-      }
-      await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', res.error);
-      return null;
-    }
+    if (res && res.success) return res.data.data;
+    return this.globalSer.altResponse(res);
   }
 
   async getGroup() {
