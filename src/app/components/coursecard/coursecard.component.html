@@ -3,12 +3,10 @@
   *ngIf="course"
   (click)="goToDetails()"
 >
-  <ion-card-content class="ion-no-margin ion-no-padding">
+  <ion-card-content class="ion-margin-top ion-no-padding">
     <ion-row>
       <ion-col class="ion-justify-content-center ion-text-center" size="3">
         <ion-img class="banner ion-text-center" [src]="course.banner || 'assets/icon/escuela.svg'"></ion-img>
-        <!--<ion-avatar class="ion-align-items-center">-->
-        <!--</ion-avatar>-->
       </ion-col>
       <ion-col>
         <ion-text><p><b>{{ course.title}}</b></p></ion-text>

@@ -32,5 +32,12 @@ export class PerfilService {
     return res && res.success ? res.data.courses : [];
   }
 
+  async changePassword(data: any) {
+    const res: any = await this.axios.putData('/user/change-password', data);
+
+    if (res && res.success)  return res.data.msg || 'Se ha actualizado la contraseña exitosamente';
+    return this.globalSer.altResponse(res);
+  }
+
 
 }
