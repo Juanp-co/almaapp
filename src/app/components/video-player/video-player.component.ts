@@ -62,7 +62,6 @@ export class VideoPlayerComponent implements OnInit, AfterContentInit {
   }
 
   async initializeYoutubePlayerPluginNative() {
-    console.log('native');
     const id = this.getIdYoutube();
     if (id) {
       const { YoutubePlayer } = Plugins;

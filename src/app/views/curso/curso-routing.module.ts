@@ -16,7 +16,15 @@ const routes: Routes = [
         loadChildren: () => import('./temario/temario.module').then( m => m.TemarioPageModule)
       }
     ]
-  }
+  },
+  {
+    path: 'modal-contenido-tema',
+    loadChildren: () => import('./modal-contenido-tema/modal-contenido-tema.module').then( m => m.ModalContenidoTemaPageModule)
+  },
+  {
+    path: 'modal-examen-tema',
+    loadChildren: () => import('./modal-examen-tema/modal-examen-tema.module').then( m => m.ModalExamenTemaPageModule)
+  },
 ];
 
 @NgModule({

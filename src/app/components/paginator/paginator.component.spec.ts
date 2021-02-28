@@ -1,19 +1,19 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ContenidoClasePage } from './contenido-clase.page';
+import { PaginatorComponent } from './paginator.component';
 
-describe('ContenidoClasePage', () => {
-  let component: ContenidoClasePage;
-  let fixture: ComponentFixture<ContenidoClasePage>;
+describe('PaginatorComponent', () => {
+  let component: PaginatorComponent;
+  let fixture: ComponentFixture<PaginatorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContenidoClasePage ],
+      declarations: [ PaginatorComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ContenidoClasePage);
+    fixture = TestBed.createComponent(PaginatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

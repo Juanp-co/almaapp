@@ -19,7 +19,7 @@ export class InicioPage implements OnInit {
   opciones = [
     { titulo: 'Red padres', imagen: 'assets/icon/red.svg', url: 'padres' },
     { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
-    { titulo: 'Disipulado', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
+    { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
     { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
     { titulo: 'Perfil', imagen: 'assets/icon/calendario.svg', url: 'perfil' },

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import {ModalController, NavController} from '@ionic/angular';
 import {CookiesService} from '../../services/cookies.service';
 
 @Component({
@@ -11,10 +11,12 @@ export class MinheaderComponent implements OnInit {
   history: string[] = [];
   @Input() title: string;
   @Input() slugValue: string;
+  @Input() modal = false;
   titleHeader: string;
   show: boolean;
 
   constructor(
+    private modalController: ModalController,
     private navCtrl: NavController,
     private cookiesService: CookiesService,
   ) { }
@@ -28,6 +30,10 @@ export class MinheaderComponent implements OnInit {
     if (this.slugValue) this.cookiesService.removeCookie(this.slugValue);
     await this.navCtrl.back();
     this.show = false;
+  }
+
+  async closeModal() {
+    await this.modalController.dismiss();
   }
 
 }

@@ -1,23 +1,34 @@
 <ion-content>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button
-          color="primary"
-          (click)="getQuestionsFromList()"
-          *ngIf="!finishedTest.msg && viewSelected > 0 && viewSelected <= totalsViews"
-        >
-          <ion-icon name="arrow-back-outline" color="dark"></ion-icon>
-        </ion-button>
-        <ion-button
-          color="light"
-          (click)="!finishedTest.msg ? dismiss() : closeModal()"
-          *ngIf="viewSelected === 0 || finishedTest.msg"
-        >
-          <ion-icon name="close" color="dark"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-text class="ion-margin-top ion-margin-bottom">Examen</ion-text>
+  <ion-header color="primary">
+    <ion-toolbar class="ion-no-padding ion-no-margin">
+      <div class="fondoCool">
+        <ion-row>
+          <ion-col class="ion-margin-top ion-margin-bottom">
+            <ion-buttons>
+              <ion-button
+                color="light"
+                (click)="getQuestionsFromList()"
+                *ngIf="!finishedTest.msg && viewSelected > 0 && viewSelected <= totalsViews"
+              >
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </ion-button>
+              <ion-button
+                color="light"
+                (click)="!finishedTest.msg ? dismiss() : closeModal()"
+                *ngIf="viewSelected === 0 || finishedTest.msg"
+              >
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="7" class="ion-margin-top ion-margin-bottom">
+            <ion-text color="light" class="titulo1">Examen: {{ title }}</ion-text>
+          </ion-col>
+          <ion-col>
+            <img src="assets/logo.png" class="logo-2">
+          </ion-col>
+        </ion-row>
+      </div>
     </ion-toolbar>
   </ion-header>
 
@@ -27,11 +38,10 @@
         <ion-card-header>
           <ion-card-title>{{ item.title }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          <div *ngIf="item.description" [innerHTML]="item.description"></div>
-        </ion-card-content>
 
         <ion-card-content>
+          <div *ngIf="item.description" [innerHTML]="item.description"></div>
+
           <div *ngIf="item.inputType === 'text'">
             <ion-item>
               <ion-label position="floating" color="medium">{{ item.placeholder || 'Indique su respuesta' }}</ion-label>

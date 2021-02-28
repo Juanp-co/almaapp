@@ -1,5 +1,3 @@
-import { IComments, ILikesAndUnlikes } from '../../../services/global.models';
-
 export interface ITemarioContent {
   _id: string;
   title: string;
@@ -14,7 +12,22 @@ export interface ITemario {
   description: string | null;
   view: number;
   content: ITemarioContent[];
-  comments: IComments[];
-  likes: ILikesAndUnlikes[];
-  unlikes: ILikesAndUnlikes[];
 }
+
+export interface IExamen {
+  _id: string;
+  title: string;
+  description: string | null;
+  extra: string | null;
+  inputType: string;
+  placeholder: string | null;
+  require: boolean;
+  values: string[] | null;
+}
+
+export interface IExamenFinalizado {
+  msg: string | null;
+  average: number;
+  approved: boolean;
+}
+

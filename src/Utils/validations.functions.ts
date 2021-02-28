@@ -90,3 +90,8 @@ export function checkUUID(value: any): boolean {
 export function checkHtmlContent(value: any): boolean {
   return value && /<(\"[^\"]*\"|'[^']*'|[^'\">])*>$/gim.test(`${value}`);
 }
+
+export function setSaltLinesOrBr(value: string|null, changeToBr = false): string {
+  if (!value) return null;
+  return changeToBr ? value.replace(/\n/g, '<br/>') : value.replace(/<br ?\/?>/g, '\n');
+}

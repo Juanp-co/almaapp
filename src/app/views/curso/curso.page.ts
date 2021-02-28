@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GlobalService} from '../../services/global.service';
 import {CursoService} from './curso.service';
 import {ICursoData} from './course.model';
+import {GlobalService} from '../../services/global.service';
 import {CookiesService} from '../../services/cookies.service';
+import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-curso',
@@ -16,6 +17,7 @@ export class CursoPage implements OnInit, OnDestroy {
   course: ICursoData | null = null;
   dataCourseUser: any = null;
   slug: string | null = null;
+  activeClickTemary = false;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -25,35 +27,71 @@ export class CursoPage implements OnInit, OnDestroy {
     private coursesService: CursoService,
     private modalController: ModalController,
     private router: Router,
-  ) {  }
+  ) {
+    // check if exist session
+    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
+  }
 
   async ngOnInit() {
-    await this.activateRoute.paramMap.subscribe(paramMap => {
-      this.slug = paramMap.get('slug');
-    });
-
-    if (this.slug) {
-      await this.globalSer.presentLoading();
-      const data: any = await this.coursesService.getCourse(this.slug);
-
-      if (data && !data.error) {
-        this.course = data.course as ICursoData;
-        this.dataCourseUser = data.dataCourseUser;
-        if (this.dataCourseUser) {
-          this.cookiesService.setCookie(this.slug, this.dataCourseUser);
-        }
-        await this.globalSer.dismissLoading();
-      }
-      else if (data && data.error) await this.globalSer.errorSession();
-      else await this.globalSer.dismissLoading();
-    }
+    // check if exist session
+    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
     else {
-      await this.globalSer.presentAlert('Alerta', 'Ha ocurrido un error al momento de obtener el dato a consultar');
-      await this.navCtrl.back();
+      await this.getCourse();
     }
   }
 
+  async getCourse() {
+    if (!this.slug) await this.setSlug();
+
+    await this.globalSer.presentLoading();
+    const data: any = await this.coursesService.getCourse(this.slug);
+
+    if (data && !data.error) {
+      this.course = data.course as ICursoData;
+      this.course.description = setSaltLinesOrBr(this.course.description, true);
+      this.dataCourseUser = data.dataCourseUser;
+      if (this.dataCourseUser) {
+        this.cookiesService.setCookie(this.slug, this.dataCourseUser);
+        this.activeClickTemary = true;
+      }
+      await this.globalSer.dismissLoading();
+    }
+    else if (data && data.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async addCourse() {
+    await this.globalSer.presentLoading();
+    const data: any = await this.coursesService.addCourse(this.slug);
+
+    if (data && !data.error) {
+      this.dataCourseUser = data;
+      this.cookiesService.setCookie(this.slug, this.dataCourseUser);
+      this.activeClickTemary = true;
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert(
+        '¡Éxito!',
+        'Se ha agregado el curso a su listado. Ahora puede acceder al contenido.'
+      );
+    }
+    else if (data && data.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async setSlug() {
+    await this.activateRoute.paramMap.subscribe(paramMap => {
+      this.slug = paramMap.get('slug');
+    });
+  }
+
   async ionViewDidEnter() {
+    // get data course
     this.dataCourseUser = this.cookiesService.getCookie(this.slug);
   }
 
@@ -61,12 +99,23 @@ export class CursoPage implements OnInit, OnDestroy {
     this.cookiesService.removeCookie(this.slug);
   }
 
-  async showLikesOrComments(input: string) {
-    await this.globalSer.openLikesOrCommentsModals(this.course, input);
-  }
-
   async goToTemary(id: string) {
     await this.router.navigate([`/curso/${this.course.slug}/temario/${id}`]);
+  }
+
+  async showAlertRejectAction() {
+    await this.globalSer.presentAlert(
+      'Alerta',
+      'Disculpe, pero no puede acceder al contenido de este curso hasta no haber agregado el curso a su listado.'
+    );
+  }
+
+  async showConfirmAddCourse() {
+    await this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué desea agregar este curso a su listado?',
+      confirmAction: () => this.addCourse()
+    });
   }
 
 }

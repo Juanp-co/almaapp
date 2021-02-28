@@ -3,66 +3,61 @@
     <app-minheader title="Curso" slugValue="{{slug}}"></app-minheader>
   </ion-header>
 
-  <ion-card *ngIf="course">
-    <ion-img class="banner" [src]="course.banner"></ion-img>
-    <ion-card-header>
-      <ion-row>
-        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-item (click)="showLikesOrComments('likes')">
-            <ion-icon name="heart"></ion-icon>&nbsp;
-            <ion-badge color="primary">{{ course.likes.length }}</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-item (click)="showLikesOrComments('unlikes')">
-            <ion-icon name="heart-dislike"></ion-icon>&nbsp;
-            <ion-badge color="secondary">{{ course.unlikes.length }}</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col size="4" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-item (click)="showLikesOrComments('comments')">
-            <ion-icon name="text"></ion-icon>&nbsp;
-            <ion-badge color="medium">{{ course.comments.length }}</ion-badge>
-          </ion-item>
-        </ion-col>
-        <ion-col size="12" class="ion-no-padding ion-no-margin ion-justify-content-center">
-          <ion-card-subtitle class="ion-margin-top">{{ course.speaker }}</ion-card-subtitle>
-          <ion-card-title>{{ course.title }}</ion-card-title>
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
+  <div *ngIf="course">
+    <ion-card>
+      <ion-img class="banner" [src]="course.banner"></ion-img>
+      <ion-card-header>
+        <ion-row>
+          <ion-col size="12" class="ion-no-padding ion-no-margin ion-justify-content-center">
+            <ion-card-subtitle class="ion-margin-top">{{ course.speaker }} - {{ course.speakerPosition }}</ion-card-subtitle>
+            <ion-card-title>{{ course.title }}</ion-card-title>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
 
-    <ion-card-content *ngIf="course.description">
-      <div [innerHTML]="course.description"></div>
-    </ion-card-content>
+      <ion-card-content *ngIf="course.description">
+        <div [innerHTML]="course.description"></div>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-card-content>
-      <ion-card-subtitle>Contenido</ion-card-subtitle>
-      <ion-list *ngFor='let temary of course.temary; let i=index'>
-        <ion-item button (click)="goToTemary(temary._id)" class="">
-          <ion-icon
-            name="albums"
-            color="{{ dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 2 ? 'success' : '' }}"
-            slot="start"
-          ></ion-icon>
-          <ion-label>{{ temary.title }} ({{ temary.content.length }})</ion-label>
-          <ion-icon
-            name="time-outline"
-            slot="end"
-            *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 0"
-          ></ion-icon>
-          <ion-icon
-            name="eye-outline"
-            slot="end"
-            *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 1"
-          ></ion-icon>
-          <ion-icon
-            name="checkmark-done-outline"
-            slot="end"
-            *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 2"
-          ></ion-icon>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Temas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list class="ion-no-padding ion-no-margin" *ngFor='let temary of course.temary; let i=index'>
+          <ion-item class="ion-no-padding ion-no-margin" button (click)="activeClickTemary ? goToTemary(temary._id) : showAlertRejectAction()" class="">
+            <ion-icon
+              name="albums"
+              color="{{ dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].approved ? 'success' : '' }}"
+              slot="start"
+            ></ion-icon>
+            <ion-text><b>{{ temary.title }} ({{ temary.content.length }})</b></ion-text>
+            <ion-icon
+              name="time-outline"
+              slot="end"
+              *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 0"
+            ></ion-icon>
+            <ion-icon
+              name="eye-outline"
+              slot="end"
+              *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 1"
+            ></ion-icon>
+            <ion-icon
+              name="checkmark-done-outline"
+              slot="end"
+              *ngIf="dataCourseUser && dataCourseUser.temary[i] && dataCourseUser.temary[i].view === 2"
+            ></ion-icon>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="course && !activeClickTemary" (click)="showConfirmAddCourse()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
