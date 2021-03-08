@@ -22,7 +22,7 @@ export class InicioPage implements OnInit {
     { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
     { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
-    { titulo: 'Salir', imagen: 'assets/icon/calendario.svg', url: null }
+    { titulo: 'Salir', imagen: 'assets/icon/logout.svg', url: null }
   ];
 
   constructor(
@@ -101,32 +101,29 @@ export class InicioPage implements OnInit {
   }
 
   async irMenu(num){
-
-
     const opt = this.opciones[num] || null;
 
     if (opt) {
       if (!opt.url) {
-        const action = async () => {
-          await this.globalSer.presentLoading();
-          this.userData = null;
-          await this.globalSer.clearAllData();
-          this.axios.deleteData('/logout');
-          this.login = false;
-          await this.globalSer.dismissLoading();
-        };
         await this.globalSer.alertConfirm({
-          header: 'Cerrar sesión',
+          header: 'Salir',
           message: '¿Está seguro qué desea finalizar la sesión?',
-          confirmAction: () => action()
+          confirmAction: async () => {
+            await this.globalSer.presentLoading();
+            this.userData = null;
+            await this.globalSer.clearAllData();
+            this.axios.deleteData('/logout');
+            this.login = false;
+            await this.globalSer.dismissLoading();
+          }
         });
       }
       else await this.navCtrl.navigateForward(opt.url);
     }
   }
 
-  async goToProfile() {
-    await this.navCtrl.navigateForward('/perfil');
+  async goTo(link: string) {
+    await this.navCtrl.navigateForward(`/${link}`);
   }
 
 }

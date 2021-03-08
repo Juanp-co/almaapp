@@ -1,0 +1,166 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Registro"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col size="12" *ngIf="!successRegister">
+      <ion-card>
+        <ion-card-content>
+          <ion-row *ngIf="view === 0">
+            <ion-col size="12">
+              <ion-text color="medium">
+                <p>Bienvenido al registro. Por favor, complete el formulario.</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
+                  (click)="showAlertDocumentList(formData.documentType)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.document"
+                  autocomplete="off"
+                  maxlength="10"
+                  (keypress)="validateOnlyNumbers($event)"
+                  class="ion-text-uppercase"
+                >
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.names"
+                  autocomplete="off"
+                  (keyup)="validateOnlyLetters($event)"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Apellido(s) (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.lastNames"
+                  autocomplete="off"
+                  (keyup)="validateOnlyLetters($event)"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none">
+                <ion-checkbox slot="start" (click)="showInputReferred()"></ion-checkbox>
+                <ion-label color="medium">He sido referido por un miembro.</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" *ngIf="referred">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nº de documento del miembro</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.referred"
+                  autocomplete="off"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+              <ion-text color="medium"><i>Ejm: CC12345678</i></ion-text>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="confirmCancel()">
+                <ion-icon name="close-outline" slot="start"></ion-icon>
+                <ion-text>Cancelar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="setView(1)">
+                <ion-text>Siguiente</ion-text>
+                <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="view === 1">
+            <ion-col size="12">
+              <ion-text color="medium">
+                <p>Por favor, complete los campos del formulario.</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
+                <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Contraseña (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.password"
+                  autocomplete="off"
+                  type="password"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Repita la contraseña (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.repPassword"
+                  autocomplete="off"
+                  type="password"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="setView(0)">
+                <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+                <ion-text>Regresar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="confirmRegister()">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Regístrame</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="12" *ngIf="successRegister">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col [size]="12" class="ion-text-center">
+              <ion-img class="pictureLogo2 ion-margin-top ion-padding-top" [src]="'/assets/icon/check.svg'"></ion-img>
+              <ion-card-title class="ion-margin-top ion-padding-top">
+                Se ha registrado exitosamente.<br/>
+                Ahora puede acceder a la aplicación.
+              </ion-card-title>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="primary" (click)="back()">
+                <ion-icon name="home-outline" slot="start"></ion-icon>
+                <ion-text>Iniciar sesión</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

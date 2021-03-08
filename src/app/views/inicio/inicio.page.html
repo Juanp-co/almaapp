@@ -33,25 +33,35 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="8">
         <ion-item>
-          <ion-label position="floating">Usuario</ion-label>
+          <ion-label position="floating" color="medium">Usuario</ion-label>
           <ion-input [(ngModel)]="user" class="ion-text-uppercase" maxlength="12"></ion-input>
         </ion-item>
       </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
       <ion-col size="8">
         <ion-item>
-          <ion-label position="floating">Contraseña</ion-label>
+          <ion-label position="floating" color="medium">Contraseña</ion-label>
           <ion-input type="password" [(ngModel)]="pass"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="8">
+        <ion-item class="ion-text-start" lines="none">
+          <ion-text color="medium">¿Olvidaste tu contraseña?</ion-text>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center ion-margin-top">
       <ion-col size="auto">
+        <ion-button expand="block" color="light" (click)="goTo('registro')">
+          Registro
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
         <ion-button expand="block" color="primary" (click)="ingresar()">
           Ingresar
         </ion-button>
       </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
     </ion-row>
   </div>
 
@@ -64,7 +74,7 @@
         style="cursor: pointer;"
         (click)="irMenu(i)"
         >
-        <img [src]="item.imagen" alt="" > <br>
+        <p><img [src]="item.imagen" alt=""/></p>
         <ion-text color="medium" class="ion-padding-top">{{item.titulo}}</ion-text>
       </ion-col>
     </ion-row>
@@ -72,7 +82,7 @@
   </div>
 
   <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="login">
-    <ion-fab-button color="light" (click)="goToProfile()">
+    <ion-fab-button color="light" (click)="goTo('perfil')">
       <ion-icon name="person-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
