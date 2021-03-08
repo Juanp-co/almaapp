@@ -12,7 +12,7 @@ import {
   checkIfValueIsNumber,
   checkNameOrLastName,
   checkPhone,
-  checkTitlesOrDescriptions
+  checkTitlesOrDescriptions, onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
 
 @Component({
@@ -139,8 +139,16 @@ export class EditarPage implements OnInit {
   }
 
   /*
-    Update
+    validations
    */
+
+  validateOnlyNumbers(event: any) {
+    onlyNumbersInputValidation(event);
+  }
+
+  validateOnlyLetters(event: any) {
+    onlyLettersInputValidation(event);
+  }
 
   validateData(): string|null {
     const { formData } = this;
@@ -191,6 +199,10 @@ export class EditarPage implements OnInit {
       else await this.globalSer.dismissLoading();
     }
   }
+
+  /*
+    Update
+   */
 
   async confirmUpdate() {
     const validated = this.validateData();

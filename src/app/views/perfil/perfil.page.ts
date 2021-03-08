@@ -27,7 +27,6 @@ export class PerfilPage implements OnInit {
 
   constructor(
     private globalSer: GlobalService,
-    private navCtrl: NavController,
     private perfilService: PerfilService,
     private cookieService: CookiesService,
     private router: Router

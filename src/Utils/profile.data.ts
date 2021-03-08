@@ -12,6 +12,14 @@ export const educationLevels = [
   'Doctorado'
 ];
 
+export const documentType: any[] = [
+  { val: 'CC', label: 'Cédula de ciudadanía' },
+  { val: 'TI', label: 'Tarjeta de identidad' },
+  { val: 'PAS', label: 'Pasaporte' },
+  { val: 'CE', label: 'Cédula de extrajería' },
+  { val: 'PE', label: 'Permiso Especial de Permanencia' },
+];
+
 export const bloodType = [ 'A -', 'A +', 'AB -', 'AB +', 'B -', 'B +', 'O -', 'O +' ];
 
 export const professions: any[] = [

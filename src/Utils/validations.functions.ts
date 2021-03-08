@@ -28,6 +28,26 @@ export function checkInputTypeValueToTest(value: any): boolean {
   return value && ['text', 'textarea', 'checkbox', 'radio', 'select'].indexOf(`${value}`) > -1;
 }
 
+export function onlyNumbersInputValidation(event: any) {
+  const pattern = /[0-9.,]/;
+  const inputChar = String.fromCharCode(event.charCode);
+
+  if (!pattern.test(inputChar)) {
+    // invalid character, prevent input
+    event.preventDefault();
+  }
+}
+
+export function onlyLettersInputValidation(event: any) {
+  const pattern = /^([A-Z\u00C0-\u024F\u1E00-\u1EFF]?)+([[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+[,.]?[ ]?|[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+['-]]?)+$/;
+  const { value } = event.target;
+
+  if (!pattern.test(value)) {
+    // invalid character, prevent input
+    event.target.value = value.substring(0, value.length - 1);
+  }
+}
+
 export function checkPhone(value: any): boolean {
   return (
     value && /^[\+]?[(]?([0-9]{2})?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(value)

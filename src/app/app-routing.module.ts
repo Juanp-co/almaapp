@@ -53,6 +53,10 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./views/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
+  {
+    path: 'registro',
+    loadChildren: () => import('./views/registro/registro.module').then( m => m.RegistroPageModule)
+  },
 ];
 
 @NgModule({
