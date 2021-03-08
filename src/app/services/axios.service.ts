@@ -8,6 +8,8 @@ import {environment} from '../../environments/environment';
 })
 export class AxiosService {
 
+  axios: any = null;
+
   constructor(private cookiesService: CookiesService) {
     this.axios = Axios.create({
       baseURL: environment.urlApi,
@@ -15,8 +17,6 @@ export class AxiosService {
     });
     this.setToken();
   }
-
-  axios: any = null;
 
   static getErrorCatch(error: any) {
     const ret = {
