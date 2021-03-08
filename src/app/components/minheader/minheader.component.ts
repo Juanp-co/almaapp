@@ -13,7 +13,6 @@ export class MinheaderComponent implements OnInit {
   @Input() slugValue: string;
   @Input() modal = false;
   titleHeader: string;
-  show: boolean;
 
   constructor(
     private modalController: ModalController,
@@ -23,13 +22,11 @@ export class MinheaderComponent implements OnInit {
 
   ngOnInit() {
     this.titleHeader = this.title;
-    this.show = true;
   }
 
   async back() {
     if (this.slugValue) this.cookiesService.removeCookie(this.slugValue);
     await this.navCtrl.back();
-    this.show = false;
   }
 
   async closeModal() {
