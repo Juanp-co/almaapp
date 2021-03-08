@@ -57,6 +57,10 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./views/registro/registro.module').then( m => m.RegistroPageModule)
   },
+  {
+    path: 'recuperar-acceso',
+    loadChildren: () => import('./views/recuperar-acceso/recuperar-acceso.module').then( m => m.RecuperarAccesoPageModule)
+  },
 ];
 
 @NgModule({

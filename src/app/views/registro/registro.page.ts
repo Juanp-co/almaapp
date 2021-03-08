@@ -58,13 +58,7 @@ export class RegistroPage implements OnInit {
       this.successRegister = true;
       await this.globalSer.dismissLoading();
     }
-    else if (res && res.error) {
-      await this.globalSer.dismissLoading();
-      await this.globalSer.errorSession();
-    }
-    else {
-      await this.globalSer.dismissLoading();
-    }
+    else await this.globalSer.dismissLoading();
   }
 
   // getters and setters
@@ -139,16 +133,15 @@ export class RegistroPage implements OnInit {
 
       return null;
     }
-    else {
-      if (!checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
-      if (!checkPassword(this.formData.password))
-        return 'Disculpe, pero debe indicar una contraseña correcta.' +
-          '<br><br>Solo se permiten letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*)';
-      if (this.formData.password !== this.formData.repPassword)
-        return 'Disculpe, pero las contraseñas ingresadas no coinciden.';
 
-      return null;
-    }
+    if (!checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
+    if (!checkPassword(this.formData.password))
+      return 'Disculpe, pero debe indicar una contraseña correcta.' +
+        '<br><br>Solo se permiten letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*)';
+    if (this.formData.password !== this.formData.repPassword)
+      return 'Disculpe, pero las contraseñas ingresadas no coinciden.';
+
+    return null;
   }
 
   async confirmRegister() {

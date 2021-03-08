@@ -111,8 +111,8 @@ export class InicioPage implements OnInit {
           confirmAction: async () => {
             await this.globalSer.presentLoading();
             this.userData = null;
-            await this.globalSer.clearAllData();
             this.axios.deleteData('/logout');
+            await this.globalSer.clearAllData();
             this.login = false;
             await this.globalSer.dismissLoading();
           }
