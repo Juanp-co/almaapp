@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {NavController} from '@ionic/angular';
 import {AxiosService} from '../../services/axios.service';
 import {GlobalService} from '../../services/global.service';
 
@@ -10,7 +9,6 @@ export class EscuelaService {
 
   constructor(
     private globalSer: GlobalService,
-    private navCtrl: NavController,
     private axios: AxiosService
   ) { }
 

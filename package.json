@@ -25,6 +25,7 @@
     "axios": "^0.21.1",
     "capacitor-video-player": "^2.4.5-2",
     "capacitor-youtube-player": "^1.0.0-alpha.1-58",
+    "chart.js": "^2.9.4",
     "dayjs": "^1.10.4",
     "ion2-calendar": "^3.0.0-rc.0",
     "js-cookie": "^2.2.1",
