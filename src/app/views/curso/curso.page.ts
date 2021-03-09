@@ -35,9 +35,7 @@ export class CursoPage implements OnInit, OnDestroy {
   async ngOnInit() {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/']);
-    else {
-      await this.getCourse();
-    }
+    else await this.getCourse();
   }
 
   async getCourse() {
@@ -50,7 +48,7 @@ export class CursoPage implements OnInit, OnDestroy {
       this.course = data.course as ICursoData;
       this.course.description = setSaltLinesOrBr(this.course.description, true);
       this.dataCourseUser = data.dataCourseUser;
-      if (this.dataCourseUser) {
+      if (data.dataCourseUser) {
         this.cookiesService.setCookie(this.slug, this.dataCourseUser);
         this.activeClickTemary = true;
       }
@@ -106,7 +104,7 @@ export class CursoPage implements OnInit, OnDestroy {
   async showAlertRejectAction() {
     await this.globalSer.presentAlert(
       'Alerta',
-      'Disculpe, pero no puede acceder al contenido de este curso hasta no haber agregado el curso a su listado.'
+      'Disculpe, pero no puede acceder al contenido hasta no haber agregado el curso a su listado.'
     );
   }
 

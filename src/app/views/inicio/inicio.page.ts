@@ -21,7 +21,7 @@ export class InicioPage implements OnInit {
     { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
     { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
-    { titulo: 'Calendario', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
+    { titulo: 'Eventos', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
     { titulo: 'Salir', imagen: 'assets/icon/logout.svg', url: null }
   ];
 
@@ -96,7 +96,7 @@ export class InicioPage implements OnInit {
         await this.globalSer.presentAlert('Alerta', res.error);
       }
     } else {
-      await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su usuario y contraseña.');
+      await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su número de documento y contraseña.');
     }
   }
 

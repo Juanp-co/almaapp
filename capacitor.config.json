@@ -9,6 +9,14 @@
       "launchShowDuration": 0
     }
   },
+  "server": {
+    "androidScheme": "http",
+    "allowNavigation": [
+      "192.168.250.29:7000/api",
+      "192.168.250.30:7000/api"
+      "45.56.115.216:7000/api"
+    ]
+  },
   "cordova": {
     "preferences": {
       "ScrollEnabled": "false",

@@ -46,15 +46,13 @@
         </ion-datetime>
       </ion-item>
       <ion-row class="ion-margin-top">
-        <ion-col size="6" class="ion-justify-content-center">
-          <ion-button class="ion-text-center" color="light" expand="full" (click)="resetQueryParams()">
-            <ion-icon name="trash-outline"></ion-icon>
+        <ion-col size="12" class="ion-text-center">
+          <ion-button class="ion-text-center" color="light" (click)="resetQueryParams()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
             <ion-text>Limpiar</ion-text>
           </ion-button>
-        </ion-col>
-        <ion-col size="6" class="ion-justify-content-center">
-          <ion-button class="ion-text-center" color="primary" expand="full" (click)="getEventsList()">
-            <ion-icon name="checkmark-outline"></ion-icon>
+          <ion-button class="ion-text-center" color="primary" (click)="getEventsList()">
+            <ion-icon name="checkmark-outline" slot="start"></ion-icon>
             <ion-text>Aplicar</ion-text>
           </ion-button>
         </ion-col>
@@ -69,8 +67,8 @@
   </div>
   <ng-template #noEvents>
     <ion-card class="ion-no-padding">
-      <ion-text>
-        <p class="ion-text-center">No existen eventos próximos.</p>
+      <ion-text class="ion-text-center">
+        <p><ion-icon name="alert-circle-outline"></ion-icon> No se encontraron eventos.</p>
       </ion-text>
     </ion-card>
   </ng-template>

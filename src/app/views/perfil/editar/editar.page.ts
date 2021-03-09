@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {AlertController, NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {EditarService} from './editar.service';
 import {IEditar} from './editar.model';
@@ -34,7 +34,6 @@ export class EditarPage implements OnInit {
   formData: IEditar | null = null;
 
   constructor(
-    private alertCtrl: AlertController,
     private editarService: EditarService,
     private cookieService: CookiesService,
     private perfilService: PerfilService,
@@ -191,6 +190,7 @@ export class EditarPage implements OnInit {
         if (userData) this.cookieService.setCookie('data', {...userData, ...updated});
         await this.globalSer.dismissLoading();
         await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
+        await this.back();
       }
       else if (updated && updated.error) {
         await this.globalSer.dismissLoading();

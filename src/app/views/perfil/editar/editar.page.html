@@ -195,14 +195,14 @@
           </ion-col>
         </ion-row>
         <ion-row class="ion-margin-top ion-margin-bottom">
-          <ion-col size="6">
-            <ion-button expand="block" color="light" (click)="back()">
+          <ion-col size="12" class="ion-text-center">
+            <ion-button color="light" (click)="back()">
+              <ion-icon name="close" slot="start"></ion-icon>
               Cancelar
             </ion-button>
-          </ion-col>
-          <ion-col size="6">
-            <ion-button expand="block" color="primary" (click)="confirmUpdate()">
-              Actualizar perfil
+            <ion-button color="primary" (click)="confirmUpdate()">
+              <ion-icon name="save-outline" slot="start"></ion-icon>
+              Guardar
             </ion-button>
           </ion-col>
         </ion-row>
