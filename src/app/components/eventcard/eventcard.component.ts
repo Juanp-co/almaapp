@@ -4,6 +4,7 @@ import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/es';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {AlertController} from '@ionic/angular';
+import {replaceNbsp} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-eventcard',
@@ -44,7 +45,8 @@ export class EventcardComponent implements OnInit {
     }
   }
 
-  async showEvent(){
+  async showEvent() {
+    const description = this.eventData.description ? replaceNbsp(this.eventData.description) : null;
     const alert = await this.alertController.create({
       header: this.eventData.title,
       subHeader: `Por: ${this.eventData.user ? `${this.eventData.user.names} ${this.eventData.user.lastNames}` : 'Anónimo'}`,
@@ -52,7 +54,8 @@ export class EventcardComponent implements OnInit {
         <b>Fecha:</b> ${this.eventData.date}<br/>
         <b>Hora de inicio:</b> ${this.eventData.initHour}<br/>
         ${this.eventData.endHour ? `<b>Hora fin:</b> ${this.eventData.endHour}<br/>` : ''}
-        <b>Descripción:</b> ${this.eventData.description || 'No especificada.'}<br/>
+        <b>Descripción:</b><br>
+        ${description || 'No especificada.'}<br/>
       `,
       buttons: ['Ok']
     });

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
@@ -8,7 +7,6 @@ import {PerfilService} from './perfil.service';
 import {IEditar} from './editar/editar.model';
 import {departments} from '../../../Utils/locations.data';
 import {bloodType, civilStatus, companyType, gender, educationLevels, professions} from '../../../Utils/profile.data';
-import {ModalContenidoTemaPage} from '../curso/modal-contenido-tema/modal-contenido-tema.page';
 import {ModalPasswordPage} from './modal-password/modal-password.page';
 
 @Component({
@@ -59,11 +57,11 @@ export class PerfilPage implements OnInit {
       this.userData.companyType = companyType[this.userData.companyType] || null;
       this.userData.civilStatus = civilStatus[this.userData.civilStatus] || null;
       this.userData.gender = gender[this.userData.gender] || null;
-      if (this.userData.department) {
+      if (this.userData.department !== null) {
         const depto = departments[this.userData.department] || null;
         if (depto) {
           this.userData.department = depto.department;
-          if (this.userData.city) this.userData.city = depto.cities[this.userData.city] || null;
+          if (this.userData.city !== null) this.userData.city = depto.cities[this.userData.city] || null;
         }
       }
       this.views.info.data = this.userData;

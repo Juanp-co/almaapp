@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {IonicModule} from '@ionic/angular';
 
 import { CoursecardComponent } from './coursecard/coursecard.component';
 import { EventcardComponent } from './eventcard/eventcard.component';
@@ -20,7 +21,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
     VideoPlayerComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule, IonicModule
   ],
   exports: [
     CoursecardComponent,

@@ -33,7 +33,7 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="8">
         <ion-item>
-          <ion-label position="floating" color="medium">Usuario</ion-label>
+          <ion-label position="floating" color="medium">Nº de documento</ion-label>
           <ion-input [(ngModel)]="user" class="ion-text-uppercase" maxlength="12"></ion-input>
         </ion-item>
       </ion-col>
@@ -81,8 +81,8 @@
     <br/>
   </div>
 
-  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="login">
-    <ion-fab-button color="light" (click)="goTo('perfil')">
+  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed"*ngIf="login">
+    <ion-fab-button color="primary" (click)="goTo('perfil')">
       <ion-icon name="person-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

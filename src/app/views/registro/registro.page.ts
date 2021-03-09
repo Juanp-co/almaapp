@@ -129,7 +129,7 @@ export class RegistroPage implements OnInit {
       if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
       if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
       if (this.formData.referred && !checkDocument(`${this.formData.referred.toUpperCase()}`))
-        return 'Disculpe, pero debe indicar un número de documento correcto del usuario referido (ejm: CC12345678).';
+        return 'Disculpe, pero debe indicar un número de documento correcto del miembro (ejm: CC12345678).';
 
       return null;
     }

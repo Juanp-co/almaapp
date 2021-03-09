@@ -6,20 +6,19 @@
 
   <ion-row class="ion-no-margin ion-no-padding">
     <ion-col size="12" class="ion-margin-start ion-margin-end">
-      <ion-text class=""><h4>Tus hijos espirituales</h4></ion-text>
+      <ion-text class=""><h4>Tus hijos espirituales ({{ referrals.length }})</h4></ion-text>
     </ion-col>
   </ion-row>
 
   <div *ngIf="referrals && referrals.length > 0; else noReferrals">
-    <app-personcard  *ngFor='let referred of referrals' [data]="referred"></app-personcard>
+    <app-personcard *ngFor='let referred of referrals' [data]="referred"></app-personcard>
   </div>
+
   <ng-template #noReferrals>
     <ion-card class="ion-no-padding">
-      <ion-text>
-        <p class="ion-text-center">No tienes hijos espirituales.</p>
+      <ion-text class="ion-text-center">
+        <p><ion-icon name="alert-circle-outline"></ion-icon> No tienes hijos espirituales.</p>
       </ion-text>
     </ion-card>
   </ng-template>
-
-
 </ion-content>

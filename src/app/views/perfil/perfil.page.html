@@ -18,108 +18,106 @@
       </ion-card-header>
       <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
         <ion-row class="ion-margin-top" *ngIf="views.info.data">
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Nombre(s):</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Apellidos:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Correo electrónico:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Teléfono:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Fecha de nac.:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Sexo:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Estado civil:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Nivel educativo:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.educationLevel || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Profesión:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.profession || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Tipo de sangre:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.bloodType || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Empresa:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.company ? 'Si' : 'No'}}</ion-text>
           </ion-col>
-          <div *ngIf="views.info.data.company">
-            <ion-col size="6">
-              <ion-text><b>Tipo de empresa:</b></ion-text>
-            </ion-col>
-            <ion-col size="6">
-              <ion-text>{{views.info.data.companyType}}</ion-text>
-            </ion-col>
-          </div>
-          <ion-col size="6">
+          <ion-col size="5" *ngIf="views.info.data.company">
+            <ion-text><b>Tipo de empresa:</b></ion-text>
+          </ion-col>
+          <ion-col size="7" *ngIf="views.info.data.company">
+            <ion-text>{{views.info.data.companyType}}</ion-text>
+          </ion-col>
+          <ion-col size="5">
             <ion-text><b>Bautizado:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.baptized ? 'Si' : 'No'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Departamento:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
-            <ion-text>{{views.info.data.department || 'No indicado'}}</ion-text>
+          <ion-col size="7">
+            <ion-text>{{ views.info.data.department || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Cuidad:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
-            <ion-text>{{views.info.data.city || 'No indicado'}}</ion-text>
+          <ion-col size="7">
+            <ion-text>{{ views.info.data.city || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Barrio:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.locality || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-text><b>Dirección:</b></ion-text>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="7">
             <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
           </ion-col>
         </ion-row>
@@ -205,12 +203,12 @@
   </ng-template>
 
   <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
-    <ion-fab-button color="light">
+    <ion-fab-button color="primary">
       <ion-icon name="create-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="warning" (click)='goToEdit()'><ion-icon name="person-outline"></ion-icon></ion-fab-button>
-      <ion-fab-button color="danger" (click)="openChangePasswordModal()"><ion-icon name="lock-closed-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button color="light" (click)='goToEdit()'><ion-icon name="person-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button color="light" (click)="openChangePasswordModal()"><ion-icon name="lock-closed-outline"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

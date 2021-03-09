@@ -64,7 +64,7 @@
       </ion-list>
     </div>
 
-    <div class="ion-margin-top" *ngIf="courses && courses.length > 0 && pages > 0">
+    <div class="ion-margin-top ion-margin-bottom" *ngIf="courses && courses.length > 0 && pages > 0">
       <app-paginator
         [totalPages]="pages"
         [currentPage]="queryParams.page"
@@ -74,9 +74,9 @@
 
     <ng-template #noCourses>
       <ion-card class="ion-margin-top ion-margin-bottom ion-no-padding">
-        <ion-text>
-          <p class="ion-text-center" *ngIf="!queryParams.title">Por ahora no existen cursos disponibles.</p>
-          <p class="ion-text-center" *ngIf="queryParams.title">No se encontraron resultados</p>
+        <ion-text class="ion-text-center">
+          <p *ngIf="!queryParams.title"><ion-icon name="alert-circle-outline"></ion-icon> Por ahora no existen cursos disponibles.</p>
+          <p *ngIf="queryParams.title"><ion-icon name="alert-circle-outline"></ion-icon> No se encontraron resultados.</p>
         </ion-text>
       </ion-card>
     </ng-template>

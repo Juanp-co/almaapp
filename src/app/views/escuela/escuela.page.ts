@@ -22,7 +22,7 @@ export class EscuelaPage implements OnInit {
     input: 'title',
     value: 1,
     page: 1,
-    limit: 5,
+    limit: 10,
     title: null
   };
 
@@ -140,13 +140,6 @@ export class EscuelaPage implements OnInit {
         {
           name: `results-per-page`,
           type: 'radio',
-          label: `5`,
-          value: 5,
-          checked: this.queryParams.limit === 5,
-        },
-        {
-          name: `results-per-page`,
-          type: 'radio',
           label: `10`,
           value: 10,
           checked: this.queryParams.limit === 10,
@@ -154,16 +147,16 @@ export class EscuelaPage implements OnInit {
         {
           name: `results-per-page`,
           type: 'radio',
-          label: `25`,
-          value: 25,
-          checked: this.queryParams.limit === 25,
+          label: `20`,
+          value: 20,
+          checked: this.queryParams.limit === 20,
         },
         {
           name: `results-per-page`,
           type: 'radio',
-          label: `50`,
-          value: 50,
-          checked: this.queryParams.limit === 50,
+          label: `30`,
+          value: 30,
+          checked: this.queryParams.limit === 30,
         },
       ],
       confirmAction: updated

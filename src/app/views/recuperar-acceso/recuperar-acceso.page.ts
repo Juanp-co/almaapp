@@ -188,7 +188,7 @@ export class RecuperarAccesoPage implements OnInit {
 
     if (!checkPassword(this.formData.password))
       return 'Disculpe, pero debe indicar una contraseña correcta.' +
-        '<br><br>Solo se permiten letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*)';
+        '<br><br>Solo se permiten letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*).';
     if (this.formData.password !== this.formData.repPassword)
       return 'Disculpe, pero las contraseñas ingresadas no coinciden.';
     return null;
