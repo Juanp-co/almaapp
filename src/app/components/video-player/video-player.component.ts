@@ -1,6 +1,6 @@
 import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
-import { Plugins, Capacitor } from '@capacitor/core'; // Native version
-import { YoutubePlayerWeb } from 'capacitor-youtube-player'; // Web version
+import { YoutubePlayerWeb } from 'capacitor-youtube-player';
+import {GlobalService} from '../../services/global.service'; // Web version
 
 @Component({
   selector: 'app-video-player',
@@ -12,17 +12,15 @@ export class VideoPlayerComponent implements OnInit, AfterContentInit {
   @Input() urlVideo: any = null;
   showVideo = false;
 
-  constructor() { }
+  constructor(
+    private globalSer: GlobalService
+  ) { }
 
   ngOnInit() {}
 
   async ngAfterContentInit() {
     if (this.urlVideo) {
-      if (Capacitor.platform === 'web') {
-        await this.initializeYoutubePlayerPluginWeb();
-      } else { // Native
-        await this.initializeYoutubePlayerPluginNative();
-      }
+      await this.initializeYoutubePlayerPluginWeb();
     }
   }
 
@@ -54,21 +52,13 @@ export class VideoPlayerComponent implements OnInit, AfterContentInit {
         this.showVideo = true;
       }
     }
+    else
+      this.globalSer.presentAlert('Error', 'Disculpe, pero no se ha logrado obtener el video a reproducir para este contenido.');
   }
 
   async destroyYoutubePlayerPluginWeb() {
     await YoutubePlayerWeb.destroy('youtube-player')
       .catch(e => console.error('e', e));
-  }
-
-  async initializeYoutubePlayerPluginNative() {
-    const id = this.getIdYoutube();
-    if (id) {
-      const { YoutubePlayer } = Plugins;
-      const playerReady = await YoutubePlayer.initialize({
-        width: 640, height: 360, videoId: id
-      });
-    }
   }
 
 }

@@ -385,7 +385,7 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: 'inicio',
-        loadChildren: () => Promise.all(/*! import() | views-inicio-inicio-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-inicio-inicio-module")]).then(__webpack_require__.bind(null, /*! ./views/inicio/inicio.module */ "Wtct")).then(m => m.InicioPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-inicio-inicio-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-inicio-inicio-module")]).then(__webpack_require__.bind(null, /*! ./views/inicio/inicio.module */ "Wtct")).then(m => m.InicioPageModule)
     },
     {
         path: '',
@@ -394,14 +394,14 @@ const routes = [
     },
     {
         path: 'padres',
-        loadChildren: () => Promise.all(/*! import() | views-padres-padres-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-padres-padres-module")]).then(__webpack_require__.bind(null, /*! ./views/padres/padres.module */ "vDr/")).then(m => m.PadresPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-padres-padres-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-padres-padres-module")]).then(__webpack_require__.bind(null, /*! ./views/padres/padres.module */ "vDr/")).then(m => m.PadresPageModule)
     },
     {
         path: 'persona',
         children: [
             {
                 path: ':personId',
-                loadChildren: () => Promise.all(/*! import() | views-persona-persona-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("default~views-perfil-perfil-module~views-persona-persona-module"), __webpack_require__.e("views-persona-persona-module")]).then(__webpack_require__.bind(null, /*! ./views/persona/persona.module */ "R6vB")).then(m => m.PersonaPageModule)
+                loadChildren: () => Promise.all(/*! import() | views-persona-persona-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("default~views-perfil-perfil-module~views-persona-persona-module"), __webpack_require__.e("views-persona-persona-module")]).then(__webpack_require__.bind(null, /*! ./views/persona/persona.module */ "R6vB")).then(m => m.PersonaPageModule)
             }
         ]
     },
@@ -410,37 +410,37 @@ const routes = [
         children: [
             {
                 path: ':slug',
-                loadChildren: () => Promise.all(/*! import() | views-curso-curso-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-curso-curso-module")]).then(__webpack_require__.bind(null, /*! ./views/curso/curso.module */ "/kjj")).then(m => m.CursoPageModule)
+                loadChildren: () => Promise.all(/*! import() | views-curso-curso-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-curso-curso-module")]).then(__webpack_require__.bind(null, /*! ./views/curso/curso.module */ "/kjj")).then(m => m.CursoPageModule)
             }
         ]
     },
     {
         path: 'escuela',
-        loadChildren: () => Promise.all(/*! import() | views-escuela-escuela-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-escuela-escuela-module")]).then(__webpack_require__.bind(null, /*! ./views/escuela/escuela.module */ "CjsL")).then(m => m.EscuelaPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-escuela-escuela-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-escuela-escuela-module")]).then(__webpack_require__.bind(null, /*! ./views/escuela/escuela.module */ "CjsL")).then(m => m.EscuelaPageModule)
     },
     {
         path: 'eventos',
-        loadChildren: () => Promise.all(/*! import() | views-eventos-eventos-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-eventos-eventos-module")]).then(__webpack_require__.bind(null, /*! ./views/eventos/eventos.module */ "TjVE")).then(m => m.EventosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-eventos-eventos-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-eventos-eventos-module")]).then(__webpack_require__.bind(null, /*! ./views/eventos/eventos.module */ "TjVE")).then(m => m.EventosPageModule)
     },
     {
         path: 'estadistica',
-        loadChildren: () => Promise.all(/*! import() | views-estadistica-estadistica-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("views-estadistica-estadistica-module")]).then(__webpack_require__.bind(null, /*! ./views/estadistica/estadistica.module */ "zWYb")).then(m => m.EstadisticaPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-estadistica-estadistica-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-estadistica-estadistica-module")]).then(__webpack_require__.bind(null, /*! ./views/estadistica/estadistica.module */ "zWYb")).then(m => m.EstadisticaPageModule)
     },
     {
         path: 'ofrenda',
-        loadChildren: () => Promise.all(/*! import() | views-ofrenda-ofrenda-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("views-ofrenda-ofrenda-module")]).then(__webpack_require__.bind(null, /*! ./views/ofrenda/ofrenda.module */ "eHMr")).then(m => m.OfrendaPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-ofrenda-ofrenda-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("views-ofrenda-ofrenda-module")]).then(__webpack_require__.bind(null, /*! ./views/ofrenda/ofrenda.module */ "eHMr")).then(m => m.OfrendaPageModule)
     },
     {
         path: 'perfil',
-        loadChildren: () => Promise.all(/*! import() | views-perfil-perfil-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("default~views-perfil-perfil-module~views-persona-persona-module"), __webpack_require__.e("views-perfil-perfil-module")]).then(__webpack_require__.bind(null, /*! ./views/perfil/perfil.module */ "BK+y")).then(m => m.PerfilPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-perfil-perfil-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("default~views-perfil-perfil-module~views-persona-persona-module"), __webpack_require__.e("views-perfil-perfil-module")]).then(__webpack_require__.bind(null, /*! ./views/perfil/perfil.module */ "BK+y")).then(m => m.PerfilPageModule)
     },
     {
         path: 'registro',
-        loadChildren: () => Promise.all(/*! import() | views-registro-registro-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-registro-registro-module")]).then(__webpack_require__.bind(null, /*! ./views/registro/registro.module */ "bIpp")).then(m => m.RegistroPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-registro-registro-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-registro-registro-module")]).then(__webpack_require__.bind(null, /*! ./views/registro/registro.module */ "bIpp")).then(m => m.RegistroPageModule)
     },
     {
         path: 'recuperar-acceso',
-        loadChildren: () => Promise.all(/*! import() | views-recuperar-acceso-recuperar-acceso-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-eventos-eventos-module~views-ini~18c76484"), __webpack_require__.e("views-recuperar-acceso-recuperar-acceso-module")]).then(__webpack_require__.bind(null, /*! ./views/recuperar-acceso/recuperar-acceso.module */ "A43k")).then(m => m.RecuperarAccesoPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-recuperar-acceso-recuperar-acceso-module */[__webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~86378ee1"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~4d5cec40"), __webpack_require__.e("default~views-curso-curso-module~views-escuela-escuela-module~views-estadistica-estadistica-module~v~e23a4c0c"), __webpack_require__.e("views-recuperar-acceso-recuperar-acceso-module")]).then(__webpack_require__.bind(null, /*! ./views/recuperar-acceso/recuperar-acceso.module */ "A43k")).then(m => m.RecuperarAccesoPageModule)
     },
 ];
 let AppRoutingModule = class AppRoutingModule {
