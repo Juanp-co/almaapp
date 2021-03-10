@@ -22,7 +22,7 @@ export class ModalExamenTemaPage implements OnInit {
   totalsViews = 0;
   viewSelected = 0;
   questions: any = [];
-  questionsView: ICursoExamen = null;
+  questionsView: ICursoExamen[] = null;
   finishedTest: ICursoExamenFinalizado = {
     msg: null,
     average: 0,

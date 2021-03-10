@@ -25,7 +25,7 @@
             <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
           </ion-col>
           <ion-col size="5">
-            <ion-text><b>Apellidos:</b></ion-text>
+            <ion-text><b>Apellido(s):</b></ion-text>
           </ion-col>
           <ion-col size="7">
             <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
@@ -145,51 +145,54 @@
       </ion-col>
     </ion-row>
 
-    <ion-card class="{{views.group.show ? '' : 'ion-hide'}}">
-      <div *ngIf="views.group.data; else noGroup">
-        <ion-card-header class="ion-no-padding ion-margin-top ion-margin-start ion-margin-end">
-          <ion-row class="ion-margin-top" *ngIf="views.group.data; else noGroup">
-            <ion-col size="9">
-              <ion-text class="toSmall">Nombre del grupo</ion-text><br/>
-              <ion-text><span class="titles">{{views.group.data.name || 'No indicado'}}</span></ion-text>
-            </ion-col>
-            <ion-col size="3">
-              <ion-text class="toSmall">Miembros</ion-text><br/>
-              <ion-text><span class="titles">{{ views.group.data.members ? views.group.data.members.length : 0 }}</span></ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="ion-margin-top ion-no-padding">
-          <ion-row class="ion-margin-top" *ngIf="views.group.data; else noGroup">
-            <ion-col class="ion-no-margin ion-no-padding" size="12">
-              <app-personcard *ngFor='let member of views.group.data.members' [data]="member" getGroup="true"></app-personcard>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </div>
-      <ng-template #noGroup>
-        <ion-card-content class="ion-margin-top ion-no-padding">
-          <div class="ion-margin-top">
-            <ion-text>
-              <p class="ion-text-center">No pertenece a ningún grupo familiar.</p>
-            </ion-text>
-          </div>
-        </ion-card-content>
-      </ng-template>
+    <ion-card class="{{views.group.show ? '' : 'ion-hide'}} ion-padding-bottom ion-margin-bottom" *ngIf="views.group.data; else noGroup">
+      <ion-card-header class="ion-no-padding ion-margin-top ion-margin-start ion-margin-end">
+        <ion-row class="ion-margin-top" *ngIf="views.group.data; else noGroup">
+          <ion-col size="9">
+            <ion-text class="toSmall">Nombre del grupo</ion-text><br/>
+            <ion-text><span class="titles">{{views.group.data.name || 'No indicado'}}</span></ion-text>
+          </ion-col>
+          <ion-col size="3">
+            <ion-text class="toSmall">Miembros</ion-text><br/>
+            <ion-text><span class="titles">{{ views.group.data.members ? views.group.data.members.length : 0 }}</span></ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-content class="ion-margin-top ion-no-padding">
+        <ion-row class="ion-margin-top" *ngIf="views.group.data; else noGroup">
+          <ion-col class="ion-no-margin ion-no-padding" size="12">
+            <app-personcard *ngFor='let member of views.group.data.members' [data]="member" getGroup="true"></app-personcard>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
     </ion-card>
 
+    <ng-template #noGroup>
+      <div class="{{ views.group.show ? 'ion-margin-bottom ion-padding-bottom' : '' }}">
+        <ion-card class="{{views.group.show ? '' : 'ion-hide'}}">
+          <ion-card-content>
+            <ion-text class="ion-text-center">
+              <p><ion-icon name="alert-circle-outline"></ion-icon> No pertenece a ningún grupo familiar.</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ng-template>
+
     <div class="{{views.courses.show ? '' : 'ion-hide'}} ion-margin-bottom ion-padding-bottom">
-      <ion-row class="ion-margin-top ion-no-padding" *ngIf="views.courses.data && views.courses.data.length > 0; else noCourses">
+      <ion-row class="ion-no-padding" *ngIf="views.courses.data && views.courses.data.length > 0; else noCourses">
         <ion-col class="ion-no-margin ion-no-padding" size="12">
           <app-coursecard *ngFor='let course of views.courses.data' [data]="course"></app-coursecard>
         </ion-col>
       </ion-row>
       <ng-template #noCourses>
-        <div class="ion-margin-top">
-          <ion-text>
-            <p class="ion-text-center">No posee ningún curso en su perfil.</p>
-          </ion-text>
-        </div>
+        <ion-card>
+          <ion-card-content>
+            <ion-text class="ion-text-center">
+              <p><ion-icon name="alert-circle-outline"></ion-icon> No posee ningún curso en su perfil.</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
       </ng-template>
     </div>
   </div>
