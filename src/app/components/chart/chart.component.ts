@@ -24,6 +24,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
   pages = 0;
   page = 1;
   index = 0;
+  totals = 0;
 
   handlePage = (page: number): void => {
     this.page = page;
@@ -40,7 +41,13 @@ export class ChartComponent implements OnInit, AfterViewInit {
     if (this.data) {
       if (this.data.data.length > 0) {
         this.isArray = Array.isArray(this.data.data[0]) || false;
-        if (this.isArray) this.pages = this.globalSer.getPagination(this.data.data.length, 1);
+        if (this.isArray) {
+          this.pages = this.globalSer.getPagination(this.data.data.length, 1);
+          this.data.data.forEach(d => {
+            if (d) this.totals += d.length;
+          });
+        }
+        else this.totals = this.data.data.length;
       }
     }
   }

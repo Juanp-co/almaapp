@@ -2,8 +2,8 @@
 <network-security-config>
   <!--Set application-wide security config using base-config tag.-->
   <domain-config cleartextTrafficPermitted="true">
-    <domain includeSubdomains="true">ppapi.test</domain>
-    <domain includeSubdomains="true">ccadv.co/</domain>
+    <domain includeSubdomains="true">ccadv.co</domain>
+    <domain includeSubdomains="true">api.ccadv.co</domain>
     <domain includeSubdomains="true">192.168.250.29</domain>
     <domain includeSubdomains="true">192.168.250.30</domain>
     <domain includeSubdomains="true">45.56.115.216</domain>

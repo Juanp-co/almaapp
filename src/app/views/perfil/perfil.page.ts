@@ -50,7 +50,7 @@ export class PerfilPage implements OnInit {
       this.userData = data;
       this.views.group.data = await this.perfilService.getGroup();
       this.views.courses.data = await this.perfilService.getCourses();
-      this.userData.birthday = dayjs(this.userData.birthday).format('DD-MM-YYYY');
+      this.userData.birthday = this.userData.birthday ? dayjs(this.userData.birthday).format('DD-MM-YYYY') : null;
       this.userData.bloodType = bloodType[this.userData.bloodType] || null;
       this.userData.profession = professions[this.userData.profession] || null;
       this.userData.educationLevel = educationLevels[this.userData.educationLevel] || null;
