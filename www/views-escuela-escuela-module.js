@@ -228,18 +228,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EscuelaService", function() { return EscuelaService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/axios.service */ "1Ldg");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/global.service */ "4WDQ");
-
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/global.service */ "4WDQ");
 
 
 
 
 let EscuelaService = class EscuelaService {
-    constructor(globalSer, navCtrl, axios) {
+    constructor(globalSer, axios) {
         this.globalSer = globalSer;
-        this.navCtrl = navCtrl;
         this.axios = axios;
     }
     getCoursesTotals(query = {}) {
@@ -260,9 +257,8 @@ let EscuelaService = class EscuelaService {
     }
 };
 EscuelaService.ctorParameters = () => [
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_3__["AxiosService"] }
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_2__["AxiosService"] }
 ];
 EscuelaService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
