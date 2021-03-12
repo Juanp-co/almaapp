@@ -19,7 +19,6 @@
         <div [innerHTML]="course.description"></div>
       </ion-card-content>
     </ion-card>
-
     <ion-card>
       <ion-card-header>
         <ion-card-title>Temas</ion-card-title>
@@ -52,6 +51,16 @@
         </ion-list>
       </ion-card-content>
     </ion-card>
+
+    <ion-card *ngIf="course.levels && course.levels.length > 0">
+      <ion-card-header>
+        <ion-card-title>Cursos previos requeridos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-no-padding ion-no-margin">
+        <app-coursecard *ngFor="let level of course.levels" [data]="level"></app-coursecard>
+      </ion-card-content>
+    </ion-card>
+
   </div>
 
   <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="course && !activeClickTemary" (click)="showConfirmAddCourse()">
