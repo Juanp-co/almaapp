@@ -1,12 +1,18 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, NgModule, OnInit, ViewChild} from '@angular/core';
+import { Capacitor } from '@capacitor/core'; // Native version
+import {Base64ToGallery} from '@ionic-native/base64-to-gallery/ngx';
 import { Chart } from 'chart.js';
 import dayjs from 'dayjs';
 import {GlobalService} from '../../services/global.service';
+import {AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 
+// @NgModule({
+// })
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
+  providers: [AndroidPermissions, Base64ToGallery],
 })
 export class ChartComponent implements OnInit, AfterViewInit {
 
@@ -34,7 +40,9 @@ export class ChartComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private globalSer: GlobalService
+    private androidPermissions: AndroidPermissions,
+    private globalSer: GlobalService,
+    private base64ToGallery: Base64ToGallery,
   ) { }
 
   ngOnInit() {
@@ -73,10 +81,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
       data: [],
     };
 
-    console.log(this.isArray);
-    console.log('pages', this.pages);
     elem.data = this.isArray ? obj.data[this.index] : obj.data;
-    console.log('elem', elem);
 
     const labels = elem.data ? elem.data.map(d => `${d.label} (${d.qty})`) : [];
     const data = elem && elem.data ? elem.data.map(d => d.qty) : [];
@@ -188,11 +193,35 @@ export class ChartComponent implements OnInit, AfterViewInit {
     this.view.show = !this.view.show;
   }
 
-  downloadPicture() {
-    const link = document.createElement('a');
-    link.href = this.view.picture;
-    link.download = `${this.title ? this.title.toLowerCase().replace(' ', '-') : 'Chart'}-${dayjs().format('YYYY-MM-DD_HH_mm_ss')}.jpg`;
-    link.click();
+  async checkPermissions() {
+    // Get permissions
+    let permissions = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+
+    if (!permissions.hasPermission) {
+      // request the permission
+      permissions = await this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+    }
+    return permissions.hasPermission;
+  }
+
+  async downloadPicture() {
+    if (Capacitor.platform === 'web') {
+      const link = document.createElement('a');
+      link.href = this.view.picture;
+      link.download = `${this.title ? this.title.toLowerCase().replace(' ', '-') : 'Chart'}-${dayjs().format('YYYY-MM-DD_HH_mm_ss')}.jpg`;
+      link.click();
+    }
+    else { // Native
+      const save = await this.checkPermissions();
+
+      if (save) {
+        const prefix = `${this.title ? this.title.toLowerCase().replace(' ', '-') : 'Chart'}-${dayjs().format('YYYY-MM-DD_HH_mm_ss')}`;
+        this.base64ToGallery.base64ToGallery(this.view.picture, { prefix, mediaScanner: true }).then(
+          res => this.globalSer.presentAlert('¡Éxito!', 'Se ha guardado la imagen exitosamente.'),
+          err => this.globalSer.presentAlert('¡Error!', 'Disculpe, pero ha ocurrido un error al momento de guardar la imagen en su dispositivo.')
+        );
+      }
+    }
   }
 
 }
