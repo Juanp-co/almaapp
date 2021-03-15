@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import {NavController} from '@ionic/angular';
 import {AxiosService} from '../../services/axios.service';
-import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 
 @Injectable({
@@ -10,9 +8,8 @@ import {GlobalService} from '../../services/global.service';
 export class CursoService {
 
   constructor(
+    private axios: AxiosService,
     private globalSer: GlobalService,
-    private navCtrl: NavController,
-    private axios: AxiosService
   ) { }
 
   async getCourse(slug: string) {

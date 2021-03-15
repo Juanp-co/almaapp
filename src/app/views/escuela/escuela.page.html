@@ -74,7 +74,7 @@
 
     <ng-template #noCourses>
       <ion-card class="ion-margin-top ion-margin-bottom ion-no-padding">
-        <ion-text class="ion-text-center">
+        <ion-text class="ion-text-center" color="medium">
           <p *ngIf="!queryParams.title"><ion-icon name="alert-circle-outline"></ion-icon> Por ahora no existen cursos disponibles.</p>
           <p *ngIf="queryParams.title"><ion-icon name="alert-circle-outline"></ion-icon> No se encontraron resultados.</p>
         </ion-text>
