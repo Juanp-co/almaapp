@@ -6,7 +6,7 @@
   <div *ngIf="banks && banks.length > 0; else noBanks">
     <ion-list *ngFor='let bank of banks'>
       <ion-card *ngIf="bank && bank.description">
-        <ion-img class="banner" [src]="bank.picture"></ion-img>
+        <ion-img class="pictureIconBank" [src]="bank.picture"></ion-img>
         <ion-card-header>
           <ion-card-title>{{ bank.title }}</ion-card-title>
         </ion-card-header>
