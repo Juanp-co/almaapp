@@ -44,7 +44,10 @@ export class EventosPage implements OnInit {
       this.events = data;
       await this.globalSer.dismissLoading();
     }
-    else if (data && data.error) await this.globalSer.errorSession();
+    else if (data && data.error) {
+      this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
     else await this.globalSer.dismissLoading();
   }
 

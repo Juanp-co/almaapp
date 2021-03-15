@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import {AxiosService} from '../../services/axios.service';
-import {Router} from '@angular/router';
-import {NavController} from '@ionic/angular';
-import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 
 @Injectable({

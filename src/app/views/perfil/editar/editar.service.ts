@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import {NavController} from '@ionic/angular';
-
 import {bloodType, civilStatus, companyType, gender, educationLevels, professions} from '../../../../Utils/profile.data';
 import {departments} from '../../../../Utils/locations.data';
-import {CookiesService} from '../../../services/cookies.service';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 
