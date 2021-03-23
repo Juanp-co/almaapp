@@ -3,13 +3,63 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'inicio',
+    loadChildren: () => import('./views/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'inicio',
     pathMatch: 'full'
+  },
+  {
+    path: 'padres',
+    loadChildren: () => import('./views/padres/padres.module').then( m => m.PadresPageModule)
+  },
+  {
+    path: 'persona',
+    children: [
+      {
+        path: ':personId',
+        loadChildren: () => import('./views/persona/persona.module').then( m => m.PersonaPageModule)
+      }
+    ]
+  },
+  {
+    path: 'curso',
+    children: [
+      {
+        path: ':slug',
+        loadChildren: () => import('./views/curso/curso.module').then( m => m.CursoPageModule)
+      }
+    ]
+  },
+  {
+    path: 'escuela',
+    loadChildren: () => import('./views/escuela/escuela.module').then( m => m.EscuelaPageModule)
+  },
+  {
+    path: 'eventos',
+    loadChildren: () => import('./views/eventos/eventos.module').then( m => m.EventosPageModule)
+  },
+  {
+    path: 'estadistica',
+    loadChildren: () => import('./views/estadistica/estadistica.module').then( m => m.EstadisticaPageModule)
+  },
+  {
+    path: 'ofrenda',
+    loadChildren: () => import('./views/ofrenda/ofrenda.module').then( m => m.OfrendaPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./views/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'registro',
+    loadChildren: () => import('./views/registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'recuperar-acceso',
+    loadChildren: () => import('./views/recuperar-acceso/recuperar-acceso.module').then( m => m.RecuperarAccesoPageModule)
   },
 ];
 

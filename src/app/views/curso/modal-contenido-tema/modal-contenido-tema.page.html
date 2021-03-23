@@ -1,0 +1,29 @@
+<ion-content *ngIf="content">
+  <ion-header>
+    <app-minheader title="Visor de contenido" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ content.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12" *ngIf="content.urlVideo">
+          <app-video-player urlVideo="{{content.urlVideo}}"></app-video-player>
+        </ion-col>
+        <ion-col size="12" *ngIf="content.description">
+          <div [innerHTML]="content.description"></div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button color="primary" expand="block" (click)="closeModal()">
+            <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+            Finalizar contenido
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

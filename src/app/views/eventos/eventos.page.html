@@ -1,0 +1,75 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Eventos"></app-minheader>
+  </ion-header>
+
+  <div class="ion-margin">
+    <ion-button color="light" (click)="setShowFilter()">
+      <ion-icon name="filter-outline" slot="start" *ngIf="!showFilter"></ion-icon>
+      <ion-icon name="close-outline" slot="start" *ngIf="showFilter"></ion-icon>
+      <ion-text>Filtrar</ion-text>
+    </ion-button>
+  </div>
+
+  <ion-card *ngIf="showFilter">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating" color="medium">Ordenar por:</ion-label>
+        <ion-input
+          [readonly]="true"
+          [value]="queryParams.value === -1 ? 'Próximas primero' : 'Antíguas primero'"
+          (click)="setOrderData()"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" color="medium">A partir de:</ion-label>
+        <ion-datetime
+          [(ngModel)]="queryParams.initDate"
+          displayFormat="DD/MM/YYYY"
+          min="2020-01-01"
+          doneText="Listo"
+          cancelText="Cancelar"
+          onchange="setDate('initDate')"
+        >
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" color="medium">Hasta:</ion-label>
+        <ion-datetime
+          [(ngModel)]="queryParams.endDate"
+          displayFormat="DD/MM/YYYY"
+          min="2020-01-01"
+          doneText="Listo"
+          cancelText="Cancelar"
+          onchange="setDate('endDate')"
+        >
+        </ion-datetime>
+      </ion-item>
+      <ion-row class="ion-margin-top">
+        <ion-col size="12" class="ion-text-center">
+          <ion-button class="ion-text-center" color="light" (click)="resetQueryParams()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            <ion-text>Limpiar</ion-text>
+          </ion-button>
+          <ion-button class="ion-text-center" color="primary" (click)="getEventsList()">
+            <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+            <ion-text>Aplicar</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="events && events.length > 0; else noEvents">
+    <ion-list *ngFor='let e of events'>
+      <app-eventcard [data]="e"></app-eventcard>
+    </ion-list>
+  </div>
+  <ng-template #noEvents>
+    <ion-card class="ion-no-padding">
+      <ion-text class="ion-text-center" color="medium">
+        <p><ion-icon name="alert-circle-outline"></ion-icon> No se encontraron eventos.</p>
+      </ion-text>
+    </ion-card>
+  </ng-template>
+</ion-content>

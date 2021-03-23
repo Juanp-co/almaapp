@@ -1,0 +1,45 @@
+<ion-card class="ion-no-padding" *ngIf="data">
+  <ion-card-header class="ion-no-padding">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button (click)="setShowView()">
+          <ion-icon name="chevron-{{view.show ? 'up' : 'down' }}-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-text color="light"><b class="light">{{title}} ({{ totals }})</b></ion-text>
+      <ion-buttons slot="end">
+        <ion-button (click)="downloadPicture()">
+          <ion-icon name="image-outline" slot="start"></ion-icon>
+          <ion-text>Guardar</ion-text>
+        </ion-button>
+        <ion-button (click)="changeChartType()">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content class="{{ view.show ? '' : 'ion-hide'}} ion-no-padding">
+    <div *ngIf="data && data.data.length > 0; else noData">
+      <canvas class="ion-padding-horizontal ion-padding-vertical" #chartElem ></canvas>
+      <div class="ion-margin-top ion-margin-bottom" *ngIf="data && pages > 0">
+        <app-paginator
+          [totalPages]="pages"
+          [currentPage]="page"
+          [handlePage]="handlePage"
+        ></app-paginator>
+      </div>
+    </div>
+    <ng-template #noData>
+      <ion-card-content class="ion-margin-top ion-margin-bottom ion-no-padding">
+        <div class="ion-margin-top">
+          <ion-text class="ion-text-center" color="medium">
+            <p>
+              <ion-icon name="information-circle-outline"></ion-icon>
+              Disculpe, pero no existen registros que mostrar.
+            </p>
+          </ion-text>
+        </div>
+      </ion-card-content>
+    </ng-template>
+  </ion-card-content>
+</ion-card>

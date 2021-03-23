@@ -1,0 +1,151 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Recuperar acceso"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col size="12" *ngIf="!successRecovery">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text>{{ views[view].msg }}</ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="view === 0">
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="formData2.documentType ? getDocumentLabel(formData2.documentType) : ''"
+                  (click)="showAlertDocumentList(formData2.documentType)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData2.document"
+                  autocomplete="off"
+                  maxlength="10"
+                  (keypress)="validateOnlyNumbers($event)"
+                  class="ion-text-uppercase"
+                >
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="confirmCancel()">
+                <ion-icon name="close-outline" slot="start"></ion-icon>
+                <ion-text>Cancelar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="checkStep(0)">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Verificar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="view === 1">
+            <ion-col size="12" *ngIf="views[view].check.email">
+              <ion-item>
+                <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
+                <ion-input [(ngModel)]="formData.check.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" *ngIf="views[view].check.birthday">
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha de nacimiento (*)</ion-label>
+                <ion-datetime
+                  [(ngModel)]="formData.check.birthday"
+                  displayFormat="DD/MM/YYYY"
+                  min="1910-03-14"
+                  max="{{maxDate}}"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate()"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="setView(0)">
+                <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+                <ion-text>Regresar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="checkStep(1)">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Verificar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="view === 2">
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Contraseña (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.password"
+                  autocomplete="off"
+                  type="password"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Repita la contraseña (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.repPassword"
+                  autocomplete="off"
+                  type="password"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="setView(1)">
+                <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+                <ion-text>Regresar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="checkStep(2)">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Cambiar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="12" *ngIf="successRecovery">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col [size]="12" class="ion-text-center">
+              <ion-img class="pictureLogo2 ion-margin-top ion-padding-top" [src]="'/assets/icon/check.svg'"></ion-img>
+              <ion-card-title class="ion-margin-top ion-padding-top">
+                Se ha recuperado su cuenta exitosamente.<br/>
+                Ahora puede acceder a la aplicación.
+              </ion-card-title>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="primary" (click)="back()">
+                <ion-icon name="home-outline" slot="start"></ion-icon>
+                <ion-text>Iniciar sesión</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>

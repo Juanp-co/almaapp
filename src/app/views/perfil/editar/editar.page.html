@@ -1,0 +1,193 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Editar perfil"></app-minheader>
+  </ion-header>
+
+  <div *ngIf="formData">
+    <ion-card>
+      <ion-card-content class="ion-no-padding">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
+              <ion-input [(ngModel)]="formData.names" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Apellido(s) (*)</ion-label>
+              <ion-input [(ngModel)]="formData.lastNames" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
+              <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Teléfono (*)</ion-label>
+              <ion-input [(ngModel)]="formData.phone" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Fecha de nacimiento (*)</ion-label>
+              <ion-datetime
+                [(ngModel)]="formData.birthday"
+                displayFormat="DD/MM/YYYY"
+                min="1910-03-14"
+                max="{{maxDate}}"
+                doneText="Listo"
+                cancelText="Cancelar"
+                (ionChange)="setDate()"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Sexo (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="gender[formData.gender] || ''"
+                autocomplete="off"
+                (click)="showAlertList('gender', 'gender', formData.gender)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Tipo de sangre (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="bloodType[formData.bloodType] || ''"
+                autocomplete="off"
+                (click)="showAlertList('bloodType', 'bloodType', formData.bloodType)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Estado civil (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="civilStatus[formData.civilStatus] || ''"
+                autocomplete="off"
+                (click)="showAlertList('civilStatus', 'civilStatus', formData.civilStatus)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Nivel educativo (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="educationLevel[formData.educationLevel] || ''"
+                autocomplete="off"
+                (click)="showAlertList('educationLevel', 'educationLevel', formData.educationLevel)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Profesión (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="professions[formData.profession] || ''"
+                autocomplete="off"
+                (click)="showAlertList('profession', 'professions', formData.profession)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">¿Posee una empresa? (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="formData.company"
+                autocomplete="off"
+                (click)="showAlertYesOrNotList('company', formData.company)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item *ngIf="formData.company === 'Si';">
+              <ion-label position="floating" color="medium">Tipo de empresa (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="companyType[formData.companyType] || ''"
+                autocomplete="off"
+                class="ion-text-uppercase"
+                (click)="showAlertList('companyType', 'companyType', formData.companyType)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">¿Estás bautizado?</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="formData.baptized"
+                autocomplete="off"
+                (click)="showAlertYesOrNotList('baptized', formData.baptized)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Departamento (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="departments[formData.department] || ''"
+                autocomplete="off"
+                class="ion-text-uppercase"
+                (click)="showAlertList('department', 'departments', formData.department)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Ciudad (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="cities[formData.city] || ''"
+                autocomplete="off"
+                class="ion-text-uppercase"
+                (click)="showAlertList('city', 'cities', formData.city)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Barrio o localidad (*)</ion-label>
+              <ion-input [(ngModel)]="formData.locality" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Dirección (*)</ion-label>
+              <ion-input [(ngModel)]="formData.direction" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-top ion-margin-bottom">
+          <ion-col size="12" class="ion-text-center">
+            <ion-button color="light" (click)="back()">
+              <ion-icon name="close" slot="start"></ion-icon>
+              Cancelar
+            </ion-button>
+            <ion-button color="primary" (click)="confirmUpdate()">
+              <ion-icon name="save-outline" slot="start"></ion-icon>
+              Guardar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+
+</ion-content>
