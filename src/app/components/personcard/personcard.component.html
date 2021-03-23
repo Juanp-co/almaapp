@@ -1,7 +1,7 @@
 <ion-card
-  class=""
+  class="height-100"
   *ngIf="member"
-  (click)="member._id && showButton ? goToDetails('persona', member._id) : null"
+  (click)="member._id && showButton ? goToDetails(member._id) : null"
 >
   <ion-card-content class="ion-margin-top ion-no-padding">
     <ion-row>
@@ -9,13 +9,15 @@
         <ion-img class="pictureiconcard" src="/assets/icon/{{member.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
       </ion-col>
       <ion-col size="9">
+        <b>{{ member.names || '' }} {{ member.lastNames || '' }}</b>
+        <br/>
         <ion-text>
-          <p><b>{{ member.names || '' }} {{ member.lastNames || '' }}</b></p>
+          <ion-icon name="call-outline"></ion-icon>
+          {{ member.phone || 'No indicado.' }}<br>
         </ion-text>
-        <ion-text>
-          <p>
-            <ion-icon name="call-outline"></ion-icon> {{ member.phone || 'No indicado' }}
-          </p>
+        <ion-text *ngIf="member.totalsReferrals !== undefined">
+          <ion-icon name="people-outline"></ion-icon>
+          {{ member.totalsReferrals || 0 }} Hijo(s) Espirituales.<br>
         </ion-text>
         <ion-text class="ion-margin-top"><i class="toSmall">{{showButton ? 'Toca para más información.' : '&nbsp;'}}</i></ion-text>
       </ion-col>

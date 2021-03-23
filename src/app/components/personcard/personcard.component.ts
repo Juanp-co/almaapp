@@ -11,6 +11,7 @@ export class PersoncardComponent implements OnInit {
 
   @Input() data: any;
   @Input() getGroup: any;
+  @Input() disabledClick = false;
   member: any = null;
   group = false;
   showButton = false;
@@ -23,7 +24,8 @@ export class PersoncardComponent implements OnInit {
   ngOnInit() {
     this.member = this.data;
     this.group = this.getGroup;
-    if (this.member && this.member._id) {
+    if (this.disabledClick) this.showButton = false;
+    else if (this.member && this.member._id) {
       this.showButton = this.checkIdMember(this.member._id);
     }
   }
@@ -36,7 +38,7 @@ export class PersoncardComponent implements OnInit {
     return false;
   }
 
-  async goToDetails(path: string, id: string|null = null) {
+  async goToDetails(id: string|null = null) {
     await this.router.navigate([`persona/${id}`], { queryParams: { group: this.group } });
   }
 

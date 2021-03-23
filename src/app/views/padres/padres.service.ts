@@ -12,6 +12,6 @@ export class PadresService {
 
   async getReferrals() {
     const res: any = await this.axios.getData('/user/referrals');
-    return res && res.success ? res && res.data.referrals : [];
+    return res && res.success ? res && res.data : null;
   }
 }

@@ -83,3 +83,12 @@ b {
 }
 
 .toSmall { font-size: 0.8em !important; }
+
+/*
+To static top bar
+ */
+.content .header-menu {
+  position: sticky !important;
+  top: 0;
+  z-index: 100;
+}

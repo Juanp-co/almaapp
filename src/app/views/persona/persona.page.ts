@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import {ActivatedRoute, Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
 import { CookiesService } from '../../services/cookies.service';
@@ -20,6 +19,23 @@ export class PersonaPage implements OnInit {
   totalCourses = 0;
   totalReferrals = 0;
   path = '/user/referrals';
+  views: any = {
+    info: {
+      show: true,
+      title: 'Datos de contacto',
+      data: null
+    },
+    courses: {
+      show: false,
+      totals: 0,
+      data: []
+    },
+    referrals: {
+      show: true,
+      totals: 0,
+      data: []
+    }
+  };
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -46,31 +62,43 @@ export class PersonaPage implements OnInit {
 
         if (res && res.success) {
           const { data } = res.data;
-          this.userData = data.member || null;
-          this.userData.civilStatus = civilStatus[this.userData.civilStatus] || null;
-          this.userData.gender = gender[this.userData.gender] || null;
-          if (this.userData.department) {
-            const depto = departments[this.userData.department] || null;
-            if (depto) {
-              this.userData.department = depto.department;
-              if (this.userData.city) this.userData.city = depto.cities[this.userData.city] || null;
-            }
+          this.views.info.data = data.member || null;
+          this.views.info.data.civilStatus = civilStatus[this.views.info.data.civilStatus] || null;
+          this.views.info.data.gender = gender[this.views.info.data.gender] || null;
+          if (this.views.info.data.department) {
+            const depto = departments[this.views.info.data.department] || null;
+            this.views.info.data.department = depto ? depto.department : null;
+            this.views.info.data.city = depto ? (depto.cities[this.views.info.data.city] || null) : null;
           }
-          this.totalCourses = data.totalCourses || 0;
-          this.totalReferrals = data.totalReferrals || 0;
+          this.views.courses.totals = data.totalCourses || 0;
+          this.views.referrals.totals = data.totalReferrals || 0;
+          this.views.referrals.data = data.referrals || [];
           await this.globalSer.dismissLoading();
         }
         else {
           await this.globalSer.dismissLoading();
           await this.globalSer.presentAlert('Error', res.error);
+          await this.navCtrl.back();
         }
       }
       else {
         await this.globalSer.presentAlert('Error', 'Error al obtener el parámetro a consultar.');
-        await this.navCtrl.navigateBack(['/']);
+        await this.navCtrl.back();
       }
     }
-    else await this.globalSer.errorSession();
+    else {
+      await this.globalSer.errorSession();
+      await this.navCtrl.back();
+    }
+  }
+
+  setShowView(input: string) {
+    this.views[input].show = !this.views[input].show;
+  }
+
+  setShowGroup(value = false) {
+    this.views.referrals.show = value;
+    this.views.courses.show = !value;
   }
 
 }

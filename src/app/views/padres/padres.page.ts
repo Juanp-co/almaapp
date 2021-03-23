@@ -12,6 +12,8 @@ import {PadresService} from './padres.service';
 })
 export class PadresPage implements OnInit {
   referrals: any[] = [];
+  referred: any = null;
+  totals = 0;
 
   constructor(
     private globalSer: GlobalService,
@@ -27,7 +29,13 @@ export class PadresPage implements OnInit {
   async getData() {
     const token = this.cookieService.getCookie('token');
     if (token) {
-      this.referrals = await this.padreService.getReferrals();
+      const data = await this.padreService.getReferrals();
+
+      if (data) {
+        this.referrals = data.referrals;
+        this.referred = data.referred;
+        this.totals = data.totals;
+      }
     }
     else await this.globalSer.errorSession();
   }
