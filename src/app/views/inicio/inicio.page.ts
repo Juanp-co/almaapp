@@ -13,7 +13,7 @@ export class InicioPage implements OnInit {
 
   login = false;
   userData: any = null;
-  user = 'CC12345678';
+  phone = '31612345678';
   pass = 'password';
 
   opciones = [
@@ -69,12 +69,12 @@ export class InicioPage implements OnInit {
   }
 
   async ingresar() {
-    if (this.pass && this.user) {
+    if (this.pass && this.phone) {
       await this.globalSer.presentLoading();
 
       const res: any = await this.axios.postData(
         '/login',
-        { document: this.user, password: this.pass }
+        { phone: this.phone, password: this.pass }
         );
 
       if (res && res.success) {
@@ -84,19 +84,19 @@ export class InicioPage implements OnInit {
         this.userData = data;
 
         this.login = true;
-        this.user = null;
+        this.phone = null;
         this.pass = null;
         await this.globalSer.dismissLoading();
         // await this.globalSer.presentAlert('Info', 'Ingreso exitoso!');
       }
       else {
-        this.user = null;
+        this.phone = null;
         this.pass = null;
         await this.globalSer.dismissLoading();
         await this.globalSer.presentAlert('Alerta', res.error);
       }
     } else {
-      await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su número de documento y contraseña.');
+      await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su número de teléfono y contraseña.');
     }
   }
 

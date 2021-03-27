@@ -6,7 +6,7 @@ import {documentType} from '../../../Utils/profile.data';
 import {
   checkDocument,
   checkEmail,
-  checkNameOrLastName, checkPassword,
+  checkNameOrLastName, checkPassword, checkPhone,
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../Utils/validations.functions';
@@ -23,7 +23,7 @@ export class RegistroPage implements OnInit {
   successRegister = false;
   view = 0;
   formData: any = {
-    email: null,
+    phone: null,
     password: null,
     repPassword: null,
     names: null,
@@ -134,7 +134,7 @@ export class RegistroPage implements OnInit {
       return null;
     }
 
-    if (!checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
+    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
     if (!checkPassword(this.formData.password))
       return 'Disculpe, pero debe indicar una contraseña correcta.' +
         '<br><br>Solo se permiten letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*)';
