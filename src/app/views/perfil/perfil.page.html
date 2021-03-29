@@ -125,7 +125,7 @@
     </ion-card>
 
     <ion-row class="ion-margin-top ion-padding">
-      <ion-col size="6">
+      <ion-col size="6" class="ion-no-padding">
         <ion-button
           expand="block"
           color="{{views.group.show ? 'primary' : 'light'}}"
@@ -134,7 +134,7 @@
           Núcleo familiar
         </ion-button>
       </ion-col>
-      <ion-col size="6">
+      <ion-col size="6" class="ion-no-padding">
         <ion-button
           expand="block"
           color="{{views.courses.show ? 'primary' : 'light'}}"
@@ -180,10 +180,15 @@
     </ng-template>
 
     <div class="{{views.courses.show ? '' : 'ion-hide'}} ion-margin-bottom ion-padding-bottom">
-      <ion-row class="ion-no-padding" *ngIf="views.courses.data && views.courses.data.length > 0; else noCourses">
-        <ion-col class="ion-no-margin ion-no-padding" size="12">
-          <app-coursecard *ngFor='let course of views.courses.data' [data]="course"></app-coursecard>
+      <ion-row class="ion-no-padding ion-justify-content-center ion-margin-bottom" *ngIf="views.courses.data && views.courses.data.length > 0; else noCourses">
+
+        <ion-col *ngFor="let course of views.courses.data" class="ion-text-center ion-margin-bottom" size="4">
+          <img src="assets/icon/level-{{course.level}}{{course.approved ? '' : '-gray'}}.svg" class="icon-courses">
         </ion-col>
+
+        <!--<ion-col class="ion-no-margin ion-no-padding" size="12">-->
+          <!--<app-coursecard *ngFor='let course of views.courses.data' [data]="course"></app-coursecard>-->
+        <!--</ion-col>-->
       </ion-row>
       <ng-template #noCourses>
         <ion-card>
@@ -204,6 +209,8 @@
       </ion-card-content>
     </ion-card>
   </ng-template>
+
+  <div class="ion-margin-top ion-margin-bottom"><br></div>
 
   <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
     <ion-fab-button color="primary">

@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ModalController, NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CursoService} from './curso.service';
 import {ICursoData} from './course.model';
 import {GlobalService} from '../../services/global.service';
 import {CookiesService} from '../../services/cookies.service';
 import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
+import {ModalContenidoTemaPage} from './modal-contenido-tema/modal-contenido-tema.page';
+import {ModalExamenTemaPage} from './modal-examen-tema/modal-examen-tema.page';
 
 @Component({
   selector: 'app-curso',
@@ -25,7 +27,6 @@ export class CursoPage implements OnInit, OnDestroy {
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private coursesService: CursoService,
-    private modalController: ModalController,
     private router: Router,
   ) {
     // check if exist session
@@ -61,27 +62,6 @@ export class CursoPage implements OnInit, OnDestroy {
     else await this.globalSer.dismissLoading();
   }
 
-  async addCourse() {
-    await this.globalSer.presentLoading();
-    const data: any = await this.coursesService.addCourse(this.slug);
-
-    if (data && !data.error) {
-      this.dataCourseUser = data;
-      this.cookiesService.setCookie(this.slug, this.dataCourseUser);
-      this.activeClickTemary = true;
-      await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert(
-        '¡Éxito!',
-        'Se ha agregado el curso a su listado. Ahora puede acceder al contenido.'
-      );
-    }
-    else if (data && data.error) {
-      await this.globalSer.dismissLoading();
-      await this.globalSer.errorSession();
-    }
-    else await this.globalSer.dismissLoading();
-  }
-
   async setSlug() {
     await this.activateRoute.paramMap.subscribe(paramMap => {
       this.slug = paramMap.get('slug');
@@ -97,23 +77,78 @@ export class CursoPage implements OnInit, OnDestroy {
     this.cookiesService.removeCookie(this.slug);
   }
 
-  async goToTemary(id: string) {
-    await this.router.navigate([`/curso/${this.course.slug}/temario/${id}`]);
+  /*
+  Temary actions
+   */
+  async openClassModal(i: number) {
+    const open = i === 0 || (this.course.temary[i - 1] && this.course.temary[i - 1].view === 2);
+    if (!open) {
+      await this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe visualizar el tema anterior para poder continuar.');
+    }
+    else {
+      const updateOnDismiss = async () => {
+        // send data to update the view history
+        const view = await this.updateHistorical(this.course.temary[i]._id, '2');
+        if (view) this.course.temary[i].view = view;
+        if (this.dataCourseUser){
+          const index = this.dataCourseUser.course.temary.findIndex((d: any) => d.temaryId === this.course.temary[i]._id);
+          if (index > -1) {
+            this.dataCourseUser.course.temary[index].view = this.course.temary[i].view;
+            this.cookiesService.setCookie(this.slug, this.dataCourseUser);
+          }
+          let acc = 0;
+          this.dataCourseUser.course.temary.forEach(t => { acc += t.view === 2 ? 1 : 0; });
+          if (acc === this.dataCourseUser.course.temary.length) {
+            await this.globalSer.presentAlert(
+              '¡Éxito!',
+              'Ha completado el curso exitosamente. Ahora puede continuar con el siguiente nivel.'
+            );
+          }
+        }
+      };
+      await this.globalSer.presentLoading();
+      const theme = this.course.temary[i] || null;
+
+      if (theme) {
+        if (theme.quiz) {
+          const updateViewQuiz = (update) => {
+            if (update) this.course.temary[i].view = 2;
+          };
+          const content: any = {
+            slug: this.slug,
+            themeId: theme._id,
+            title: theme.title,
+            test: theme.quiz
+          };
+          await this.globalSer.dismissLoading();
+          await this.globalSer.loadModal(
+            ModalExamenTemaPage,
+            content,
+            false,
+            updateViewQuiz
+          );
+        }
+        else {
+          // send data to update the view history
+          this.updateHistorical(this.course.temary[i]._id, '1');
+          await this.globalSer.dismissLoading();
+          await this.globalSer.loadModal(
+            ModalContenidoTemaPage,
+            { content: theme },
+            false,
+            updateOnDismiss
+          );
+        }
+      }
+      else {
+        await this.globalSer.dismissLoading();
+        await this.globalSer.presentAlert('Alerta', 'Ha ocurrido un error al momento de cargar el contenido.');
+        await this.navCtrl.back();
+      }
+    }
   }
 
-  async showAlertRejectAction() {
-    await this.globalSer.presentAlert(
-      'Alerta',
-      'Disculpe, pero no puede acceder al contenido hasta no haber agregado el curso a su listado.'
-    );
+  async updateHistorical(themeId: string, action: string): Promise<number> {
+    return this.coursesService.updateHistoricalThemeCourse(this.slug, themeId, action);
   }
-
-  async showConfirmAddCourse() {
-    await this.globalSer.alertConfirm({
-      header: 'Confirme',
-      message: '¿Está seguro qué desea agregar este curso a su listado?',
-      confirmAction: () => this.addCourse()
-    });
-  }
-
 }

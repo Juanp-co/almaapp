@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {GlobalService} from '../../../services/global.service';
 import {ICursoExamen, ICursoExamenFinalizado} from '../course.model';
@@ -31,8 +30,6 @@ export class ModalExamenTemaPage implements OnInit {
   questionsModel: any = {};
 
   constructor(
-    private activateRoute: ActivatedRoute,
-    private alertController: AlertController,
     private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private cursoService: CursoService,
@@ -153,14 +150,14 @@ export class ModalExamenTemaPage implements OnInit {
 
     if (answer && !answer.error) {
       this.finishedTest = answer;
-      const dataCourseUser = this.cookiesService.getCookie(this.slug);
-      const index = dataCourseUser.temary.findIndex(t => t._id === this.themeId);
-      if (index > -1) {
-        dataCourseUser.temary[index].view = 2;
-        dataCourseUser.temary[index].approved = this.finishedTest.approved;
-        dataCourseUser.temary[index].approvedDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
-        dataCourseUser.temary[index].date = dayjs().format('YYYY-MM-DD HH:mm:ss');
-        this.cookiesService.setCookie(this.slug, dataCourseUser);
+      const dataCourseUser: any = this.cookiesService.getCookie(this.slug);
+      if (dataCourseUser) {
+        const index = dataCourseUser.course ? dataCourseUser.course?.temary.findIndex(t => t._id === this.themeId) : -1;
+        if (index > -1) {
+          dataCourseUser.course.temary[index].view = 2;
+          dataCourseUser.course.temary[index].date = dayjs().format('YYYY-MM-DD HH:mm:ss');
+          this.cookiesService.setCookie(this.slug, dataCourseUser);
+        }
       }
       await this.globalSer.dismissLoading();
     }
@@ -178,14 +175,14 @@ export class ModalExamenTemaPage implements OnInit {
     return true;
   }
 
-  async closeModal() {
-    await this.modalController.dismiss();
+  async closeModal(update = false) {
+    await this.modalController.dismiss(update);
   }
 
   async dismiss() {
     await this.globalSer.alertConfirm({
       header: 'Saliendo del examen',
-      message: '¿Está seguro qué desea salir del examen?<br/><br/>NOTA: Se perderá todo el progreso.',
+      message: '¿Está seguro qué desea salir?<br/><br/>NOTA: Se perderá todo el progreso.',
       confirmAction: async () => await this.modalController.dismiss()
     });
   }

@@ -14,23 +14,12 @@ import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
 export class EscuelaPage implements OnInit {
 
   courses: IEscuela[] | null = null;
-  totals = 0;
-  pages = 0;
-  page = 1;
-  showSearch = false;
   queryParams: any = {
-    input: 'title',
+    input: 'level',
     value: 1,
     page: 1,
-    limit: 10,
-    title: null
+    limit: 100
   };
-
-  handlePage = (page: number): void => {
-    this.queryParams.page = page;
-    this.courses = [];
-    this.getCoursesList();
-  }
 
   constructor(
     private globalSer: GlobalService,
@@ -47,40 +36,7 @@ export class EscuelaPage implements OnInit {
   async ionViewWillEnter() {
     if (!this.globalSer.checkSession())
       this.router.navigate(['/']);
-    else await this.getTotals();
-  }
-
-  async getTotals() {
-    this.totals = 0;
-    this.pages = 0;
-    const totals: any = await this.escuelaServ.getCoursesTotals(this.queryParams);
-
-    if (!!totals && totals >= 0 && !totals.error) {
-      this.totals = totals;
-      this.pages = this.globalSer.getPagination(totals, this.queryParams.limit);
-
-      if (totals > 0) await this.getCoursesList();
-      else {
-        this.queryParams.page = 1;
-        this.pages = 0;
-        this.courses = [];
-      }
-    }
-    else if (!!totals && totals.error) {
-      this.queryParams.page = 1;
-      this.pages = 0;
-      this.courses = [];
-      if (totals.status && totals.status === 401) {
-        await this.globalSer.dismissLoading();
-        await this.globalSer.errorSession();
-      }
-    }
-    else {
-      this.queryParams.page = 1;
-      this.pages = 0;
-      this.courses = [];
-      await this.globalSer.dismissLoading();
-    }
+    else await this.getCoursesList();
   }
 
   async getCoursesList() {
@@ -91,8 +47,8 @@ export class EscuelaPage implements OnInit {
       this.courses = data as IEscuela[];
       this.courses.forEach(c => {
         c.description = setSaltLinesOrBr(c.description, true);
-        if (c.description.length > 150) {
-          c.description = `${c.description.substr(0, 150)} ...`;
+        if (c.description.length > 50) {
+          c.description = `${c.description.substr(0, 50)} ...`;
         }
       });
       await this.globalSer.dismissLoading();
@@ -105,66 +61,15 @@ export class EscuelaPage implements OnInit {
   }
 
   // query actions
-  setShowSearch() {
-    this.showSearch = !this.showSearch;
-  }
-
-  async findData(closeSearch = false) {
-    if (closeSearch) this.setShowSearch();
-    this.queryParams.page = 1;
-    this.pages = 0;
-    this.courses = null;
-    await this.getTotals();
-  }
-
-  async setSortOrder() {
-    this.queryParams.value = this.queryParams.value === 1 ? -1 : 1;
-    this.queryParams.page = 1;
-    this.courses = null;
-    await this.getCoursesList();
-  }
-
-  async setQueryValues() {
-
-    const updated = (selectedValue: any) => {
-      this.queryParams.limit = selectedValue;
-      this.queryParams.page = 1;
-      this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
-      this.courses = null;
-      this.getCoursesList();
-    };
-
-    await this.globalSer.alertWithList({
-      header: 'Resultados por página',
-      inputs: [
-        {
-          name: `results-per-page`,
-          type: 'radio',
-          label: `10`,
-          value: 10,
-          checked: this.queryParams.limit === 10,
-        },
-        {
-          name: `results-per-page`,
-          type: 'radio',
-          label: `20`,
-          value: 20,
-          checked: this.queryParams.limit === 20,
-        },
-        {
-          name: `results-per-page`,
-          type: 'radio',
-          label: `30`,
-          value: 30,
-          checked: this.queryParams.limit === 30,
-        },
-      ],
-      confirmAction: updated
-    });
-  }
-
   async goToDetails(slug: string|null = null) {
     await this.router.navigate([`curso/${slug}`]);
+  }
+
+  async msgCantView() {
+    await this.globalSer.presentAlert(
+      'Alerta',
+      'Disculpe, pero de debe completar los niveles anteriores para poder acceder este curso.'
+    );
   }
 
 }
