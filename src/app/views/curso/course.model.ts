@@ -1,8 +1,3 @@
-export interface ICursoContent {
-  _id: string;
-  title: string | null;
-}
-
 export interface ICursoLevels {
   _id: string;
   title: string;
@@ -13,7 +8,9 @@ export interface ICursoTemary {
   _id: string;
   title: string;
   description: string | null;
-  content: ICursoContent[];
+  urlVideo: string | null;
+  quiz: ICursoExamen[] | null;
+  view: number;
 }
 
 export interface ICursoTemarioExtended {
@@ -28,6 +25,7 @@ export interface ICursoTemarioContent {
   _id: string;
   title: string;
   description: string | null;
+  quiz: ICursoExamen[] | null;
   view: number;
   content: ICursoTemarioExtended[];
 }
@@ -42,6 +40,7 @@ export interface ICursoData {
   levels: ICursoLevels[];
   speaker: string;
   speakerPosition: string;
+  level: string;
   temary: ICursoTemary[];
 }
 

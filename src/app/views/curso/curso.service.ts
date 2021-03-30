@@ -18,36 +18,19 @@ export class CursoService {
     return this.globalSer.altResponse(res);
   }
 
-  async addCourse(slug: string) {
-    const res: any = await this.axios.postData(`/courses/${slug}/add`);
-    if (res && res.success) return res.data.added;
-    return this.globalSer.altResponse(res);
-  }
-
   /*
     Temary
    */
-  async getThemeCourse(slug: string, themeId: string) {
-    const res: any = await this.axios.getData(`/courses/${slug}/theme/${themeId}`);
-    if (res && res.success) return res.data.theme;
-    return this.globalSer.altResponse(res);
-  }
 
-  async updateHistoricalThemeCourse(slug: string, temaryId: string, contentId: string, action: string): Promise<number|null> {
+  async updateHistoricalThemeCourse(slug: string, temaryId: string, action: string): Promise<number|null> {
     const res: any = await this.axios.putData(
-      `/courses/${slug}/theme/${temaryId}/content/${contentId}/${action}`,
+      `/courses/${slug}/theme/${temaryId}/${action}`,
     );
     return res && res.success && res.data && res.data.updated ? 2 : null;
   }
 
-  async getTestThemeCourse(slug: string, themeId: string) {
-    const res: any = await this.axios.getData(`/courses/${slug}/theme/${themeId}/test`);
-    if (res && res.success) return res.data.test;
-    return this.globalSer.altResponse(res);
-  }
-
   async sendAnswer(slug: string, themeId: string, data) {
-    const res: any = await this.axios.postData(`/courses/${slug}/theme/${themeId}/test`, { data });
+    const res: any = await this.axios.postData(`/courses/${slug}/theme/${themeId}/quiz`, { data });
     if (res && res.success) return res.data;
     return this.globalSer.altResponse(res);
   }

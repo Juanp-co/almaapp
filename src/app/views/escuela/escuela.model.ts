@@ -4,6 +4,7 @@ export interface IEscuela {
   speakerPosition: string | null;
   title: string;
   slug: string;
-  banner: string | null;
   description: string | null;
+  level: number;
+  enable: boolean;
 }

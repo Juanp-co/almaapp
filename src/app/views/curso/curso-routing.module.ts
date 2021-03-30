@@ -9,15 +9,6 @@ const routes: Routes = [
     component: CursoPage
   },
   {
-    path: 'temario',
-    children: [
-      {
-        path: ':themeId',
-        loadChildren: () => import('./temario/temario.module').then( m => m.TemarioPageModule)
-      }
-    ]
-  },
-  {
     path: 'modal-contenido-tema',
     loadChildren: () => import('./modal-contenido-tema/modal-contenido-tema.module').then( m => m.ModalContenidoTemaPageModule)
   },

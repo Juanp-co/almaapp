@@ -13,7 +13,7 @@ export class InicioPage implements OnInit {
 
   login = false;
   userData: any = null;
-  phone = '31612345678';
+  phone = '3161234567';
   pass = 'password';
 
   opciones = [

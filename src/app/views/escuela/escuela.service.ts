@@ -12,13 +12,6 @@ export class EscuelaService {
     private axios: AxiosService
   ) { }
 
-  async getCoursesTotals(query = {}): Promise<any> {
-    const res: any = await this.axios.getData('/courses/counters', query);
-
-    if (res && res.success) return res.data.totals;
-    return this.globalSer.altResponse(res);
-  }
-
   async getCourses(query = {}) {
     const res: any = await this.axios.getData('/courses', query);
     if (res && res.success) return res.data.courses;
