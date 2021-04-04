@@ -14,4 +14,9 @@ export class PadresService {
     const res: any = await this.axios.getData('/user/referrals');
     return res && res.success ? res && res.data : null;
   }
+
+  async getFamiliesGroups() {
+    const res: any = await this.axios.getData('/families-groups');
+    return res && res.success ? res && res.data.groups : [];
+  }
 }

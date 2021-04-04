@@ -1,0 +1,253 @@
+<ion-content>
+  <ion-header color="primary">
+    <ion-toolbar class="ion-no-padding ion-no-margin">
+      <div class="fondoCool">
+        <ion-row>
+          <ion-col class="ion-margin-top">
+            <ion-buttons>
+              <ion-button color="light" (click)="confirmCancel()">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="8" class="ion-margin-top">
+            <ion-text color="light" class="titulo1">Reportar</ion-text>
+          </ion-col>
+          <ion-col>
+            <img src="assets/logo.png" class="logo-2">
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text color="medium">
+            <i class="toSmall">
+              Seleccione un grupo y complete todos los campos del formulario para poder enviar el reporte del grupo.
+              Si algún campo no tiene registro puede rellenarlo con un cero (0).
+            </i>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Grupo</ion-label>
+            <ion-input
+              [readonly]="true"
+              [value]="getNumberGroup()"
+              autocomplete="off"
+              class="no-selected-text"
+              (click)="showListGroups(selected ? (selected._id || null) : null)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº Hermanos (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.brethren"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de amigos de los hnos. (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.friends"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº niños cristianos (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.christianChildren"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de amigos de los niños (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.christianChildrenFriends"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de conversiones (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.conversions"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de conversiones con niños (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.conversionsChildren"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Total en ofrendas (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.offering"
+              autocomplete="off"
+              maxlength="15"
+              (keypress)="validateOnlyNumber($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de visitas programadas (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.scheduledVisits"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de visitas al discipulado (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.discipleshipVisits"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de asistencias a la iglesia (Hnos.) (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.churchAttendance"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de asistencias a la iglesia (Niños) (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.churchAttendanceChildren"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de reconciliaciones (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.reconciliations"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de hermanos planificando (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.brethrenPlanning"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de lecturas bíblicas (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.bibleReading"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Nº de consolidados (*)</ion-label>
+            <ion-input
+              [(ngModel)]="formData.consolidated"
+              autocomplete="off"
+              maxlength="4"
+              (keypress)="validateOnlyNumber2($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Observaciones (*)</ion-label>
+            <ion-textarea
+              [(ngModel)]="formData.observations"
+              rows="5"
+              class="ion-text-uppercase"
+              placeholder="Indica alguna observación..."
+            ></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="6">
+          <ion-item>
+            <ion-label position="floating" color="medium">Fecha del reporte (*)</ion-label>
+            <ion-datetime
+              [(ngModel)]="formData.date"
+              displayFormat="DD/MM/YYYY"
+              [min]="minInitDate"
+              [max]="maxInitDate"
+              doneText="Listo"
+              cancelText="Cancelar"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="12" class="ion-margin-top">
+          <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+        </ion-col>
+        <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+          <ion-button color="light" (click)="confirmCancel()">
+            <ion-icon name="close-outline" slot="start"></ion-icon>
+            <ion-text>Cancelar</ion-text>
+          </ion-button>
+          <ion-button color="primary" (click)="confirmAddReport()">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            <ion-text>Guardar</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
