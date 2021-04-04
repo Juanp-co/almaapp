@@ -12,14 +12,13 @@ import {PadresService} from './padres.service';
 })
 export class PadresPage implements OnInit {
   referrals: any[] = [];
+  totalsGroups = 0;
   referred: any = null;
   totals = 0;
 
   constructor(
-    private globalSer: GlobalService,
-    private navCtrl: NavController,
     private padreService: PadresService,
-    private cookieService: CookiesService,
+    private router: Router,
   ) { }
 
   async ngOnInit() {
@@ -27,16 +26,16 @@ export class PadresPage implements OnInit {
   }
 
   async getData() {
-    const token = this.cookieService.getCookie('token');
-    if (token) {
-      const data = await this.padreService.getReferrals();
-
-      if (data) {
-        this.referrals = data.referrals;
-        this.referred = data.referred;
-        this.totals = data.totals;
-      }
+    const data = await this.padreService.getReferrals();
+    if (data) {
+      this.referrals = data.referrals;
+      this.referred = data.referred;
+      this.totals = data.totals;
+      this.totalsGroups = data.totalsGroups;
     }
-    else await this.globalSer.errorSession();
+  }
+
+  async goToFamiliesGroups() {
+    await this.router.navigate([`grupos-familiares`]);
   }
 }

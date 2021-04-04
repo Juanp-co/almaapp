@@ -61,6 +61,10 @@ const routes: Routes = [
     path: 'recuperar-acceso',
     loadChildren: () => import('./views/recuperar-acceso/recuperar-acceso.module').then( m => m.RecuperarAccesoPageModule)
   },
+  {
+    path: 'grupos-familiares',
+    loadChildren: () => import('./views/grupos-familiares/grupos-familiares.module').then( m => m.GruposFamiliaresPageModule)
+  },
 ];
 
 @NgModule({
