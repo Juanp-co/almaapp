@@ -105,6 +105,24 @@ export class ModalExamenTemaPage implements OnInit {
     }
   }
 
+  async confirmFinishTest() {
+
+    // check required answer
+    if (this.checkAnswerSections(this.viewSelected)) {
+      await this.globalSer.presentAlert(
+        'Alerta',
+        'Disculpe, pero debe asegurarse de responder las preguntas obligatorias de esta sección.'
+      );
+      return false;
+    }
+
+    await this.globalSer.alertConfirm({
+      header: 'Finalizando Quiz',
+      message: '¿Está seguro qué desea finalizar el Quiz?<br/><br/>NOTA: Una vez enviadas las respuetas, no podrá modificarse.',
+      confirmAction: async () => await this.finishTest()
+    });
+  }
+
   async finishTest(): Promise<boolean> {
     await this.globalSer.presentLoading();
 
@@ -181,8 +199,8 @@ export class ModalExamenTemaPage implements OnInit {
 
   async dismiss() {
     await this.globalSer.alertConfirm({
-      header: 'Saliendo del examen',
-      message: '¿Está seguro qué desea salir?<br/><br/>NOTA: Se perderá todo el progreso.',
+      header: 'Saliendo del Quiz',
+      message: '¿Está seguro qué desea cerrar esta ventana?<br/><br/>NOTA: Se perderá todo el progreso.',
       confirmAction: async () => await this.modalController.dismiss()
     });
   }

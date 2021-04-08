@@ -4,15 +4,17 @@
   </ion-header>
 
   <ion-row class="ion-margin-top ion-no-padding" *ngIf="referred">
+    <ion-col size="12">
+      <ion-text><b class="ion-margin-start">Mi padre espiritual</b></ion-text>
+    </ion-col>
     <ion-col size="12" size-sm="6" size-md="4" size-lg="3">
-      <b class="ion-margin-start">Mi padre espiritual</b><br>
       <app-personcard [data]="referred"></app-personcard>
     </ion-col>
   </ion-row>
 
   <ion-row class="ion-margin-top ion-no-padding" *ngIf="referrals && referrals.length > 0; else noReferrals">
     <ion-col size="12">
-      <ion-text><b>Mis hijos espirituales ({{ totals }})</b></ion-text>
+      <ion-text><b class="ion-margin-start">Mis hijos espirituales ({{ totals }})</b></ion-text>
     </ion-col>
     <ion-col class="ion-margin-top ion-no-padding" size="12" size-sm="6" size-md="4" size-lg="3" *ngFor='let referred of referrals'>
       <app-personcard [data]="referred"></app-personcard>
