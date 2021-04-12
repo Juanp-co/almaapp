@@ -15,12 +15,12 @@ export class CookiesService {
   }
 
   removeCookie(key: string) {
-    cookie.remove(key, { expires: 1 });
+    cookie.remove(key, { path: '' });
   }
 
   setCookie(key: string, value: any) {
     cookie.set(key, value, {
-      expires: 1,
+      expires: 500,
       path: '/'
     });
   }

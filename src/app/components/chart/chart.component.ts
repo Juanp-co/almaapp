@@ -57,7 +57,6 @@ export class ChartComponent implements OnInit, AfterViewInit {
             if (d) this.totals += d.length;
           });
         }
-        else this.totals = this.data.data.length;
       }
     }
   }

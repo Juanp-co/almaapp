@@ -85,7 +85,14 @@
       <app-chart
         [data]="data.referrals"
         title="Mis hijos espirituales"
-        typeChart="bar"
+        typeChart="pie"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" *ngIf="data.referrals">
+      <app-chart
+        [data]="data.visits"
+        title="Visitas"
+        typeChart="pie"
       ></app-chart>
     </ion-col>
   </ion-row>

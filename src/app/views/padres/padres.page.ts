@@ -22,6 +22,10 @@ export class PadresPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // await this.getData();
+  }
+
+  async ionViewWillEnter() {
     await this.getData();
   }
 
@@ -37,5 +41,9 @@ export class PadresPage implements OnInit {
 
   async goToFamiliesGroups() {
     await this.router.navigate([`grupos-familiares`]);
+  }
+
+  async goToAddNewMember() {
+    await this.router.navigate([`/padres/nuevo-miembro`]);
   }
 }

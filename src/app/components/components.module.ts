@@ -10,6 +10,7 @@ import {PaginatorComponent} from './paginator/paginator.component';
 import {PersoncardComponent} from './personcard/personcard.component';
 import {PersoncardtwoComponent} from './personcardtwo/personcardtwo.component';
 import {VideoPlayerComponent} from './video-player/video-player.component';
+import {VisitscardComponent} from './visitscard/visitscard.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     PersoncardComponent,
     PersoncardtwoComponent,
     VideoPlayerComponent,
+    VisitscardComponent,
   ],
   imports: [
     CommonModule, IonicModule
@@ -34,6 +36,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     PersoncardComponent,
     PersoncardtwoComponent,
     VideoPlayerComponent,
+    VisitscardComponent,
   ]
 })
 export class ComponentsModule { }

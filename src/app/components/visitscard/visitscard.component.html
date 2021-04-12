@@ -1,0 +1,11 @@
+<ion-card class="ion-no-padding ion-no-margin" *ngIf="visit">
+  <ion-card-content>
+    <ion-row>
+      <ion-col size="12">
+        <ion-text><b>{{ visit.observation || 'Sin observación.' }}</b></ion-text><br/>
+        <ion-text><b>Fecha:</b> {{ visit.date || '' }}</ion-text><br/>
+        <ion-text class="ion-margin-top"><i class="toSmall">Toca para más información.</i></ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

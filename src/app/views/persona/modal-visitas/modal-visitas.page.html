@@ -1,0 +1,94 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Visitas" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col [size]="12" *ngIf="!showForm">
+      <ion-row>
+        <ion-col size="12" class="ion-text-end">
+          <ion-button (click)="setShowForm()">
+            <ion-icon name="add-outline" slot="start"></ion-icon>
+            Registrar visita
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-margin-bottom" *ngIf="visits && visits.length > 0; else noVisits">
+
+        <ion-col size="12" *ngFor="let v of visits; let i=index">
+          <app-visitscard [visit]="v" (click)="showVisit(i)"></app-visitscard>
+        </ion-col>
+
+        <ion-col>
+          <br>
+        </ion-col>
+
+      </ion-row>
+
+      <ng-template #noVisits>
+        <ion-card>
+          <ion-card-content>
+            <ion-text class="ion-text-center" color="medium">
+              <p><ion-icon name="alert-circle-outline"></ion-icon> No existen visitas registradas para este miembro.</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </ion-col>
+    <ion-col [size]="12" *ngIf="showForm">
+      <ion-card class="ion-no-padding">
+        <ion-card-content>
+          <ion-row>
+            <ion-col [size]="12">
+              <ion-text color="medium">
+                <i>Registre la visita realizada a su hijo espiritual. Indique la fecha y la observación realizada.</i>
+              </ion-text>
+            </ion-col>
+            <ion-col class="" size="12">
+              <ion-row>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Fecha de la visita (*)</ion-label>
+                    <ion-datetime
+                      [(ngModel)]="formData.date"
+                      displayFormat="DD/MM/YYYY"
+                      [min]="minInitDate"
+                      [max]="maxInitDate"
+                      doneText="Listo"
+                      cancelText="Cancelar"
+                    ></ion-datetime>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Observaciones (*)</ion-label>
+                    <ion-textarea
+                      [(ngModel)]="formData.observation"
+                      rows="5"
+                      class="ion-text-uppercase"
+                      placeholder="Indica alguna observación..."
+                    ></ion-textarea>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-margin-top">
+                  <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+                </ion-col>
+                <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                  <ion-button color="light" (click)="confirmCancelForm()">
+                    <ion-icon name="close-outline" slot="start"></ion-icon>
+                    <ion-text>Cancelar</ion-text>
+                  </ion-button>
+                  <ion-button color="primary" (click)="confirmSave()">
+                    <ion-icon name="save-outline" slot="start"></ion-icon>
+                    <ion-text>Guardar</ion-text>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
