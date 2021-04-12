@@ -36,9 +36,20 @@
     </ion-row>
   </ng-template>
 
-  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="totalsGroups > 0">
-    <ion-fab-button color="primary" (click)="goToFamiliesGroups()">
+  <ion-fab class="ion-margin-start ion-margin-bottom" vertical="bottom" horizontal="start" slot="fixed" *ngIf="totalsGroups > 0">
+    <ion-fab-button color="secondary" (click)="goToFamiliesGroups()">
       <ion-icon name="people-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="totalsGroups > 0">
+    <ion-fab-button color="primary" (click)="goToAddNewMember()">
+      <ion-icon name="person-add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div>
+    <br>
+    <br>
+  </div>
 </ion-content>

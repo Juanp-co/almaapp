@@ -6,7 +6,7 @@
           <ion-icon name="chevron-{{view.show ? 'up' : 'down' }}-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-text color="light"><b class="light">{{title}} ({{ totals }})</b></ion-text>
+      <ion-text color="light"><b class="light">{{title}} {{ totals > 0 ? '(' + totals + ')' : '' }}</b></ion-text>
       <ion-buttons slot="end">
         <ion-button (click)="downloadPicture()">
           <ion-icon name="image-outline" slot="start"></ion-icon>

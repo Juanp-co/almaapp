@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: PersonaPage
+  },
+  {
+    path: 'modal-visitas',
+    loadChildren: () => import('./modal-visitas/modal-visitas.module').then( m => m.ModalVisitasPageModule)
+  },
+  {
+    path: 'modal-detalles-visita',
+    loadChildren: () => import('./modal-detalles-visita/modal-detalles-visita.module').then( m => m.ModalDetallesVisitaPageModule)
   }
 ];
 

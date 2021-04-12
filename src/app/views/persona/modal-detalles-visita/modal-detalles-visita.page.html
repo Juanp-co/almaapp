@@ -1,0 +1,37 @@
+<ion-content *ngIf="data">
+
+  <ion-header>
+    <app-minheader title="Detalles visita" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-text class="ion-margin-start"><b>Visita realizada por: </b></ion-text>
+    </ion-col>
+    <ion-col size="12">
+      <app-personcard [disabledClick]="true" [data]="data.consolidator"></app-personcard>
+    </ion-col>
+    <ion-col size="12">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col [size]="12">
+              <ion-text>
+                <b>Fecha: </b> {{ data.date }}
+              </ion-text>
+            </ion-col>
+            <ion-col [size]="12">
+              <ion-text>
+                <b>Observación:</b><br>
+              </ion-text>
+              <ion-text>
+                {{ data.observation }}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

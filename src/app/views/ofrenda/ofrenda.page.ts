@@ -29,7 +29,7 @@ export class OfrendaPage implements OnInit {
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
-      this.globalSer.dismissLoading();
+      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
     else await this.globalSer.dismissLoading();
