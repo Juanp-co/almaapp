@@ -19,6 +19,12 @@
       <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
         <ion-row class="ion-margin-top" *ngIf="views.info.data">
           <ion-col size="5">
+            <ion-text><b>Teléfono:</b></ion-text>
+          </ion-col>
+          <ion-col size="7">
+            <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="5">
             <ion-text><b>Nombre(s):</b></ion-text>
           </ion-col>
           <ion-col size="7">
@@ -31,22 +37,16 @@
             <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
           </ion-col>
           <ion-col size="5">
-            <ion-text><b>Correo electrónico:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Teléfono:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
             <ion-text><b>Fecha de nac.:</b></ion-text>
           </ion-col>
           <ion-col size="7">
             <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
+          </ion-col>
+          <ion-col size="5">
+            <ion-text><b>Correo electrónico:</b></ion-text>
+          </ion-col>
+          <ion-col size="7">
+            <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
           </ion-col>
           <ion-col size="5">
             <ion-text><b>Sexo:</b></ion-text>

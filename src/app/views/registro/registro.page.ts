@@ -28,8 +28,6 @@ export class RegistroPage implements OnInit {
     repPassword: null,
     names: null,
     lastNames: null,
-    documentType: null,
-    document: null,
     referred: null,
   };
 
@@ -48,10 +46,7 @@ export class RegistroPage implements OnInit {
 
   async registerMember() {
     await this.globalSer.presentLoading('Registrando, por favor espere ...');
-
     const data: any = {...this.formData};
-    data.document = `${data.documentType}${data.document}`;
-
     const res = await this.registroService.register(data);
 
     if (res && !res.error) {
@@ -124,17 +119,12 @@ export class RegistroPage implements OnInit {
 
   validateData(view: number|null = null): string|null {
     if (view === 1) {
-      if (!/^([CC|CE|PE|TI|PAS]){2,3}/.test(this.formData.documentType)) return 'Disculpe, pero debe indicar el tipo de documento.';
-      if (!/[0-9]{5,10}/.test(this.formData.document)) return 'Disculpe, pero debe indicar el número de documento de identidad.';
       if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
       if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
-      if (this.formData.referred && !checkDocument(`${this.formData.referred.toUpperCase()}`))
-        return 'Disculpe, pero debe indicar un número de documento correcto del miembro (ejm: CC12345678).';
-
       return null;
     }
 
-    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
+    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido. Ejm: 3161234567';
     if (!checkPassword(this.formData.password))
       return 'Disculpe, pero debe indicar una contraseña correcta.' +
         '<br><br>Solo se permiten letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*)';
@@ -150,8 +140,7 @@ export class RegistroPage implements OnInit {
     if (!validated) {
       await this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: '¿Está seguro qué desea registrarse con esta información?' +
-        '<br/><br/><b>NOTA</b>: Le recomendamos verificar su número de documento, ya que una vez registrado no podrá modificarlo.',
+        message: '¿Está seguro qué desea registrarse con esta información?',
         confirmAction: () => this.registerMember()
       });
     }
