@@ -15,29 +15,6 @@
             </ion-col>
             <ion-col size="12">
               <ion-item>
-                <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
-                <ion-input
-                  [readonly]="true"
-                  [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
-                  (click)="showAlertDocumentList(formData.documentType)"
-                ></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
-                <ion-input
-                  [(ngModel)]="formData.document"
-                  autocomplete="off"
-                  maxlength="10"
-                  (keypress)="validateOnlyNumbers($event)"
-                  class="ion-text-uppercase"
-                >
-                </ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12">
-              <ion-item>
                 <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
                 <ion-input
                   [(ngModel)]="formData.names"
@@ -57,23 +34,6 @@
                   class="ion-text-uppercase"
                 ></ion-input>
               </ion-item>
-            </ion-col>
-            <ion-col size="12">
-              <ion-item lines="none">
-                <ion-checkbox slot="start" (click)="showInputReferred()"></ion-checkbox>
-                <ion-label color="medium">Tengo un padre espiritual.</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" *ngIf="referred || formData.referred">
-              <ion-item>
-                <ion-label position="floating" color="medium">Nº de documento del padre esp.</ion-label>
-                <ion-input
-                  [(ngModel)]="formData.referred"
-                  autocomplete="off"
-                  class="ion-text-uppercase"
-                ></ion-input>
-              </ion-item>
-              <ion-text color="medium"><i>Ejm: CC12345678</i></ion-text>
             </ion-col>
             <ion-col size="12" class="ion-margin-top">
               <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>

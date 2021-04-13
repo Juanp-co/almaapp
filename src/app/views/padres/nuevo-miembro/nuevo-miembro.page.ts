@@ -21,8 +21,6 @@ export class NuevoMiembroPage implements OnInit {
   successRegister = false;
   successData: string|null = null;
   formData: any = {
-    documentType: null,
-    document: null,
     phone: null,
     names: null,
     lastNames: null,
@@ -32,7 +30,6 @@ export class NuevoMiembroPage implements OnInit {
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private padreService: PadresService,
-    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -40,11 +37,7 @@ export class NuevoMiembroPage implements OnInit {
 
   async registerMember() {
     await this.globalSer.presentLoading('Registrando, por favor espere ...');
-
-    const data: any = {...this.formData};
-    data.document = `${data.documentType}${data.document}`;
-
-    const res = await this.padreService.saveMember(data);
+    const res: any = await this.padreService.saveMember({...this.formData});
 
     if (res && !res.error) {
       this.successData = res;
@@ -107,11 +100,9 @@ export class NuevoMiembroPage implements OnInit {
   }
 
   validateData(): string|null {
-    if (!/^([CC|CE|PE|TI|PAS]){2,3}/.test(this.formData.documentType)) return 'Disculpe, pero debe indicar el tipo de documento.';
-    if (!/[0-9]{5,9}/.test(this.formData.document)) return 'Disculpe, pero debe indicar el número de documento de identidad.';
+    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido. Ejm: 3161234567';
     if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
-    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
     return null;
   }
 
@@ -125,9 +116,7 @@ export class NuevoMiembroPage implements OnInit {
         confirmAction: () => this.registerMember()
       });
     }
-    else {
-      await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');
-    }
+    else await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');
   }
 
 }
