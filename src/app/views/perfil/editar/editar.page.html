@@ -25,6 +25,24 @@
               <ion-input [(ngModel)]="formData.lastNames" autocomplete="off" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-item>
+              <ion-label position="floating" color="medium">Cargo(s) o posición</ion-label>
+              <ion-input
+                [(ngModel)]="formData.position"
+                autocomplete="off"
+                maxlength="50"
+                (keyup)="validateOnlyLetters($event)"
+                class="ion-text-uppercase"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Correo electrónico</ion-label>
+              <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+            </ion-item>
+          </ion-col>
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Fecha de nacimiento</ion-label>
@@ -38,12 +56,6 @@
                 (ionChange)="setDate()"
               >
               </ion-datetime>
-            </ion-item>
-          </ion-col>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating" color="medium">Correo electrónico</ion-label>
-              <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12">

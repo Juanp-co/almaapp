@@ -53,6 +53,16 @@
                 ></ion-input>
               </ion-item>
             </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item lines="none">
+                <ion-label color="medium">El miembro fue consolidado</ion-label>
+                <ion-checkbox
+                  slot="start"
+                  [checked]="formData.consolidated"
+                  (ionChange)="setConsolidatedValue()"
+                ></ion-checkbox>
+              </ion-item>
+            </ion-col>
             <ion-col size="12" class="ion-margin-top">
               <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
             </ion-col>
