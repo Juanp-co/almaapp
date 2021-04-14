@@ -24,6 +24,7 @@ export class NuevoMiembroPage implements OnInit {
     phone: null,
     names: null,
     lastNames: null,
+    consolidated: false
   };
 
   constructor(
@@ -68,6 +69,10 @@ export class NuevoMiembroPage implements OnInit {
     if (!value) return null;
     const da = this.documentTypes.find(d => d.val === value);
     return da ? da.label : null;
+  }
+
+  setConsolidatedValue() {
+    this.formData.consolidated = !this.formData.consolidated;
   }
 
   async showAlertDocumentList(selected: any = null) {

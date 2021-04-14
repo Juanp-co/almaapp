@@ -3,7 +3,6 @@ import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {EditarService} from './editar.service';
 import {IEditar} from './editar.model';
-import {PerfilService} from '../perfil.service';
 import {CookiesService} from '../../../services/cookies.service';
 import {GlobalService} from '../../../services/global.service';
 import {
@@ -12,7 +11,7 @@ import {
   checkIfValueIsNumber,
   checkNameOrLastName,
   checkPhone,
-  checkTitlesOrDescriptions, onlyLettersInputValidation, onlyNumbersInputValidation
+  onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
 
 @Component({
@@ -36,7 +35,6 @@ export class EditarPage implements OnInit {
   constructor(
     private editarService: EditarService,
     private cookieService: CookiesService,
-    private perfilService: PerfilService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
   ) {
@@ -172,6 +170,7 @@ export class EditarPage implements OnInit {
       const data: any = Object.assign({}, this.formData);
       data.company = data.company === 'Si';
       data.baptized = data.baptized === 'Si';
+      data.position = data.position ? data.position.trim().toUpperCase() : null;
       const updated = await this.editarService.updateProfile(data);
 
       if (updated && !updated.error) {

@@ -4,6 +4,7 @@ export interface IEditar {
   phone: string | null;
   names: string | null;
   lastNames: string | null;
+  position: string | null;
   gender: string | null;
   birthday: string | null;
   civilStatus: string | null;
