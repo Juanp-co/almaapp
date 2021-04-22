@@ -1,0 +1,37 @@
+<ion-content>
+
+  <ion-header>
+    <app-minheader title="Seleccionar miembro" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col [size]="12">
+      <ion-searchbar (ionChange)="searchInput($event)" placeholder="Buscar por teléfono o nombre" showCancelButton="focus"></ion-searchbar>
+    </ion-col>
+    <ion-col [size]="12" class="{{ searching ? '' : 'ion-hide'}} ion-padding-start ion-padding-end">
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ion-col>
+    <ion-col [size]="12" *ngIf="members.length > 0; else noMembers" class="ion-margin-bottom">
+      <ion-row>
+        <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3"*ngFor="let m of members; let i=index" >
+          <app-personcardtwo [member]="m" (click)="m !== memberSelected ? selectMember(i) : null"></app-personcardtwo>
+        </ion-col>
+        <ion-col [size]="12" class="ion-margin-top ion-margin-bottom"><br></ion-col>
+      </ion-row>
+    </ion-col>
+    <ng-template #noMembers>
+      <ion-col [size]="12">
+        <ion-card>
+          <ion-card-content>
+            <ion-text class="ion-text-center" color="medium">
+              <p>
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                {{init ? 'Busque al miembro por nombe o número de teléfono y seleccionelo.' : 'No se ha encontrado ningún miembro.'}}
+              </p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ng-template>
+  </ion-row>
+</ion-content>

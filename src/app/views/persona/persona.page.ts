@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import {PersonaService} from './persona.service';
 import {ModalVisitasPage} from './modal-visitas/modal-visitas.page';
 import { GlobalService } from '../../services/global.service';
@@ -16,8 +18,9 @@ export class PersonaPage implements OnInit {
 
   userData: any;
   visits: any[] = [];
+  genderList: any[] = [];
+  civilStatusList: any[] = [];
   id: any = null;
-  totalCourses = 0;
   totalReferrals = 0;
   group = false;
   path = '/user/referrals';
@@ -43,7 +46,10 @@ export class PersonaPage implements OnInit {
     private globalSer: GlobalService,
     private personaService: PersonaService,
     private navCtrl: NavController
-  ) { }
+  ) {
+    this.genderList = gender;
+    this.civilStatusList = civilStatus;
+  }
 
   async ngOnInit() {
     await this.activateRoute.paramMap.subscribe(paramMap => {
@@ -64,6 +70,9 @@ export class PersonaPage implements OnInit {
         this.views.info.data = data.member || null;
         this.views.info.data.civilStatus = civilStatus[this.views.info.data.civilStatus] || null;
         this.views.info.data.gender = gender[this.views.info.data.gender] || null;
+        this.views.info.data.birthday = this.views.info.data.birthday ?
+          dayjs(this.views.info.data.birthday, 'YYYY-MM-DD', true).locale('es').format('DD [de] MMMM [de] YYYY')
+          : null;
         if (this.views.info.data.department) {
           const depto = departments[this.views.info.data.department] || null;
           this.views.info.data.department = depto ? depto.department : null;

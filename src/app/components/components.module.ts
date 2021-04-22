@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {ChartComponent} from './chart/chart.component';
 import {CoursecardComponent} from './coursecard/coursecard.component';
 import {EventcardComponent} from './eventcard/eventcard.component';
+import {GrupoFamiliarCardComponent} from './grupo-familiar-card/grupo-familiar-card.component';
 import {MinheaderComponent} from './minheader/minheader.component';
 import {PaginatorComponent} from './paginator/paginator.component';
 import {PersoncardComponent} from './personcard/personcard.component';
@@ -17,6 +18,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     ChartComponent,
     CoursecardComponent,
     EventcardComponent,
+    GrupoFamiliarCardComponent,
     MinheaderComponent,
     PaginatorComponent,
     PersoncardComponent,
@@ -31,6 +33,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     ChartComponent,
     CoursecardComponent,
     EventcardComponent,
+    GrupoFamiliarCardComponent,
     MinheaderComponent,
     PaginatorComponent,
     PersoncardComponent,

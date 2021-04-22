@@ -1,6 +1,6 @@
 <ion-content class="content">
   <ion-header>
-    <app-minheader title="Detalles del miembro"></app-minheader>
+    <app-minheader title="Información del miembro"></app-minheader>
   </ion-header>
 
   <div *ngIf="views.info.data; else noData">
@@ -18,7 +18,7 @@
             </ion-toolbar>
           </ion-card-header>
           <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
-            <ion-row>
+            <ion-row class="ion-margin-top">
               <ion-col size="5">
                 <ion-text><b>Nombres:</b></ion-text>
               </ion-col>
@@ -53,13 +53,13 @@
                 <ion-text><b>Sexo:</b></ion-text>
               </ion-col>
               <ion-col size="7">
-                <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
+                <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
               </ion-col>
               <ion-col size="5">
                 <ion-text><b>Estado civil:</b></ion-text>
               </ion-col>
               <ion-col size="7">
-                <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
+                <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
               </ion-col>
               <ion-col size="5">
                 <ion-text><b>Departamento:</b></ion-text>
@@ -84,6 +84,18 @@
               </ion-col>
               <ion-col size="7">
                 <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
+              </ion-col>
+              <ion-col size="5">
+                <ion-text><b>Consolidado:</b></ion-text>
+              </ion-col>
+              <ion-col size="7">
+                <ion-text>{{views.info.data.consolidated ? 'SI' : 'NO'}}</ion-text>
+              </ion-col>
+              <ion-col size="5" *ngIf="views.info.data.consolidated">
+                <ion-text><b>Petición:</b></ion-text>
+              </ion-col>
+              <ion-col size="7" *ngIf="views.info.data.consolidated">
+                <ion-text>{{views.info.data.petition || 'No solicitada.'}}</ion-text>
               </ion-col>
             </ion-row>
           </ion-card-content>

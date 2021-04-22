@@ -1,14 +1,21 @@
-<ion-card *ngIf="person">
-  <ion-row class="ion-no-margin ion-no-padding">
-    <ion-col size="3">
-      <ion-avatar>
-        <ion-img src="/assets/icon/{{person.gender ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
-      </ion-avatar>
-    </ion-col>
-    <ion-col size="9">
-      <ion-text><p><b>{{ person.names }} {{ person.lastNames }}</b></p></ion-text>
-      <ion-text *ngIf="comment"><p>{{ comment }}</p></ion-text>
-      <ion-text class="toSmall" *ngIf="date"><p><i>Hace {{ date }}</i></p></ion-text>
-    </ion-col>
-  </ion-row>
+<ion-card
+  class="height-100"
+  *ngIf="member"
+>
+  <ion-card-content class="ion-margin-top ion-no-padding">
+    <ion-row>
+      <ion-col size="3" class="ion-text-center">
+        <ion-img class="pictureiconcard" src="/assets/icon/{{member.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
+      </ion-col>
+      <ion-col size="9">
+        <b>{{ member.names || '' }} {{ member.lastNames || '' }}</b>
+        <br/>
+        <ion-text>
+          <ion-icon name="call-outline"></ion-icon>
+          {{ member.phone || 'No indicado.' }}<br>
+        </ion-text>
+        <ion-text class="ion-margin-top"><i>Toque para seleccionar.</i></ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
 </ion-card>
