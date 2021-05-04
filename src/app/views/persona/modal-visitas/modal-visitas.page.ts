@@ -18,6 +18,7 @@ export class ModalVisitasPage implements OnInit {
 
   @Input() data: any[];
   @Input() id: string|null;
+  listActions: string[] = ['Visita', 'Llamada'];
   visits: any[] = [];
   showForm = false;
   minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
@@ -25,6 +26,7 @@ export class ModalVisitasPage implements OnInit {
   formData: any = {
     userId: null,
     observation: null,
+    action: '0',
     date: null
   };
 
@@ -53,6 +55,7 @@ export class ModalVisitasPage implements OnInit {
     if (created && !created.error) {
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', created || 'Se ha registrado la visita exitosamente.');
+      data.action = data.action === '1' ? 'Llamada' : 'Visita';
       this.data.unshift({
         consolidator: this.getMyDataToCard(),
         ...data
@@ -85,6 +88,7 @@ export class ModalVisitasPage implements OnInit {
     await this.globalSer.presentLoading();
     const content: any = {
       data: {
+        action: this.data[index].action || null,
         consolidator: this.data[index].consolidator || 'NO ENCONTRADO',
         observation: this.data[index].observation || 'No indicada.',
         date: this.data[index].date ? dayjs(this.data[index].date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY') : 'No encontrada.',
@@ -108,7 +112,7 @@ export class ModalVisitasPage implements OnInit {
   }
 
   getMyDataToCard() {
-    const data = this.cookiesService.getCookie('data');
+    const data: any = this.cookiesService.getCookie('data');
 
     if (data) {
       return {
