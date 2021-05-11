@@ -14,7 +14,7 @@
     <ion-col [size]="12" *ngIf="members.length > 0; else noMembers" class="ion-margin-bottom">
       <ion-row>
         <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3"*ngFor="let m of members; let i=index" >
-          <app-personcardtwo [member]="m" (click)="m !== memberSelected ? selectMember(i) : null"></app-personcardtwo>
+          <app-personcardtwo [member]="m"></app-personcardtwo>
         </ion-col>
         <ion-col [size]="12" class="ion-margin-top ion-margin-bottom"><br></ion-col>
       </ion-row>
