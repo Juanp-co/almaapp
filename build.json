@@ -1,0 +1,11 @@
+{
+    "android": {
+        "release": {
+            "keystore": "ccadv.keystore",
+            "storePassword": "Ccadv123+",
+            "alias": "key0",
+            "password" : "Ccadv123+",
+            "keystoreType": "JKS"
+        }
+    }
+}

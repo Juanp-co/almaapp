@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
     "@ionic-native/android-permissions": "^5.31.1",
-    "@ionic-native/base64-to-gallery": "^5.31.1",
+    "@ionic-native/base64-to-gallery": "^5.33.0",
     "@ionic-native/youtube-video-player": "^5.31.1",
     "@ionic/angular": "^5.5.2",
     "axios": "^0.21.1",
@@ -49,6 +49,7 @@
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cordova-ios": "^6.2.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
@@ -81,7 +82,8 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
