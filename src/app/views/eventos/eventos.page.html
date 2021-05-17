@@ -4,10 +4,14 @@
   </ion-header>
 
   <div class="ion-margin">
+
     <ion-button color="light" (click)="setShowFilter()">
-      <ion-icon name="filter-outline" slot="start" *ngIf="!showFilter"></ion-icon>
-      <ion-icon name="close-outline" slot="start" *ngIf="showFilter"></ion-icon>
+      <ion-icon name="{{!showFilter ? 'filter' : 'close'}}-outline" slot="start"></ion-icon>
       <ion-text>Filtrar</ion-text>
+    </ion-button>
+    <ion-button color="primary" (click)="goToAddEvent()">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      <ion-text>Agregar evento</ion-text>
     </ion-button>
   </div>
 
@@ -26,7 +30,7 @@
         <ion-datetime
           [(ngModel)]="queryParams.initDate"
           displayFormat="DD/MM/YYYY"
-          min="2020-01-01"
+          min="2021-01-01"
           doneText="Listo"
           cancelText="Cancelar"
           onchange="setDate('initDate')"
@@ -38,12 +42,20 @@
         <ion-datetime
           [(ngModel)]="queryParams.endDate"
           displayFormat="DD/MM/YYYY"
-          min="2020-01-01"
+          min="2021-01-01"
           doneText="Listo"
           cancelText="Cancelar"
           onchange="setDate('endDate')"
         >
         </ion-datetime>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label color="medium">Ver solo eventos para mi</ion-label>
+        <ion-checkbox
+          slot="start"
+          [checked]="queryParams.me || false"
+          (ionChange)="setMeQueryParam()"
+        ></ion-checkbox>
       </ion-item>
       <ion-row class="ion-margin-top">
         <ion-col size="12" class="ion-text-center">

@@ -1,0 +1,112 @@
+<ion-content>
+  <ion-content>
+    <ion-header>
+      <app-minheader title="Crear evento"></app-minheader>
+    </ion-header>
+
+
+    <ion-card>
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Título del evento (*)</ion-label>
+              <ion-input
+                [(ngModel)]="formData.title"
+                autocomplete="off"
+                maxlength="100"
+                class="ion-text-uppercase"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Descripción (*)</ion-label>
+              <ion-textarea
+                [(ngModel)]="formData.description"
+                rows="5"
+                cols="20"
+                class="ion-text-uppercase"
+              ></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">Fecha del evento (*)</ion-label>
+              <ion-datetime
+                [(ngModel)]="formData.date"
+                displayFormat="DD/MM/YYYY"
+                [min]="minDate"
+                [max]="maxDate"
+                doneText="Listo"
+                cancelText="Cancelar"
+                (ionChange)="setMinEndHour('date')"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">Hora inicio (*)</ion-label>
+              <ion-datetime
+                [(ngModel)]="formData.initHour"
+                [min]="minInitHour"
+                displayFormat="HH:mm"
+                minuteValues="00,15,30,45,59"
+                doneText="Listo"
+                cancelText="Cancelar"
+                (ionChange)="setMinEndHour('initHour')"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">Hora fin (*)</ion-label>
+              <ion-datetime
+                [(ngModel)]="formData.endHour"
+                [min]="minEndHour"
+                displayFormat="HH:mm"
+                minuteValues="00,15,30,45"
+                doneText="Listo"
+                cancelText="Cancelar"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Dirigido a (*)</ion-label>
+              <ion-input
+                [(ngModel)]="formData.rolesSelected"
+                [value]="formData.rolesSelected"
+                [readonly]="true"
+                autocomplete="off"
+                class="ion-text-uppercase no-selected-text"
+                (click)="showAlertRolesList(formData.toRoles)"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" class="ion-margin-top">
+            <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-row class="ion-margin-top">
+      <ion-col size="12" class="ion-text-center">
+        <ion-button class="ion-text-center" color="light" (click)="setShowForm({ id: null, edit: false, show: false })">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          <ion-text>Cancelar</ion-text>
+        </ion-button>
+        <ion-button
+          class="ion-text-center"
+          color="primary"
+          (click)="confirmAction({ update: edit, id: formData._id })"
+        >
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          <ion-text>Guardar</ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+</ion-content>

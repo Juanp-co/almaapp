@@ -32,6 +32,9 @@ export class EventosPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+  }
+
+  async ionViewWillEnter() {
     await this.getEventsList();
   }
 
@@ -49,6 +52,10 @@ export class EventosPage implements OnInit {
       await this.globalSer.errorSession();
     }
     else await this.globalSer.dismissLoading();
+  }
+
+  async goToAddEvent() {
+    await this.router.navigate([`/eventos/crear-evento`]);
   }
 
   setShowFilter(){
@@ -104,6 +111,12 @@ export class EventosPage implements OnInit {
     this.queryParams.value = -1;
     this.queryParams.initDate = dayjs().format('YYYY-MM-DD');
     this.queryParams.endDate = null;
+    delete this.queryParams.me;
+  }
+
+  setMeQueryParam() {
+    if (this.queryParams.me) delete this.queryParams.me;
+    else this.queryParams.me = true;
   }
 
 }

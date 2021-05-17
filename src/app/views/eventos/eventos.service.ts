@@ -17,4 +17,10 @@ export class EventosService {
     if (res && res.success) return res.data.events;
     return this.globalSer.altResponse(res);
   }
+
+  async saveEvents(data: any) {
+    const res: any = await this.axios.postData(`/events`, data);
+    if (res && res.success) return res.data;
+    return this.globalSer.altResponse(res);
+  }
 }
