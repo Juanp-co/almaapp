@@ -18,4 +18,5 @@ export interface IEditar {
   city: string | null;
   locality: string | null;
   direction: string | null;
+  roles: number[] | null;
 }

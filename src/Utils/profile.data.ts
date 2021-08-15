@@ -1,3 +1,11 @@
+export const rolesListSingleText = [
+  'Administrador',
+  'Pastor',
+  'Supervisor',
+  'Líder',
+  'Persona',
+];
+
 export const educationLevels = [
   'Preescolar',
   'Básica Primaria (1-5)',

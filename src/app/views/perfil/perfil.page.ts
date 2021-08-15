@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import {IEditar} from './editar/editar.model';
+import {PerfilService} from './perfil.service';
+import {ModalPasswordPage} from './modal-password/modal-password.page';
 import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
-import {PerfilService} from './perfil.service';
-import {IEditar} from './editar/editar.model';
 import {departments} from '../../../Utils/locations.data';
-import {bloodType, civilStatus, companyType, gender, educationLevels, professions} from '../../../Utils/profile.data';
-import {ModalPasswordPage} from './modal-password/modal-password.page';
+import {bloodType, civilStatus, companyType, gender, educationLevels, professions, rolesListSingleText} from '../../../Utils/profile.data';
 
 @Component({
   selector: 'app-perfil',
@@ -92,6 +92,19 @@ export class PerfilPage implements OnInit {
 
   async openChangePasswordModal() {
     await this.globalSer.loadModal(ModalPasswordPage, {}, false);
+  }
+
+  getRoleValue(): string {
+    const { roles } = this.userData || {};
+    let ret = 'NO TIENE ASIGNADO NINGÚN ROL.';
+    if (roles.length > 0) {
+      ret = '';
+      for (const v of roles) {
+        if (ret === '') ret = rolesListSingleText[v];
+        else ret += `, ${rolesListSingleText[v]}`;
+      }
+    }
+    return ret;
   }
 
 }
