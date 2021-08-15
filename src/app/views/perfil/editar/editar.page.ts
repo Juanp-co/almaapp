@@ -57,6 +57,7 @@ export class EditarPage implements OnInit {
         this.formData = {...userData} as IEditar;
         this.formData.company = this.formData.company ? 'Si' : 'No';
         this.formData.baptized = this.formData.baptized ? 'Si' : 'No';
+        this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
         if (this.formData.department !== null) this.getCity();
         await this.globalSer.dismissLoading();
       }
@@ -170,6 +171,7 @@ export class EditarPage implements OnInit {
       const data: any = Object.assign({}, this.formData);
       data.company = data.company === 'Si';
       data.baptized = data.baptized === 'Si';
+      data.meetingNew = data.meetingNew === 'Si';
       data.position = data.position ? data.position.trim().toUpperCase() : null;
       const updated = await this.editarService.updateProfile(data);
 

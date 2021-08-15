@@ -149,6 +149,17 @@
           </ion-col>
           <ion-col size="12">
             <ion-item>
+              <ion-label position="floating" color="medium">¿Asistí al curso de nuevos?</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="formData.meetingNew"
+                autocomplete="off"
+                (click)="showAlertYesOrNotList('meetingNew', formData.meetingNew)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
               <ion-label position="floating" color="medium">Departamento</ion-label>
               <ion-input
                 [readonly]="true"

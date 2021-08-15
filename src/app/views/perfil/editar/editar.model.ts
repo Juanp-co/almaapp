@@ -14,6 +14,7 @@ export interface IEditar {
   company: string | null;
   companyType: string | null;
   baptized: string | null;
+  meetingNew: string | null;
   department: string | null;
   city: string | null;
   locality: string | null;

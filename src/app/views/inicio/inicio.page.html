@@ -1,15 +1,9 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>inicio</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
-
   <ion-row class="fondoCool ion-justify-content-end ion-padding ">
     <ion-col size="8" class="ion-margin-top ion-padding-top">
       <br><br><br><br>
-      <ion-text color="light" class="titulo1">Bienvenido</ion-text> <br>
+      <ion-text color="light" class="titulo1">Bienvenido(a)</ion-text>
+      <br>
       <ion-text color="light" class="titulo2" *ngIf="userData">
         {{userData.names}} {{userData.lastNames}}
       </ion-text>
@@ -77,8 +71,12 @@
         <p><img [src]="item.imagen" alt=""/></p>
         <ion-text color="medium" class="ion-padding-top">{{item.titulo}}</ion-text>
       </ion-col>
+      <ion-col size="12">
+
+        <br/>
+        <br/>
+      </ion-col>
     </ion-row>
-    <br/>
   </div>
 
   <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed"*ngIf="login">
