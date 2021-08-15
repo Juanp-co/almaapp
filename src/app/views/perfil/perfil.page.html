@@ -37,7 +37,7 @@
             <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
           </ion-col>
           <ion-col size="5">
-            <ion-text><b>Rol(es):</b></ion-text>
+            <ion-text><b>Roles:</b></ion-text>
           </ion-col>
           <ion-col size="7">
             <ion-text>{{getRoleValue()}}</ion-text>
@@ -107,6 +107,12 @@
           </ion-col>
           <ion-col size="7">
             <ion-text>{{views.info.data.baptized ? 'Si' : 'No'}}</ion-text>
+          </ion-col>
+          <ion-col size="5">
+            <ion-text><b>Asistí al curso de nuevos:</b></ion-text>
+          </ion-col>
+          <ion-col size="7">
+            <ion-text>{{views.info.data.meetingNew ? 'Si' : 'No'}}</ion-text>
           </ion-col>
           <ion-col size="5">
             <ion-text><b>Departamento:</b></ion-text>
