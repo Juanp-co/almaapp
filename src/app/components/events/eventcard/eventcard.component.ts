@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/es';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {AlertController} from '@ionic/angular';
-import {replaceNbsp} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-eventcard',
@@ -22,10 +21,11 @@ export class EventcardComponent implements OnInit {
     date: null,
     initHour: null,
     endHour: null,
+    picture: null,
   };
 
   constructor(
-    private alertController: AlertController
+    private router: Router,
   ) {
     dayjs.extend(duration);
     dayjs.extend(relativeTime);
@@ -36,6 +36,7 @@ export class EventcardComponent implements OnInit {
       this.eventData._id = this.data._id;
       this.eventData.title = this.data.title;
       this.eventData.user = this.data.user;
+      this.eventData.picture = this.data.picture;
       this.eventData.description = this.data.description;
       this.eventData.date = dayjs(this.data.date).locale('es').format('dddd, DD [de] MMMM [de] YYYY');
       this.eventData.initHour = dayjs(`${this.data.date} ${this.eventData.initHour}`).format('hh:mm a');
@@ -45,21 +46,7 @@ export class EventcardComponent implements OnInit {
     }
   }
 
-  async showEvent() {
-    const description = this.eventData.description ? replaceNbsp(this.eventData.description) : null;
-    const alert = await this.alertController.create({
-      header: this.eventData.title,
-      subHeader: `Por: ${this.eventData.user ? `${this.eventData.user.names} ${this.eventData.user.lastNames}` : 'Anónimo'}`,
-      message: `
-        <b>Fecha:</b> ${this.eventData.date}<br/>
-        <b>Hora de inicio:</b> ${this.eventData.initHour}<br/>
-        ${this.eventData.endHour ? `<b>Hora fin:</b> ${this.eventData.endHour}<br/>` : ''}
-        <b>Descripción:</b><br>
-        ${description || 'No especificada.'}<br/>
-      `,
-      buttons: ['Ok']
-    });
-
-    await alert.present();
+  async goToDetails(id: string|null = null) {
+    await this.router.navigate([`eventos/${id}`]);
   }
 }

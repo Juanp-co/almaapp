@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
+    "@ckeditor/ckeditor5-angular": "^2.0.1",
+    "@ckeditor/ckeditor5-build-classic": "^25.0.0",
     "@ionic-native/android-permissions": "^5.31.1",
     "@ionic-native/base64-to-gallery": "^5.33.0",
     "@ionic-native/youtube-video-player": "^5.31.1",

@@ -109,7 +109,7 @@ b {
 }
 
 .pictureIcon {
-  width: 45px !important;
+  width: 150px !important;
   margin: 0 auto !important;
 }
 
@@ -123,3 +123,14 @@ To static top bar
   top: 0;
   z-index: 100;
 }
+
+
+/*
+  To banner events
+ */
+.banner-event {
+  border-radius: 5px 5px 0 0;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
