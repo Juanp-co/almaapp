@@ -14,7 +14,19 @@ export class EventosService {
 
   async getEvents(queryParam: any) {
     const res: any = await this.axios.getData(`/events`, queryParam);
-    if (res && res.success) return res.data.events;
+    if (res && res.success) return res.data.events || [];
+    return this.globalSer.altResponse(res);
+  }
+
+  async getDetailsEvent(id: string|null = null) {
+    const res: any = await this.axios.getData(`/events/${id}`);
+    if (res && res.success) return res.data.event || {};
+    return this.globalSer.altResponse(res);
+  }
+
+  async deleteEvent(id: string|null = null) {
+    const res: any = await this.axios.deleteData(`/events/${id}`);
+    if (res && res.success) return res.data || {};
     return this.globalSer.altResponse(res);
   }
 }

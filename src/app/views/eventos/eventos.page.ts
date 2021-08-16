@@ -32,7 +32,12 @@ export class EventosPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    await this.getEventsList();
+  }
+
+  async ionViewDidEnter() {
+    // check if exist session
+    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
+    else await this.getEventsList();
   }
 
   async getEventsList() {
@@ -104,6 +109,10 @@ export class EventosPage implements OnInit {
     this.queryParams.value = -1;
     this.queryParams.initDate = dayjs().format('YYYY-MM-DD');
     this.queryParams.endDate = null;
+  }
+
+  async goTo(id = null) {
+    await this.navCtrl.navigateForward(`/eventos/${id || 'crear-evento'}`);
   }
 
 }

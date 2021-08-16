@@ -97,7 +97,7 @@ export class PerfilPage implements OnInit {
   getRoleValue(): string {
     const { roles } = this.userData || {};
     let ret = 'NO TIENE ASIGNADO NINGÚN ROL.';
-    if (roles.length > 0) {
+    if (roles?.length > 0) {
       ret = '';
       for (const v of roles) {
         if (ret === '') ret = rolesListSingleText[v];
