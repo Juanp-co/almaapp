@@ -1,20 +1,20 @@
-export interface IEditar {
+export interface IPerfl {
   document: string | null;
   email: string | null;
   phone: string | null;
   names: string | null;
   lastNames: string | null;
   position: string | null;
-  gender: string | null;
+  gender: number | null;
   birthday: string | null;
-  civilStatus: string | null;
-  educationLevel: string | null;
-  profession: string | null;
-  bloodType: string | null;
-  company: string | null;
-  companyType: string | null;
-  baptized: string | null;
-  meetingNew: string | null;
+  civilStatus: number | null;
+  educationLevel: number | null;
+  profession: number | null;
+  bloodType: number | null;
+  company: boolean | null;
+  companyType: number | null;
+  baptized: boolean | null;
+  meetingNew: boolean | null;
   department: string | null;
   city: string | null;
   picture: string | null;

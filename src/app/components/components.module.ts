@@ -13,6 +13,8 @@ import {MinheaderComponent} from './minheader/minheader.component';
 import {PaginatorComponent} from './paginator/paginator.component';
 import {PersoncardComponent} from './personcard/personcard.component';
 import {PersoncardtwoComponent} from './personcardtwo/personcardtwo.component';
+import {ResumeHijosEducacionComponent} from './users/resume-hijos-educacion/resume-hijos-educacion.component';
+import {ResumeProfileComponent} from './users/resume-profile/resume-profile.component';
 import {VideoPlayerComponent} from './video-player/video-player.component';
 import {VisitscardComponent} from './visitscard/visitscard.component';
 
@@ -27,6 +29,8 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     PaginatorComponent,
     PersoncardComponent,
     PersoncardtwoComponent,
+    ResumeHijosEducacionComponent,
+    ResumeProfileComponent,
     VideoPlayerComponent,
     VisitscardComponent,
   ],
@@ -43,6 +47,8 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     PaginatorComponent,
     PersoncardComponent,
     PersoncardtwoComponent,
+    ResumeHijosEducacionComponent,
+    ResumeProfileComponent,
     VideoPlayerComponent,
     VisitscardComponent,
   ]

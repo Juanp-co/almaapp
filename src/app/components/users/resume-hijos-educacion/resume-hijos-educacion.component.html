@@ -1,0 +1,109 @@
+<ion-row>
+  <ion-col size="12">
+    <ion-row class="ion-margin-top ion-padding">
+      <ion-col size="6" class="ion-no-padding" *ngIf="showGroup">
+        <ion-button
+          expand="block"
+          color="{{!showCourses ? 'primary' : 'medium'}}"
+          (click)="setShowGroup(true)"
+        >
+          Núcleo familiar
+        </ion-button>
+      </ion-col>
+      <ion-col size="6" class="ion-no-padding" *ngIf="!showGroup">
+        <ion-button
+          expand="block"
+          color="{{!showCourses ? 'primary' : 'medium'}}"
+          (click)="setShowGroup(true)"
+        >
+          Hijos espirituales
+        </ion-button>
+      </ion-col>
+      <ion-col size="6" class="ion-no-padding">
+        <ion-button
+          expand="block"
+          color="{{showCourses ? 'primary' : 'medium'}}"
+          (click)="setShowGroup()"
+        >
+          Educación
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-card class="{{ !showCourses && !showGroup ? '' : 'ion-hide'}}">
+      <ion-card-content class="ion-no-padding">
+        <ion-row>
+          <ion-col size="12" class="ion-padding">
+            <ion-text color="medium">
+              <b>Hijos espirituales ({{ referrals?.totals }})</b>
+            </ion-text>
+          </ion-col>
+          <ion-col size="12" *ngIf="referrals?.totals > 0">
+            <ion-row>
+              <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3" *ngFor='let referred of referrals?.list' >
+                <app-personcard [data]="referred" [disabledClick]="true"></app-personcard>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card
+      class="{{!showCourses && showGroup ? '' : 'ion-hide'}} ion-padding-bottom ion-margin-bottom"
+      *ngIf="group?.data; else noGroup"
+    >
+      <ion-card-header class="ion-no-padding ion-margin-top ion-margin-start ion-margin-end">
+        <ion-row class="ion-margin-top">
+          <ion-col size="9">
+            <ion-text class="toSmall">Nombre del grupo</ion-text><br/>
+            <ion-text><span class="titles">{{group?.data?.name || 'No indicado'}}</span></ion-text>
+          </ion-col>
+          <ion-col size="3">
+            <ion-text class="toSmall">Miembros</ion-text><br/>
+            <ion-text><span class="titles">{{ group?.totals || 0 }}</span></ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-content class="ion-margin-top ion-no-padding">
+        <ion-row class="ion-margin-top">
+          <ion-col class="ion-no-margin ion-no-padding" size="12">
+            <app-personcard *ngFor='let member of group?.data?.members' [data]="member" getGroup="true"></app-personcard>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ng-template #noGroup *ngIf="showGroup">
+      <div class="{{ !showCourses ? 'ion-margin-bottom ion-padding-bottom' : '' }}">
+        <ion-card class="{{!showCourses ? '' : 'ion-hide'}}">
+          <ion-card-content>
+            <ion-text class="ion-text-center" color="medium">
+              <p><ion-icon name="alert-circle-outline"></ion-icon> No pertenece a ningún grupo familiar.</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ng-template>
+
+    <div class="{{showCourses ? '' : 'ion-hide'}} ion-margin-bottom ion-padding-bottom">
+      <ion-row
+        class="ion-no-padding ion-justify-content-center ion-margin-bottom"
+        *ngIf="courses?.totals > 0; else noCourses"
+      >
+        <ion-col *ngFor="let course of courses?.list" class="ion-text-center ion-margin-bottom" size="4">
+          <img src="assets/icon/level-{{course.level}}{{course.approved ? '' : '-gray'}}.svg" class="icon-courses">
+        </ion-col>
+      </ion-row>
+      <ng-template #noCourses>
+        <ion-card>
+          <ion-card-content>
+            <ion-text class="ion-text-center" color="medium">
+              <p><ion-icon name="alert-circle-outline"></ion-icon> No posee cursos que mostrar.</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </div>
+  </ion-col>
+</ion-row>
