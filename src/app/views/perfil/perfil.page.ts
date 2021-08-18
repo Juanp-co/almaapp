@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import dayjs from 'dayjs';
-import 'dayjs/locale/es';
-import {IEditar} from './editar/editar.model';
+import {IPerfl} from './perfil.model';
 import {PerfilService} from './perfil.service';
 import {ModalPasswordPage} from './modal-password/modal-password.page';
 import {CookiesService} from '../../services/cookies.service';
+import {DataService} from '../../services/data.service';
 import {GlobalService} from '../../services/global.service';
-import {departments} from '../../../Utils/locations.data';
-import {bloodType, civilStatus, companyType, gender, educationLevels, professions, rolesListSingleText} from '../../../Utils/profile.data';
 
 @Component({
   selector: 'app-perfil',
@@ -17,14 +14,23 @@ import {bloodType, civilStatus, companyType, gender, educationLevels, profession
 })
 export class PerfilPage implements OnInit {
 
-  userData: IEditar | null = null;
-  views: any = {
-    info: { show: true, title: 'Mis datos', data: null },
-    courses: { show: false, title: 'Mis cursos', data: [] },
-    group: { show: true, title: 'Núcleo familiar', data: null },
+  userData: IPerfl | null = null;
+  courses: any = {
+    totals: 0,
+    list: []
   };
+  group: any = {
+    totals: 0,
+    data: null
+  };
+  formPic: any = {
+    picture: null
+  };
+  showInfo = true;
+  showEditPic = false;
 
   constructor(
+    private dataService: DataService,
     private globalSer: GlobalService,
     private perfilService: PerfilService,
     private cookieService: CookiesService,
@@ -49,25 +55,10 @@ export class PerfilPage implements OnInit {
     if (data && !data.error) {
       this.cookieService.setCookie('data', data);
       this.userData = data;
-      this.views.group.data = await this.perfilService.getGroup();
-      this.views.courses.data = await this.perfilService.getCourses();
-      this.userData.birthday = this.userData.birthday ?
-        dayjs(this.userData.birthday, 'YYYY-MM-DD', true).locale('es').format('DD [de] MMMM [de] YYYY')
-        : null;
-      this.userData.bloodType = bloodType[this.userData.bloodType] || null;
-      this.userData.profession = professions[this.userData.profession] || null;
-      this.userData.educationLevel = educationLevels[this.userData.educationLevel] || null;
-      this.userData.companyType = companyType[this.userData.companyType] || null;
-      this.userData.civilStatus = civilStatus[this.userData.civilStatus] || null;
-      this.userData.gender = gender[this.userData.gender] || null;
-      if (this.userData.department !== null) {
-        const depto = departments[this.userData.department] || null;
-        if (depto) {
-          this.userData.department = depto.department;
-          if (this.userData.city !== null) this.userData.city = depto.cities[this.userData.city] || null;
-        }
-      }
-      this.views.info.data = this.userData;
+      this.group.data = await this.perfilService.getGroup() || null;
+      this.group.totals = this.group.data?.members?.length || 0;
+      this.courses.list = await this.perfilService.getCourses();
+      this.courses.totals = this.courses.list?.length || 0;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
@@ -77,34 +68,98 @@ export class PerfilPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  setShowView(input: string) {
-    this.views[input].show = !this.views[input].show;
+  async updatePicture(remove = false) {
+    await this.globalSer.presentLoading('Actualizando foto de perfil, por favor espere ...');
+    const updated: any = await this.perfilService.updatePictureProfile({ ...this.formPic });
+
+    if (updated && !updated.error) {
+      const { data, msg } = updated;
+      const infoUser = await this.cookieService.getCookie('data') || {};
+      this.cookieService.setCookie('data', {...infoUser, ...data});
+      this.userData = {...this.userData, ...data};
+      if (!remove) this.editPicEnable();
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', msg || 'Se ha actualizado la foto de perfil exitosamente.');
+      this.updatePictureInGroup(data);
+    }
+    else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  setShowView() {
+    this.showInfo = !this.showInfo;
   }
 
   async goToEdit() {
     await this.router.navigate(['perfil/editar']);
   }
 
-  setShowGroup(value = false) {
-    this.views.group.show = value;
-    this.views.courses.show = !value;
-  }
-
   async openChangePasswordModal() {
     await this.globalSer.loadModal(ModalPasswordPage, {}, false);
   }
 
-  getRoleValue(): string {
-    const { roles } = this.userData || {};
-    let ret = 'NO TIENE ASIGNADO NINGÚN ROL.';
-    if (roles?.length > 0) {
-      ret = '';
-      for (const v of roles) {
-        if (ret === '') ret = rolesListSingleText[v];
-        else ret += `, ${rolesListSingleText[v]}`;
+  updatePictureInGroup(data: any = null) {
+    if (data) {
+      if (this.group.data?.members?.length > 0) {
+        const index = this.group.data?.members.findIndex(m => m._id === data._id);
+        if (index > -1) {
+          this.group.data.members[index].picture = data.picture;
+        }
       }
     }
-    return ret;
   }
+
+  // picture actions
+  editPicEnable() {
+    this.formPic.picture = null;
+    this.showEditPic = !this.showEditPic;
+  }
+
+  openFile(event) {
+    const files = event.target.files;
+
+    if (typeof files[0] !== 'object') return false;
+    else {
+      this.dataService.resizePhoto(files[0], 900, 'dataURL',  (resizedFile) => {
+        this.formPic.picture = resizedFile;
+      });
+    }
+  }
+
+  validatePicture() {
+    return !this.formPic.picture ?
+      'Disculpe, pero debe seleccionar una imagen para el perfil.'
+      : null;
+  }
+
+  async confirmUpdatePicture() {
+    const validated = this.validatePicture();
+
+    if (validated) await this.globalSer.presentAlert('Alerta', validated);
+    else {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea cambiar la foto de su perfil?',
+        confirmAction: () => this.updatePicture()
+      });
+    }
+  }
+
+  async confirmDeletePicture() {
+    await this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué desea eliminar su foto de perfil?',
+      confirmAction: () => {
+        this.formPic.picture = null;
+        this.updatePicture(true);
+      }
+    });
+  }
+
+  removePhoto = (): void => { this.confirmDeletePicture(); };
+  changePhoto = (): void => { this.editPicEnable(); };
 
 }

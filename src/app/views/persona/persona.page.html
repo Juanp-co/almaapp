@@ -1,101 +1,26 @@
 <ion-content class="content">
   <ion-header>
-    <app-minheader title="Información del miembro"></app-minheader>
+    <app-minheader title="Detalles del miembro"></app-minheader>
   </ion-header>
 
-  <div *ngIf="views.info.data; else noData">
+  <div *ngIf="member; else noData">
     <ion-row class="ion-margin-top">
       <ion-col size="12">
         <ion-card>
           <ion-card-header class="ion-no-padding" color="primary">
             <ion-toolbar color="primary">
               <ion-buttons slot="start">
-                <ion-button (click)="setShowView('info')">
-                  <ion-icon name="chevron-{{views.info.show ? 'up' : 'down' }}-outline"></ion-icon>
+                <ion-button (click)="setShowView()">
+                  <ion-icon name="chevron-{{showInfo ? 'up' : 'down' }}-outline"></ion-icon>
                 </ion-button>
               </ion-buttons>
-              <ion-title>{{ views.info.title }}</ion-title>
+              <ion-title>Datos de contacto</ion-title>
             </ion-toolbar>
           </ion-card-header>
-          <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
-            <ion-row class="ion-margin-top">
-              <ion-col size="5">
-                <ion-text><b>Nombres:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Apellidos:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Teléfono:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Correo electrónico:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Fecha de nac.:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Sexo:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Estado civil:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Departamento:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.department || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Cuidad:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.city || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Barrio:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.locality || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Dirección:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
-              </ion-col>
-              <ion-col size="5">
-                <ion-text><b>Consolidado:</b></ion-text>
-              </ion-col>
-              <ion-col size="7">
-                <ion-text>{{views.info.data.consolidated ? 'SI' : 'NO'}}</ion-text>
-              </ion-col>
-              <ion-col size="5" *ngIf="views.info.data.consolidated">
-                <ion-text><b>Petición:</b></ion-text>
-              </ion-col>
-              <ion-col size="7" *ngIf="views.info.data.consolidated">
-                <ion-text>{{views.info.data.petition || 'No solicitada.'}}</ion-text>
+          <ion-card-content class="{{showInfo ? '' : 'ion-hide'}}">
+            <ion-row>
+              <ion-col size="12" class="ion-margin-top">
+                <app-resume-profile [member]="member"></app-resume-profile>
               </ion-col>
             </ion-row>
           </ion-card-content>
@@ -103,53 +28,16 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top ion-padding">
-      <ion-col size="6">
-        <ion-button expand="block" color="{{views.referrals.show ? 'primary' : 'light'}}" (click)="setShowGroup(true)">
-          Hijos espirituales
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button expand="block" color="{{views.courses.show ? 'primary' : 'light'}}" (click)="setShowGroup()">
-          Educación
-        </ion-button>
-      </ion-col>
+
+    <app-resume-hijos-educacion
+      [coursesData]="courses"
+      [referralsData]="referrals"
+    >
+    </app-resume-hijos-educacion>
+
+    <ion-row>
+      <ion-col><br/></ion-col>
     </ion-row>
-
-    <ion-card class="{{ views.referrals.show ? '' : 'ion-hide'}}">
-      <ion-card-content class="ion-no-padding">
-        <ion-row>
-          <ion-col size="12" class="ion-padding">
-            <ion-text color="medium">
-              <b>Hijos espirituales ({{ views.referrals.totals }})</b>
-            </ion-text>
-          </ion-col>
-          <ion-col size="12" *ngIf="views.referrals.totals > 0">
-            <ion-row>
-              <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3" *ngFor='let referred of views.referrals.data' >
-                <app-personcard [data]="referred" [disabledClick]="true"></app-personcard>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="{{ views.courses.show ? '' : 'ion-hide'}}">
-      <ion-card-content>
-        <ion-row class="ion-no-padding ion-justify-content-center ion-margin-bottom" *ngIf="views.courses.data && views.courses.data.length > 0; else noCourses">
-          <ion-col *ngFor="let course of views.courses.data" class="ion-text-center ion-margin-bottom" size="4">
-            <img src="assets/icon/level-{{course.level}}{{course.approved ? '' : '-gray'}}.svg" class="icon-courses">
-          </ion-col>
-        </ion-row>
-        <ng-template #noCourses>
-          <ion-text class="ion-text-center" color="medium">
-            <p><ion-icon name="alert-circle-outline"></ion-icon> Este miembro no posee ningún curso en su perfil.</p>
-          </ion-text>
-        </ng-template>
-      </ion-card-content>
-    </ion-card>
-    <br/>
   </div>
   <ng-template #noData>
     <ion-card>
@@ -161,7 +49,13 @@
     </ion-card>
   </ng-template>
 
-  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="views.info.data && !group">
+  <ion-fab
+    class="ion-margin-end ion-margin-bottom"
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    *ngIf="member && !group"
+  >
     <ion-fab-button color="primary" (click)="showVisits()">
       <ion-icon name="clipboard-outline"></ion-icon>
     </ion-fab-button>

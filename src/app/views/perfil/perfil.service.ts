@@ -19,6 +19,13 @@ export class PerfilService {
     return this.globalSer.altResponse(res);
   }
 
+  async updatePictureProfile(data = {}): Promise<any> {
+    const res: any = await this.axios.putData('/user/picture', data);
+
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
   async getGroup() {
     const res: any = await this.axios.getData('/user/group');
     return res && res.success ? res.data.group : null;

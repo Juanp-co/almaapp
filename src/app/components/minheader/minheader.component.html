@@ -1,21 +1,19 @@
-<!--<ion-header class="header-menu">-->
-  <ion-toolbar class="ion-no-padding ion-no-margin">
-    <div class="fondoCool">
-      <ion-row>
-        <ion-col class="ion-margin-top ion-margin-bottom">
-          <ion-buttons>
-            <ion-button color="light" (click)="!modal ? back() : closeModal()" >
-              <ion-icon name="arrow-back"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-col>
-        <ion-col size="8" class="ion-margin-top ion-margin-bottom">
-          <ion-text color="light" class="titulo1">{{titleHeader}}</ion-text>
-        </ion-col>
-        <ion-col>
-          <img src="assets/logo.png" class="logo-2">
-        </ion-col>
-      </ion-row>
-    </div>
-  </ion-toolbar>
-<!--</ion-header>-->
+<ion-toolbar class="ion-no-padding ion-no-margin">
+  <div class="fondoCool">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="2" size-sm="1">
+        <ion-buttons>
+          <ion-button color="light" (click)="!modal ? back() : closeModal()" >
+            <ion-icon name="arrow-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="8">
+        <ion-text color="light" class="titulo1">{{titleHeader}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-text-end">
+        <img src="assets/logo.png" class="logo-2" height="60">
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-toolbar>
