@@ -13,6 +13,9 @@ export class MinheaderComponent implements OnInit {
   @Input() slugValue: string;
   @Input() modal = false;
   titleHeader: string;
+  style: any = {
+    'background-image': `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/cruz.png)`
+  };
 
   constructor(
     private modalController: ModalController,

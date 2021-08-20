@@ -1,15 +1,18 @@
 
 
 .fondoCool{
-  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png");
+  //background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png");
+  background: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) center center;
   background-size: cover;
-  background-position: center center;
-  // -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
-  // clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
+  min-height: 180px;
 }
 
 .logo{
   margin-bottom: -190px !important;
-  //margin-left: auto;
-  max-width: 120px;
+  border-radius: 5px;
+}
+
+.footer{
+  font-size: 2em;
+  text-align: center;
 }
