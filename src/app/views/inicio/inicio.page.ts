@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { GlobalService } from 'src/app/services/global.service';
 import {AxiosService} from '../../services/axios.service';
 import {CookiesService} from '../../services/cookies.service';
+import { GlobalService } from '../../services/global.service';
+import {onlyNumbersInputValidation2} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-inicio',
@@ -12,9 +13,22 @@ import {CookiesService} from '../../services/cookies.service';
 export class InicioPage implements OnInit {
 
   login = false;
+  showButtonSocial = false;
   userData: any = null;
   phone: any = null;
   pass: any = null;
+  params: any = {
+    facebook: null,
+    instagram: null,
+    twitter: null,
+    web: null,
+    youtube: null,
+    banner: null,
+    logo: null,
+    lastCheckTime: null,
+  };
+  styleBg = 'linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png")';
+  logo = 'assets/logo.png';
 
   opciones = [
     { titulo: 'Red padres', imagen: 'assets/icon/red.svg', url: 'padres' },
@@ -26,10 +40,10 @@ export class InicioPage implements OnInit {
   ];
 
   constructor(
-    public axios: AxiosService,
-    public cookieService: CookiesService,
-    public globalSer: GlobalService,
-    public navCtrl: NavController
+    private axiosService: AxiosService,
+    private cookiesService: CookiesService,
+    private globalSer: GlobalService,
+    private navCtrl: NavController
   ) { }
 
   async ngOnInit() {
@@ -37,26 +51,27 @@ export class InicioPage implements OnInit {
   }
 
   async ionViewWillEnter() {
+    this.getParams();
     await this.getDataLogin();
   }
 
   async getDataLogin() {
-    const token = this.cookieService.getCookie('token');
+    const token = this.cookiesService.getCookie('token');
     if (token) {
       this.login = true;
-      const data = this.cookieService.getCookie('data');
+      const data = this.cookiesService.getCookie('data');
 
       if (!data) {
-        const res: any = await this.axios.getData('/user');
+        const res: any = await this.axiosService.getData('/user');
 
         if (res && res.success) {
-          this.cookieService.setCookie('data', res.data.data);
+          this.cookiesService.setCookie('data', res.data.data);
           this.userData = res.data.data;
           await this.globalSer.dismissLoading();
         }
         else {
           if (res.status && res.status === 401) {
-            this.cookieService.removeCookie('token');
+            this.cookiesService.removeCookie('token');
             this.login = false;
           }
           await this.globalSer.dismissLoading();
@@ -72,22 +87,21 @@ export class InicioPage implements OnInit {
     if (this.pass && this.phone) {
       await this.globalSer.presentLoading();
 
-      const res: any = await this.axios.postData(
+      const res: any = await this.axiosService.postData(
         '/login',
         { phone: this.phone, password: this.pass }
         );
 
       if (res && res.success) {
         const { data, token } = res.data;
-        this.cookieService.setCookie('token', token);
-        this.cookieService.setCookie('data', data);
+        this.cookiesService.setCookie('token', token);
+        this.cookiesService.setCookie('data', data);
         this.userData = data;
 
         this.login = true;
         this.phone = null;
         this.pass = null;
         await this.globalSer.dismissLoading();
-        // await this.globalSer.presentAlert('Info', 'Ingreso exitoso!');
       }
       else {
         this.phone = null;
@@ -97,6 +111,26 @@ export class InicioPage implements OnInit {
       }
     } else {
       await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su número de teléfono y contraseña.');
+    }
+  }
+
+  async getParams() {
+    const res: any = await this.axiosService.getData('params-app');
+
+    if (res && res.success) {
+      const { data } = res.data;
+      if (data) {
+        this.params = {...this.params, ...data};
+        this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
+        this.logo = `${this.params.logo || 'assets/logo.png'}`;
+        this.showButtonSocial = (
+          this.params.facebook ||
+          this.params.instagram ||
+          this.params.twitter ||
+          this.params.web ||
+          this.params.youtube
+        );
+      }
     }
   }
 
@@ -111,7 +145,7 @@ export class InicioPage implements OnInit {
           confirmAction: async () => {
             await this.globalSer.presentLoading();
             this.userData = null;
-            this.axios.deleteData('/logout');
+            this.axiosService.deleteData('/logout');
             await this.globalSer.clearAllData();
             this.login = false;
             await this.globalSer.dismissLoading();
@@ -124,6 +158,27 @@ export class InicioPage implements OnInit {
 
   async goTo(link: string) {
     await this.navCtrl.navigateForward(`/${link}`);
+  }
+
+  validateOnlyNumber2(event: any) {
+    onlyNumbersInputValidation2(event);
+  }
+
+  async openExternalLink(key: string) {
+    try {
+      const url = this.params[key] || null;
+      if (url) window.open(url, '_system');
+      else
+        await this.globalSer.presentAlert('Alerta', 'Ha ocurrido un error inesperado al momento de abrir el enlace.');
+    }
+    catch (e) {
+      await this.globalSer.presentAlert('Alerta', 'Ha ocurrido un error inesperado al momento de abrir el enlace.');
+    }
+  }
+
+  handleErrorImg(e) {
+    e.target.src = `/images/assets/logo.png`;
+    e.onerror = null;
   }
 
 }

@@ -24,6 +24,7 @@
     "@ckeditor/ckeditor5-build-classic": "^25.0.0",
     "@ionic-native/android-permissions": "^5.31.1",
     "@ionic-native/base64-to-gallery": "^5.33.0",
+    "@ionic-native/in-app-browser": "^5.35.0",
     "@ionic-native/youtube-video-player": "^5.31.1",
     "@ionic/angular": "^5.5.2",
     "axios": "^0.21.1",
@@ -53,6 +54,7 @@
     "codelyzer": "^6.0.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -81,7 +83,8 @@
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android",
