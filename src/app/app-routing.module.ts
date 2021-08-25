@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'inicio',
+    redirectTo: 'visitantes',
     pathMatch: 'full'
   },
   {
@@ -64,6 +64,10 @@ const routes: Routes = [
   {
     path: 'grupos-familiares',
     loadChildren: () => import('./views/grupos-familiares/grupos-familiares.module').then( m => m.GruposFamiliaresPageModule)
+  },
+  {
+    path: 'visitantes',
+    loadChildren: () => import('./views/visitantes/visitantes.module').then( m => m.VisitantesPageModule)
   },
 ];
 
