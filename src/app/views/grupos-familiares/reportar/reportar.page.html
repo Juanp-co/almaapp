@@ -1,7 +1,7 @@
 <ion-content>
   <ion-header color="primary">
     <ion-toolbar class="ion-no-padding ion-no-margin">
-      <div class="fondoCool">
+      <div class="fondoCool" [style.background-image]="styleBg">
         <ion-row>
           <ion-col class="ion-margin-top">
             <ion-buttons>
@@ -14,7 +14,7 @@
             <ion-text color="light" class="titulo1">Reportar</ion-text>
           </ion-col>
           <ion-col>
-            <img src="assets/logo.png" class="logo-2" height="60">
+            <img [src]="logo" class="logo-2" height="60">
           </ion-col>
         </ion-row>
       </div>

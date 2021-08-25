@@ -1,5 +1,4 @@
 <ion-card
-  class="height-100"
   *ngIf="member"
   (click)="member._id && showButton ? goToDetails(member._id) : null"
 >
@@ -13,7 +12,7 @@
           *ngIf="member.picture"
         >
         <img
-          src="/assets/icon/{{member.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
+          src="/assets/icon/{{member.gender === 1 ? 'mujer' : 'hombre'}}_lista.svg"
           height="65"
           class="img-rounded"
           *ngIf="!member.picture"

@@ -9,6 +9,7 @@ import {
 } from '../../../../Utils/validations.functions';
 import {GlobalService} from '../../../services/global.service';
 import {GruposService} from '../grupos.service';
+import {CookiesService} from '../../../services/cookies.service';
 
 @Component({
   selector: 'app-reportar',
@@ -18,6 +19,7 @@ import {GruposService} from '../grupos.service';
 export class ReportarPage implements OnInit {
 
   @Input() groups: any[] = [];
+  styleBg = 'linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png")';
   id: any = null;
   selected: any|null = null;
   formData: any = {
@@ -41,14 +43,18 @@ export class ReportarPage implements OnInit {
   };
   minInitDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
+  logo = '/assets/logo.png';
 
   constructor(
+    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private gruposService: GruposService,
     private modalController: ModalController,
   ) { }
 
   ngOnInit() {
+    const params: any = this.cookiesService.getCookie('params-app');
+    this.logo = `${params?.logo || '/assets/logo.png'}`;
   }
 
   async saveReport() {
