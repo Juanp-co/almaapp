@@ -69,6 +69,10 @@ const routes: Routes = [
     path: 'visitantes',
     loadChildren: () => import('./views/visitantes/visitantes.module').then( m => m.VisitantesPageModule)
   },
+  {
+    path: 'visitantes',
+    loadChildren: () => import('./views/visitantes/visitantes.module').then( m => m.VisitantesPageModule)
+  },
 ];
 
 @NgModule({

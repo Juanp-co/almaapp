@@ -18,13 +18,12 @@ export class PadresService {
 
   async getFamiliesGroups(query: any = {}) {
     const res: any = await this.axios.getData('/families-groups', query);
-    return res && res.success ? (res.data ? res.data.groups : []) : [];
+    return res && res.success ? (res.data?.groups || []) : [];
   }
 
   async getMembers(query: any = {}) {
     const res: any = await this.axios.getData('/members', query);
-    if (res && res.success)
-      return res.data ? res.data.members || [] : [];
+    if (res && res.success) return res.data?.members || [];
     return this.globalSer.altResponse(res);
   }
 

@@ -36,6 +36,7 @@ export class InicioPage implements OnInit {
     { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
     { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
     { titulo: 'Eventos', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
+    { titulo: 'Organización', imagen: 'assets/icon/calendario.svg', url: 'organizacion' },
     { titulo: 'Salir', imagen: 'assets/icon/logout.svg', url: null }
   ];
 
@@ -120,9 +121,10 @@ export class InicioPage implements OnInit {
     if (res && res.success) {
       const { data } = res.data;
       if (data) {
+        this.cookiesService.setCookie('params-app', data);
         this.params = {...this.params, ...data};
         this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
-        this.logo = `${this.params.logo || 'assets/logo.png'}`;
+        this.logo = `${this.params.logo || '/assets/logo.png'}`;
         this.showButtonSocial = (
           this.params.facebook ||
           this.params.instagram ||

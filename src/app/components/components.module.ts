@@ -9,6 +9,7 @@ import {CoursecardComponent} from './coursecard/coursecard.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
 import {GrupoFamiliarCardComponent} from './grupo-familiar-card/grupo-familiar-card.component';
+import {MapComponent} from './map/map.component';
 import {MinheaderComponent} from './minheader/minheader.component';
 import {PaginatorComponent} from './paginator/paginator.component';
 import {PersoncardComponent} from './personcard/personcard.component';
@@ -25,6 +26,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     EventcardComponent,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
+    MapComponent,
     MinheaderComponent,
     PaginatorComponent,
     PersoncardComponent,
@@ -43,6 +45,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     EventcardComponent,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
+    MapComponent,
     MinheaderComponent,
     PaginatorComponent,
     PersoncardComponent,

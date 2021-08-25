@@ -54,7 +54,7 @@ export class GlobalService {
   }
 
   async dismissLoading(){
-    await this.loading.dismiss();
+    await this.loading?.dismiss();
   }
 
   /*

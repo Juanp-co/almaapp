@@ -1,0 +1,141 @@
+<ion-content>
+  <ion-header class="sticky-menu">
+    <app-minheader [title]="showGroups ? 'Grupos familiares' : 'Organización'"></app-minheader>
+  </ion-header>
+
+  <ion-row class="{{ !showGroups ? '' : 'ion-hide' }}">
+    <ion-col size="12" class="ion-margin-start {{!viewSelected ? '' : 'ion-hide'}}">
+      <h4>Estructura de la organización</h4>
+    </ion-col>
+    <ion-col size="12" class="{{!viewSelected ? '' : 'ion-hide'}}">
+      <ion-list>
+        <ion-item button *ngFor="let opt of optsOrganization" (click)="setViewOrganization(opt)" mode="md">
+          <ion-thumbnail slot="start">
+            <img src="/assets/icon/{{opt.icon}}.svg" height="120" class="img-bordered">
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <b>{{opt.label}}</b>
+            </h3>
+          </ion-label>
+          <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+    <ion-col size="12" *ngIf="viewSelected" class="ion-no-margin ion-no-padding">
+      <ion-row>
+        <ion-col size="12" class="position-sticky">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-button color="light" (click)="setViewOrganization()">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <h3>
+                <b>{{viewSelected.label}}</b>
+              </h3>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12">
+          <ion-list>
+            <ion-item *ngFor="let item of viewSelected.list">
+              <ion-thumbnail slot="start">
+                <img src="{{item.picture}}" height="120" class="img-rounded">
+              </ion-thumbnail>
+              <ion-label>
+                <h3>
+                  <b>{{item.fullname}}</b>
+                </h3>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="{{ showGroups ? '' : 'ion-hide' }} ion-align-items-center">
+    <ion-col class="ion-no-margin ion-no-padding">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" class="ion-margin-start" *ngIf="!showGroupData">
+          <h4>Grupos familiares</h4>
+        </ion-col>
+        <ion-col size="12" *ngIf="!showGroupData">
+          <ion-list>
+            <ion-item button *ngFor="let group of groups" (click)="setViewGroupData(group)" mode="md">
+              <ion-label>
+                <h3>
+                  <b>Grupo #{{group.number}}</b>
+                </h3>
+                <p>
+                  Sector # {{group.sector}}
+                </p>
+                <p>
+                  Sub-sector # {{group.subSector}}
+                </p>
+              </ion-label>
+              <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col size="12" *ngIf="showGroupData" class="ion-no-margin ion-no-padding">
+          <ion-row class="ion-no-margin ion-no-padding">
+            <ion-col size="12" class="position-sticky">
+              <ion-row class="ion-align-items-center">
+                <ion-col size="2">
+                  <ion-button color="light" (click)="setViewGroupData()">
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col>
+                  <h3>
+                    <b>Ubicación del grupo</b>
+                  </h3>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12">
+              <app-map
+                [coodrs]="showGroupData.coords"
+                [zoom]="15"
+                height="80vh"
+              ></app-map>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top" *ngIf="!viewSelected && !showGroupData">
+    <ion-col class="ion-margin-top">
+      <br>
+      <br>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="footer ion-text-center" *ngIf="!viewSelected && !showGroupData">
+    <ion-col>
+      <ion-button
+        color="{{!showGroups ? 'primary' : 'light'}}"
+        expand="block"
+        size="large"
+        (click)="setView(false)"
+      >
+        <ion-icon name="list-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button
+        color="{{showGroups ? 'primary' : 'light'}}"
+        expand="block"
+        size="large"
+        (click)="setView(true)"
+      >
+        <ion-icon name="people-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

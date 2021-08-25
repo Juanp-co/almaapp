@@ -115,10 +115,10 @@ b {
 /*
 To static top bar
  */
-.content .header-menu {
+.sticky-menu {
   position: sticky !important;
   top: 0;
-  z-index: 100;
+  z-index: 1001;
 }
 
 
@@ -135,3 +135,6 @@ To static top bar
   border-radius: 50%;
 }
 
+.img-bordered {
+  border-radius: 10px;
+}

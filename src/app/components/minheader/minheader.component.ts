@@ -11,11 +11,13 @@ export class MinheaderComponent implements OnInit {
   history: string[] = [];
   @Input() title: string;
   @Input() slugValue: string;
+  @Input() pathUrl: string;
   @Input() modal = false;
   titleHeader: string;
   style: any = {
     'background-image': `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/cruz.png)`
   };
+  logo = '/assets/logo.png';
 
   constructor(
     private modalController: ModalController,
@@ -25,11 +27,16 @@ export class MinheaderComponent implements OnInit {
 
   ngOnInit() {
     this.titleHeader = this.title;
+    const params: any = this.cookiesService.getCookie('params-app');
+    this.logo = `${params?.logo || '/assets/logo.png'}`;
   }
 
   async back() {
     if (this.slugValue) this.cookiesService.removeCookie(this.slugValue);
-    await this.navCtrl.back();
+    if (this.pathUrl) {
+      await this.navCtrl.back();
+    }
+    else await this.navCtrl.back();
   }
 
   async closeModal() {

@@ -18,6 +18,10 @@ export class ModalExamenTemaPage implements OnInit {
   @Input() test: any = null;
   @Input() title: any = null;
 
+  style: any = {
+    'background-image': `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/cruz.png)`
+  };
+  logo = '/assets/logo.png';
   totalsViews = 0;
   viewSelected = 0;
   questions: any = [];
@@ -37,6 +41,8 @@ export class ModalExamenTemaPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    const params: any = this.cookiesService.getCookie('params-app');
+    this.logo = `${params?.logo || '/assets/logo.png'}`;
     this.setSectionsQuestions();
   }
 

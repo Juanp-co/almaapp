@@ -12,7 +12,7 @@
       </ion-text>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <img [src]="logo" height="100" class="logo" onerror="handleErrorImg($event)">
+      <img [src]="logo" height="100" class="logo" onerror="($event) {handleErrorImg($event)}">
     </ion-col>
   </ion-row>
 
