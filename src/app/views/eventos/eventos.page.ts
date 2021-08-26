@@ -20,6 +20,7 @@ export class EventosPage implements OnInit {
     initDate: dayjs().format('YYYY-MM-DD'),
     endDate: null,
   };
+  logged = false;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -27,17 +28,15 @@ export class EventosPage implements OnInit {
     private globalSer: GlobalService,
     private eventsService: EventosService,
     private navCtrl: NavController,
-    private modalController: ModalController,
-    private router: Router,
   ) { }
 
   async ngOnInit() {
+    this.logged = this.globalSer.isLoggeded();
   }
 
   async ionViewDidEnter() {
     // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
-    else await this.getEventsList();
+    this.getEventsList();
   }
 
   async getEventsList() {

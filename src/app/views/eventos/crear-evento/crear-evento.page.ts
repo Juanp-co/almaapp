@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {GlobalService} from '../../../services/global.service';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-crear-evento',
@@ -7,8 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrearEventoPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private globalSer: GlobalService,
+    private navCtrl: NavController,
+  ) { }
 
   ngOnInit() {
+    if (!this.globalSer.isLoggeded()) {
+      this.navCtrl.back();
+    }
   }
 }

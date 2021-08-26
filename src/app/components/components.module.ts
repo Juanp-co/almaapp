@@ -7,6 +7,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {ChartComponent} from './chart/chart.component';
 import {CoursecardComponent} from './coursecard/coursecard.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
+import {Eventcard2Component} from './events/eventcard2/eventcard2.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
 import {GrupoFamiliarCardComponent} from './grupo-familiar-card/grupo-familiar-card.component';
 import {MapComponent} from './map/map.component';
@@ -24,6 +25,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     ChartComponent,
     CoursecardComponent,
     EventcardComponent,
+    Eventcard2Component,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
     MapComponent,
@@ -43,6 +45,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     ChartComponent,
     CoursecardComponent,
     EventcardComponent,
+    Eventcard2Component,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
     MapComponent,

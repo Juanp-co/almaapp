@@ -1,4 +1,6 @@
 <ion-content>
+
+  <!-- COPIAR EL HEADER DEL INICIO PERO MAS CORTO -->
   <ion-row
     class="fondoCool ion-justify-content-end ion-padding"
     [style.background-image]="styleBg"
@@ -12,92 +14,94 @@
       </ion-text>
     </ion-col>
     <ion-col size="4" class="ion-text-center">
-      <img [src]="logo" height="100" class="logo" onerror="($event) {handleErrorImg($event)}">
+      <img [src]="logo" height="100" class="logo" onerror="handleErrorImg($event)">
     </ion-col>
   </ion-row>
 
-  <div *ngIf="!login" class="ion-margin-top ion-padding-top">
-    <br><br><br>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="auto">
-        <h4>
-          <ion-text color="primary">
-            Inicio de sesión
-          </ion-text>
-        </h4>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="9">
-        <ion-item>
-          <ion-label position="floating" color="medium">Nº de teléfono</ion-label>
-          <ion-input
-            [(ngModel)]="phone"
-            class="ion-text-uppercase"
-            maxlength="12"
-            (keypress)="validateOnlyNumber2($event)"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="9">
-        <ion-item>
-          <ion-label position="floating" color="medium">Contraseña</ion-label>
-          <ion-input type="password" [(ngModel)]="pass"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="9">
-        <p (click)="goTo('recuperar-acceso')">
-          <ion-text color="medium" class="ion-text-start">¿Olvidaste tu contraseña?</ion-text>
-        </p>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center ion-margin-top">
-      <ion-col size="auto">
-        <ion-button expand="block" color="light" (click)="goTo('registro')">
-          Registro
-        </ion-button>
-      </ion-col>
-      <ion-col size="auto">
-        <ion-button expand="block" color="primary" (click)="ingresar()">
-          Ingresar
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-    </ion-row>
-  </div>
+  <ion-row>
+    <ion-col size="12"><br></ion-col>
 
-  <div *ngIf="login"  class="ion-margin-top ion-padding-top ion-margin-bottom ion-padding-bottom">
-    <br/>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="5"
-        *ngFor="let item of opciones; let i = index"
-        class="ion-text-center ion-margin-top ion-padding-top"
-        style="cursor: pointer;"
-        (click)="irMenu(i)"
-        >
-        <p><img [src]="item.imagen" alt=""/></p>
-        <ion-text color="medium" class="ion-padding-top">{{item.titulo}}</ion-text>
-      </ion-col>
-      <ion-col size="12" class="">
-      </ion-col>
-      <ion-col size="12">
+    <ion-col size="12">
+      <div class="scrolling-wrapper">
+        <div class="card" *ngFor="let item of list1">
+          <ion-card>
+            <div [ngStyle]="{'background-image': 'url(' + 'https://picsum.photos/400/200' + ')'}" class="img_header"></div>
+            <ion-card-content>
+              <ion-card-title>La vida siempre sera la vida ya veras!</ion-card-title>
+              <div class="description">
+                Este es el limite de caracteres para las cards se vean iguales...
+              </div>
+              <ion-button slot="end" size="small">Ir devocional</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div class="card">
+          <ion-card>
+            <div [ngStyle]="{'background-image': 'url(' + '/assets/cruz.png' + ')'}" class="img_header"></div>
+            <ion-card-content>
+              <ion-card-title>Puedes ver nuestra lista de devocionales</ion-card-title>
+              <div class="description">
+                Puedes acceder al listado y mirar contenido de fechas anteriores...
+              </div>
+              <ion-button fill="outline" slot="end" size="small">Lista de devocionales</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+    </ion-col>
 
-        <br/>
-        <br/>
-      </ion-col>
-    </ion-row>
-  </div>
+    <ion-col size="12">
+      <div class="scrolling-wrapper">
+        <app-eventcard2 *ngFor="let ele of events" [data]="ele"></app-eventcard2>
+        <div class="card">
+          <ion-card>
+            <div [ngStyle]="{'background-image': 'url(' + '/assets/icon/calendario.svg' + ')'}" class="img_header4"></div>
+            <ion-card-content class="ion-text-center">
+              <div class="description">
+                <br>
+                <ion-button size="small" (click)="goTo('eventos')">Ver lista de eventos</ion-button>
+                <br>
+                <br>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+    </ion-col>
 
-  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed"*ngIf="login">
+    <ion-col size="12">
+      <div class="scrolling-wrapper">
+        <div class="card3" *ngFor="let item of opciones; let i=index" (click)="irMenu(i)">
+          <ion-card>
+            <div [ngStyle]="{'background-image': 'url(' + item.imagen + ')'}" class="img_header3"></div>
+            <ion-card-content>
+              <ion-card-subtitle class="ion-text-center">{{item.titulo}}</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div class="card3" (click)="logout()" *ngIf="logged">
+          <ion-card>
+            <div [ngStyle]="{'background-image': 'url(assets/icon/logout.svg)'}" class="img_header3"></div>
+            <ion-card-content>
+              <ion-card-subtitle class="ion-text-center">Salir</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+    </ion-col>
+    <ion-col><br><br><br></ion-col>
+
+  </ion-row>
+  <ion-row>
+  </ion-row>
+
+  <ion-fab class="ion-margin-end" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
     <ion-fab-button color="primary" (click)="goTo('perfil')">
       <ion-icon name="person-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-
-
-  <ion-fab class="ion-margin-start ion-margin-bottom" vertical="bottom" horizontal="start" slot="fixed" *ngIf="showButtonSocial">
+  <ion-fab class="ion-margin-start" vertical="bottom" horizontal="start" slot="fixed" *ngIf="showButtonSocial">
     <ion-fab-button color="dark">
       <ion-icon name="ellipsis-vertical-outline"></ion-icon>
     </ion-fab-button>
@@ -119,4 +123,5 @@
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
+
 </ion-content>

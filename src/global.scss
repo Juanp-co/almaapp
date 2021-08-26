@@ -138,3 +138,56 @@ To static top bar
 .img-bordered {
   border-radius: 10px;
 }
+
+/* Guest view */
+.scrolling-wrapper {
+  margin: 10px auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .card {
+    min-height: 110px !important;
+    display: inline-block;
+    height: 100% !important;
+    width: 75%;
+    white-space: normal;
+  }
+  .card3 {
+    display: inline-block;
+    width: 40%;
+    white-space: normal;
+  }
+  .img_header{
+    height: 70px !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .img_header2{
+    height: 110px !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .img_header3{
+    margin: 5px auto;
+    height: 70px !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .img_header4{
+    height: 95px !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .title-card {
+    font-weight: 550 !important;
+  }
+  .description{
+    margin: 5px 0;
+  }
+}
+

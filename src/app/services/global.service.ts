@@ -142,6 +142,11 @@ export class GlobalService {
     return data && data.role !== null && data.role !== undefined ? data.role : null;
   }
 
+  isLoggeded() {
+    const token = this.cookieService.getCookie('token') || null;
+    return !!token;
+  }
+
   clearAllData() {
     this.cookieService.removeCookie('token');
     this.cookieService.removeCookie('data');
