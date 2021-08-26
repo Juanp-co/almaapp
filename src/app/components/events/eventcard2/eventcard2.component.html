@@ -1,0 +1,16 @@
+<div class="card" (click)="goToDetails()" *ngIf="eventData">
+  <ion-card>
+    <div
+      [ngStyle]="{'background-image': 'url(' + (eventData.picture || 'https://picsum.photos/400/200') + ')'}"
+      class="img_header2"
+    ></div>
+    <ion-card-content>
+      <ion-card-subtitle class="title-card">{{eventData.title}}</ion-card-subtitle>
+      <div class="description">
+        {{ eventData.date }}
+        <br>
+        Hora: {{ eventData.initHour }}
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

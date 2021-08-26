@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import {AxiosService} from '../../services/axios.service';
 import {CookiesService} from '../../services/cookies.service';
 import { GlobalService } from '../../services/global.service';
-import {onlyNumbersInputValidation2} from '../../../Utils/validations.functions';
+import {InicioService} from './inicio.service';
 
 @Component({
   selector: 'app-inicio',
@@ -12,11 +12,18 @@ import {onlyNumbersInputValidation2} from '../../../Utils/validations.functions'
 })
 export class InicioPage implements OnInit {
 
-  login = false;
-  showButtonSocial = false;
-  userData: any = null;
-  phone: any = null;
-  pass: any = null;
+  list1 = [ {}, {}, {} ];
+  list2 = [ {}, {}, {} ];
+  opciones = [
+    { titulo: 'Red de padres', imagen: 'assets/icon/red.svg', url: 'padres' },
+    { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
+    { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
+    { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
+    // { titulo: 'Eventos', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
+    // { titulo: 'Salir', imagen: 'assets/icon/logout.svg', url: null }
+  ];
+
+  // ===============
   params: any = {
     facebook: null,
     instagram: null,
@@ -29,132 +36,70 @@ export class InicioPage implements OnInit {
   };
   styleBg = 'linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png")';
   logo = 'assets/logo.png';
-
-  opciones = [
-    { titulo: 'Red padres', imagen: 'assets/icon/red.svg', url: 'padres' },
-    { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
-    { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
-    { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
-    { titulo: 'Eventos', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
-    { titulo: 'Organización', imagen: 'assets/icon/calendario.svg', url: 'organizacion' },
-    { titulo: 'Salir', imagen: 'assets/icon/logout.svg', url: null }
-  ];
+  showButtonSocial = false;
+  userData: any = null;
+  events: any = [];
+  logged = false;
 
   constructor(
     private axiosService: AxiosService,
     private cookiesService: CookiesService,
     private globalSer: GlobalService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private inicioService: InicioService,
   ) { }
 
   async ngOnInit() {
-    // await this.getDataLogin();
   }
 
   async ionViewWillEnter() {
     this.getParams();
-    await this.getDataLogin();
+    this.getEvents();
+    const token = await this.cookiesService.getCookie('token');
+    if (token) {
+      this.logged = true;
+      await this.getDataLogin();
+    }
   }
 
   async getDataLogin() {
-    const token = this.cookiesService.getCookie('token');
-    if (token) {
-      this.login = true;
-      const data = this.cookiesService.getCookie('data');
+    const data = this.cookiesService.getCookie('data');
 
-      if (!data) {
-        const res: any = await this.axiosService.getData('/user');
-
-        if (res && res.success) {
-          this.cookiesService.setCookie('data', res.data.data);
-          this.userData = res.data.data;
-          await this.globalSer.dismissLoading();
-        }
-        else {
-          if (res.status && res.status === 401) {
-            this.cookiesService.removeCookie('token');
-            this.login = false;
-          }
-          await this.globalSer.dismissLoading();
-          await this.globalSer.presentAlert('Alerta', res.error);
-        }
-      }
-      else this.userData = data;
-    }
-    else this.login = false;
-  }
-
-  async ingresar() {
-    if (this.pass && this.phone) {
-      await this.globalSer.presentLoading();
-
-      const res: any = await this.axiosService.postData(
-        '/login',
-        { phone: this.phone, password: this.pass }
-        );
+    if (!data) {
+      const res: any = await this.inicioService.getSessionData();
 
       if (res && res.success) {
-        const { data, token } = res.data;
-        this.cookiesService.setCookie('token', token);
-        this.cookiesService.setCookie('data', data);
-        this.userData = data;
-
-        this.login = true;
-        this.phone = null;
-        this.pass = null;
-        await this.globalSer.dismissLoading();
+        this.cookiesService.setCookie('data', res);
+        this.userData = res;
       }
-      else {
-        this.phone = null;
-        this.pass = null;
-        await this.globalSer.dismissLoading();
-        await this.globalSer.presentAlert('Alerta', res.error);
+      else if (res && res.error) {
+        await this.globalSer.errorSession();
       }
-    } else {
-      await this.globalSer.presentAlert('Alerta', 'Asegúrese de indicar su número de teléfono y contraseña.');
     }
+    else this.userData = data || null;
   }
 
   async getParams() {
-    const res: any = await this.axiosService.getData('params-app');
-
-    if (res && res.success) {
-      const { data } = res.data;
-      if (data) {
-        this.cookiesService.setCookie('params-app', data);
-        this.params = {...this.params, ...data};
-        this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
-        this.logo = `${this.params.logo || '/assets/logo.png'}`;
-        this.showButtonSocial = (
-          this.params.facebook ||
-          this.params.instagram ||
-          this.params.twitter ||
-          this.params.web ||
-          this.params.youtube
-        );
-      }
+    const data: any = await this.inicioService.getParamsApp();
+    if (data) {
+      this.params = {...this.params, ...data};
+      this.cookiesService.setCookie('params-app', this.params);
+      this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
+      this.logo = `${this.params.logo || '/assets/logo.png'}`;
+      this.showButtonSocial = (
+        this.params.facebook ||
+        this.params.instagram ||
+        this.params.twitter ||
+        this.params.web ||
+        this.params.youtube
+      );
     }
   }
 
-  async irMenu(num){
-    const opt = this.opciones[num] || null;
-
-    if (opt) {
-      if (!opt.url) {
-        await this.globalSer.alertConfirm({
-          header: 'Salir',
-          message: '¿Está seguro qué desea finalizar la sesión?',
-          confirmAction: async () => {
-            await this.globalSer.presentLoading();
-            this.userData = null;
-            this.axiosService.deleteData('/logout');
-            await this.globalSer.clearAllData();
-            this.login = false;
-            await this.globalSer.dismissLoading();
-          }
-        });
-      }
-      else await this.navCtrl.navigateForward(opt.url);
+  async getEvents() {
+    const data: any = await this.inicioService.getEvents({ limit: 6 });
+    if (data) {
+      this.events = data || [];
     }
   }
 
@@ -162,8 +107,36 @@ export class InicioPage implements OnInit {
     await this.navCtrl.navigateForward(`/${link}`);
   }
 
-  validateOnlyNumber2(event: any) {
-    onlyNumbersInputValidation2(event);
+  async irMenu(num){
+    if (!this.logged) {
+      await this.globalSer.alertConfirm({
+        header: 'Alerta',
+        message: 'Disculpe, pero debe iniciar sesión para poder visualizar este contenido.<br><br>¿Desea iniciar sesión?',
+        confirmAction: async () => {
+          this.goTo('acceder');
+        }
+      });
+    }
+    else {
+      const opt = this.opciones[num] || null;
+
+      if (opt) {
+        await this.navCtrl.navigateForward(opt.url);
+      }
+    }
+  }
+
+  async logout() {
+    await this.globalSer.alertConfirm({
+      header: 'Salir',
+      message: '¿Está seguro qué desea finalizar la sesión?',
+      confirmAction: async () => {
+        this.userData = null;
+        this.logged = false;
+        await this.axiosService.deleteData('/logout');
+        this.globalSer.clearAllData();
+      }
+    });
   }
 
   async openExternalLink(key: string) {
@@ -178,9 +151,5 @@ export class InicioPage implements OnInit {
     }
   }
 
-  handleErrorImg(e) {
-    e.target.src = `/images/assets/logo.png`;
-    e.onerror = null;
-  }
 
 }
