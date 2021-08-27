@@ -12,15 +12,11 @@ import {InicioService} from './inicio.service';
 })
 export class InicioPage implements OnInit {
 
-  list1 = [ {}, {}, {} ];
-  list2 = [ {}, {}, {} ];
   opciones = [
     { titulo: 'Red de padres', imagen: 'assets/icon/red.svg', url: 'padres' },
     { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
     { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
-    { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' },
-    // { titulo: 'Eventos', imagen: 'assets/icon/calendario.svg', url: 'eventos' },
-    // { titulo: 'Salir', imagen: 'assets/icon/logout.svg', url: null }
+    { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' }
   ];
 
   // ===============
@@ -39,6 +35,7 @@ export class InicioPage implements OnInit {
   showButtonSocial = false;
   userData: any = null;
   events: any = [];
+  devotionals: any = [];
   logged = false;
 
   constructor(
@@ -55,6 +52,7 @@ export class InicioPage implements OnInit {
   async ionViewWillEnter() {
     this.getParams();
     this.getEvents();
+    this.getDevotionals();
     const token = await this.cookiesService.getCookie('token');
     if (token) {
       this.logged = true;
@@ -100,6 +98,13 @@ export class InicioPage implements OnInit {
     const data: any = await this.inicioService.getEvents({ limit: 6 });
     if (data) {
       this.events = data || [];
+    }
+  }
+
+  async getDevotionals() {
+    const data: any = await this.inicioService.getDevotionals({ limit: 6, input: 'created_at', value: -1 });
+    if (data) {
+      this.devotionals = data || [];
     }
   }
 

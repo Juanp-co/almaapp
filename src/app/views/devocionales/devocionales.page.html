@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Devocionales y predicaciones"></app-minheader>
+  </ion-header>
+
+  <ion-row *ngIf="totals > 0; else noDevotionals">
+    <ion-col size="12" size-sm="6" *ngFor="let item of devotionals">
+      <app-devocionales-card2 [item]="item"></app-devocionales-card2>
+    </ion-col>
+  </ion-row>
+
+  <ng-template #noDevotionals>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-no-padding ion-margin-top ion-margin-bottom">
+          <ion-text color="medium">
+            <p class="ion-text-center">
+              <ion-icon name="alert-circle-outline"></ion-icon> No existen devocionales ni predicaciones disponible en este momento.
+            </p>
+          </ion-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="totals > 0">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando ...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

@@ -1,0 +1,15 @@
+<div class="card" *ngIf="model">
+  <ion-card>
+    <div
+      [ngStyle]="{'background-image': 'url(' + (model.picture || 'assets/cruz.png')+ '), url(assets/cruz.png)'}"
+      class="img_header"
+    ></div>
+    <ion-card-content>
+      <ion-card-subtitle class="title-card">{{model.sortTitle}}</ion-card-subtitle>
+      <div class="description">
+        <i>{{ model.created_at }}</i>
+      </div>
+      <ion-button slot="end" size="small" (click)="goTo(model._id)">Ver devocional</ion-button>
+    </ion-card-content>
+  </ion-card>
+</div>

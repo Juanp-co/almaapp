@@ -23,27 +23,21 @@
 
     <ion-col size="12">
       <div class="scrolling-wrapper">
-        <div class="card" *ngFor="let item of list1">
-          <ion-card>
-            <div [ngStyle]="{'background-image': 'url(' + 'https://picsum.photos/400/200' + ')'}" class="img_header"></div>
-            <ion-card-content>
-              <ion-card-title>La vida siempre sera la vida ya veras!</ion-card-title>
-              <div class="description">
-                Este es el limite de caracteres para las cards se vean iguales...
-              </div>
-              <ion-button slot="end" size="small">Ir devocional</ion-button>
-            </ion-card-content>
-          </ion-card>
-        </div>
+        <app-devocionales-card *ngFor="let item of devotionals" [item]="item"></app-devocionales-card>
         <div class="card">
           <ion-card>
             <div [ngStyle]="{'background-image': 'url(' + '/assets/cruz.png' + ')'}" class="img_header"></div>
             <ion-card-content>
-              <ion-card-title>Puedes ver nuestra lista de devocionales</ion-card-title>
+              <ion-card-subtitle class="card-title">Ver nuestra lista de devocionales</ion-card-subtitle>
               <div class="description">
-                Puedes acceder al listado y mirar contenido de fechas anteriores...
+                Accede a más contenido ...
               </div>
-              <ion-button fill="outline" slot="end" size="small">Lista de devocionales</ion-button>
+              <ion-button
+                fill="outline"
+                slot="end"
+                size="small"
+                (click)="goTo('devocionales')"
+              >Lista de devocionales</ion-button>
             </ion-card-content>
           </ion-card>
         </div>
