@@ -6,6 +6,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import {ChartComponent} from './chart/chart.component';
 import {CoursecardComponent} from './coursecard/coursecard.component';
+import {DevocionalesCardComponent} from './devocionales/devocionales-card/devocionales-card.component';
+import {DevocionalesCard2Component} from './devocionales/devocionales-card2/devocionales-card2.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {Eventcard2Component} from './events/eventcard2/eventcard2.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
@@ -24,6 +26,8 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
   declarations: [
     ChartComponent,
     CoursecardComponent,
+    DevocionalesCardComponent,
+    DevocionalesCard2Component,
     EventcardComponent,
     Eventcard2Component,
     EventsFormComponent,
@@ -44,6 +48,8 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
   exports: [
     ChartComponent,
     CoursecardComponent,
+    DevocionalesCardComponent,
+    DevocionalesCard2Component,
     EventcardComponent,
     Eventcard2Component,
     EventsFormComponent,

@@ -17,6 +17,11 @@ export class InicioService {
     if (res && res.success) return res.data.events || [];
   }
 
+  async getDevotionals(queryParam: any) {
+    const res: any = await this.axios.getData(`/devotionals`, queryParam);
+    if (res && res.success) return res.data?.devotionals || [];
+  }
+
   async getSessionData() {
     const res: any = await this.axios.getData(`/user`);
     if (res && res.success) return res.data || {};

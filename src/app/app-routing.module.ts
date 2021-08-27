@@ -69,6 +69,10 @@ const routes: Routes = [
     path: 'acceder',
     loadChildren: () => import('./views/acceder/acceder.module').then( m => m.AccederPageModule)
   },
+  {
+    path: 'devocionales',
+    loadChildren: () => import('./views/devocionales/devocionales.module').then( m => m.DevocionalesPageModule)
+  },
 ];
 
 @NgModule({
