@@ -4,6 +4,7 @@ import {NavController} from '@ionic/angular';
 import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 import {PadresService} from './padres.service';
+import {ModalVisitsPage} from './modal-visits/modal-visits.page';
 
 @Component({
   selector: 'app-padres',
@@ -18,6 +19,7 @@ export class PadresPage implements OnInit {
 
   constructor(
     private padreService: PadresService,
+    private globalSer: GlobalService,
     private router: Router,
   ) { }
 
@@ -45,5 +47,23 @@ export class PadresPage implements OnInit {
 
   async goToAddNewMember() {
     await this.router.navigate([`/padres/nuevo-miembro`]);
+  }
+
+  async showVisits() {
+    await this.globalSer.presentLoading();
+    const updateVisits = (data) => {
+      // if (data) this.visits = data;
+    };
+    const content: any = {
+      // data: this.visits,
+      // id: this.id
+    };
+    await this.globalSer.dismissLoading();
+    await this.globalSer.loadModal(
+      ModalVisitsPage,
+      content,
+      false,
+      updateVisits
+    );
   }
 }

@@ -20,7 +20,8 @@ import {PersoncardtwoComponent} from './personcardtwo/personcardtwo.component';
 import {ResumeHijosEducacionComponent} from './users/resume-hijos-educacion/resume-hijos-educacion.component';
 import {ResumeProfileComponent} from './users/resume-profile/resume-profile.component';
 import {VideoPlayerComponent} from './video-player/video-player.component';
-import {VisitscardComponent} from './visitscard/visitscard.component';
+import {VisitscardComponent} from './visits/visitscard/visitscard.component';
+import {VisitFormComponent} from './visits/visit-form/visit-form.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     ResumeProfileComponent,
     VideoPlayerComponent,
     VisitscardComponent,
+    VisitFormComponent,
   ],
   imports: [
     CommonModule, IonicModule, CKEditorModule
@@ -63,6 +65,7 @@ import {VisitscardComponent} from './visitscard/visitscard.component';
     ResumeProfileComponent,
     VideoPlayerComponent,
     VisitscardComponent,
+    VisitFormComponent,
   ]
 })
 export class ComponentsModule { }

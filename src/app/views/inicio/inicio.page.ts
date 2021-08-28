@@ -139,7 +139,7 @@ export class InicioPage implements OnInit {
         this.userData = null;
         this.logged = false;
         await this.axiosService.deleteData('/logout');
-        this.globalSer.clearAllData();
+        await this.globalSer.clearAllData();
       }
     });
   }
