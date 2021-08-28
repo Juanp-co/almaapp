@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, ModalController, NavController} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
-import dayjs from 'dayjs';
+import {AlertController, NavController} from '@ionic/angular';
+import {ActivatedRoute} from '@angular/router';
 import {GlobalService} from '../../services/global.service';
 import {EventosService} from './eventos.service';
 
@@ -17,7 +16,8 @@ export class EventosPage implements OnInit {
   queryParams: any = {
     input: 'date',
     value: -1,
-    initDate: dayjs().format('YYYY-MM-DD'),
+    limit: 50,
+    initDate: null,
     endDate: null,
   };
   logged = false;
@@ -97,16 +97,14 @@ export class EventosPage implements OnInit {
     await alert.present();
   }
 
-  setDate(input: string) {
-    if (this.queryParams[input]) {
-      this.queryParams[input] = dayjs(this.queryParams[input]).format('YYYY-MM-DD');
-    }
+  setDate(input: string, value) {
+    this.queryParams[input] = `${value}`.substr(0, 10);
   }
 
   resetQueryParams() {
     this.queryParams.input = 'date';
     this.queryParams.value = -1;
-    this.queryParams.initDate = dayjs().format('YYYY-MM-DD');
+    this.queryParams.initDate = null;
     this.queryParams.endDate = null;
   }
 
