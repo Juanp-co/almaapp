@@ -29,9 +29,7 @@
               <ion-text>
                 <b>Observación:</b><br>
               </ion-text>
-              <ion-text>
-                {{ data.observation }}
-              </ion-text>
+              <div class="w-100" [innerHTML]="data.observation"></div>
             </ion-col>
           </ion-row>
         </ion-card-content>

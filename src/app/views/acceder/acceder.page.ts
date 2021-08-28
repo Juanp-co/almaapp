@@ -58,7 +58,6 @@ export class AccederPage implements OnInit {
         this.goTo();
       }
       else {
-        this.phone = null;
         this.pass = null;
         await this.globalSer.dismissLoading();
       }

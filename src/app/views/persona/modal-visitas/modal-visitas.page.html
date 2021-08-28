@@ -20,9 +20,7 @@
           <app-visitscard [visit]="v" (click)="showVisit(i)"></app-visitscard>
         </ion-col>
 
-        <ion-col>
-          <br>
-        </ion-col>
+        <ion-col><br></ion-col>
 
       </ion-row>
 
@@ -36,6 +34,7 @@
         </ion-card>
       </ng-template>
     </ion-col>
+
     <ion-col [size]="12" *ngIf="showForm">
       <ion-card class="ion-no-padding">
         <ion-card-content>
@@ -68,7 +67,7 @@
                       </ion-list-header>
                       <ion-item *ngFor="let a of listActions; let i=index">
                         <ion-label>{{a}}</ion-label>
-                        <ion-radio slot="start" value="{{i}}"></ion-radio>
+                        <ion-radio slot="start" [value]="i"></ion-radio>
                       </ion-item>
                     </ion-radio-group>
                   </ion-list>
@@ -83,6 +82,30 @@
                       placeholder="Indica alguna observación..."
                     ></ion-textarea>
                   </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item lines="none">
+                    <ion-label color="medium">Soy el visitador</ion-label>
+                    <ion-checkbox
+                      slot="start"
+                      [checked]="iAmVisitor"
+                      (ionChange)="setCheckedValue()"
+                    ></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+                <ion-col *ngIf="!iAmVisitor" class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Miembro visitante (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="getMemberSelectedNames()"
+                      autocomplete="off"
+                      (click)="openMembersModal()"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-text color="medium">
+                    <i class="toSmall">Busque y seleccione al miembro quien realizó la visita.</i>
+                  </ion-text>
                 </ion-col>
                 <ion-col size="12" class="ion-margin-top">
                   <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>

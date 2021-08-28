@@ -8,6 +8,8 @@ import {PersonaService} from '../persona.service';
 import {GlobalService} from '../../../services/global.service';
 import {ModalDetallesVisitaPage} from '../modal-detalles-visita/modal-detalles-visita.page';
 import {CookiesService} from '../../../services/cookies.service';
+import {ModalMiembrosPage} from '../../padres/nuevo-miembro/modal-miembros/modal-miembros.page';
+import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-modal-visitas',
@@ -21,12 +23,15 @@ export class ModalVisitasPage implements OnInit {
   listActions: string[] = ['Visita', 'Llamada'];
   visits: any[] = [];
   showForm = false;
+  iAmVisitor = true;
+  memberSelected: any = null;
   minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
   formData: any = {
     userId: null,
+    visitor: null,
     observation: null,
-    action: '0',
+    action: 0,
     date: null
   };
 
@@ -47,17 +52,18 @@ export class ModalVisitasPage implements OnInit {
   async saveVisit() {
     await this.globalSer.presentLoading('Guardando, por favor espere...');
     const data: any = {...this.formData};
-    data.date = dayjs(data.date).format('YYYY-MM-DD');
+    data.date = data.date.substr(0, 10);
     data.userId = this.id || null;
-
+    data.visitor = this.memberSelected?._id || null;
+    data.observation = `${setSaltLinesOrBr(data.observation, true)}`.toUpperCase();
     const created = await this.personaService.saveVisit(data);
 
     if (created && !created.error) {
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', created || 'Se ha registrado la visita exitosamente.');
-      data.action = data.action === '1' ? 'Llamada' : 'Visita';
+      data.action = data.action === 1 ? 'Llamada' : 'Visita';
       this.data.unshift({
-        consolidator: this.getMyDataToCard(),
+        consolidator: this.memberSelected || this.getMyDataToCard(),
         ...data
       });
       await this.setVisits();
@@ -77,8 +83,14 @@ export class ModalVisitasPage implements OnInit {
       this.data.forEach(d => {
         this.visits.push({
           consolidator: d.consolidator,
-          observation: d.observation && d.observation.length > 50 ? `${d.observation.substr(0, 50)} ...` : d.observation || 'No indicada.',
-          date: d.date ? dayjs(d.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY') : 'No encontrada.',
+          observation: d.observation && d.observation.length > 50 ?
+            `${setSaltLinesOrBr(d.observation.substr(0, 50))} ...`
+            : (setSaltLinesOrBr(d.observation) || 'No indicada.'),
+          date: d.date ?
+            dayjs(d.date, 'YYYY-MM-DD', true)
+              .locale('es')
+              .format('dddd, DD [de] MMMM [de] YYYY')
+            : 'No encontrada.',
         });
       });
     }
@@ -104,6 +116,7 @@ export class ModalVisitasPage implements OnInit {
 
   setShowForm() {
     if (this.showForm) {
+      this.formData.action = 0;
       this.formData.date = null;
       this.formData.userId = null;
       this.formData.observation = null;
@@ -120,9 +133,48 @@ export class ModalVisitasPage implements OnInit {
         names: data.names,
         lastNames: data.lastNames,
         gender: data.gender,
-        document: data.document
+        document: data.document,
+        picture: data.picture || null,
+        phone: data.phone,
+        position: data.position
       };
     }
+    return null;
+  }
+
+  async openMembersModal() {
+    await this.globalSer.presentLoading();
+    const updateOnDismiss = async (member) => {
+      if (member) {
+        this.memberSelected = member;
+        this.formData.visitor = member._id;
+      }
+    };
+    await this.globalSer.dismissLoading();
+    await this.globalSer.loadModal(
+      ModalMiembrosPage,
+      {},
+      false,
+      updateOnDismiss
+    );
+  }
+
+  setCheckedValue() {
+    this.iAmVisitor = !this.iAmVisitor;
+  }
+
+  getMemberSelectedNames() {
+    return this.memberSelected ?
+      `${this.memberSelected.names} ${this.memberSelected.lastNames}`
+      : null;
+  }
+
+  validate() {
+    const { action, date, observation } = this.formData;
+    if (!date) return 'Disculpe, pero debe indicar la fecha en la que se realizó la visita.';
+    if (action === null) return 'Disculpe, pero debe seleccionar la acción realizda en la visita.';
+    if (!observation || observation?.length < 5) return 'Disculpe, pero debe indicar una observación válida para la visita.';
+    if (!this.iAmVisitor && !this.memberSelected) return 'Disculpe, pero debe seleccionar al miembro que realizó la visita.';
     return null;
   }
 
@@ -134,10 +186,15 @@ export class ModalVisitasPage implements OnInit {
   }
 
   async confirmSave() {
-    await this.globalSer.alertConfirm({
-      message: `¿Está seguro qué desea guardar la información suministrada de la visita?`,
-      confirmAction: async () => { await this.saveVisit(); }
-    });
+    const validated = this.validate();
+
+    if (!validated) {
+      await this.globalSer.alertConfirm({
+        message: `¿Está seguro qué desea guardar la información suministrada de la visita?`,
+        confirmAction: async () => { await this.saveVisit(); }
+      });
+    }
+    else await this.globalSer.presentAlert('Alerta', validated);
   }
 
 }

@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'nuevo-miembro',
     loadChildren: () => import('./nuevo-miembro/nuevo-miembro.module').then( m => m.NuevoMiembroPageModule)
+  },
+  {
+    path: 'modal-visits',
+    loadChildren: () => import('./modal-visits/modal-visits.module').then( m => m.ModalVisitsPageModule)
   }
 ];
 

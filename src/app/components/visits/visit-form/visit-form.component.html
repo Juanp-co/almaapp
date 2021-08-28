@@ -1,0 +1,106 @@
+<ion-card class="ion-no-padding">
+  <ion-card-content>
+    <ion-row>
+      <ion-col [size]="12">
+        <ion-text color="medium">
+          <i>Registre la visita realizada a un hijo espiritual. Indique la fecha y la observación realizada.</i>
+        </ion-text>
+      </ion-col>
+      <ion-col class="" size="12">
+        <ion-row>
+          <ion-col size="12" size-sm="6">
+            <ion-item>
+              <ion-label position="floating" color="medium">Miembro (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="getMemberNames()"
+                autocomplete="off"
+                (click)="openMembersModal('member')"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-item>
+              <ion-label position="floating" color="medium">Fecha (*)</ion-label>
+              <ion-datetime
+                [value]="formData.date"
+                displayFormat="DD/MM/YYYY"
+                min="2021-01-01"
+                [max]="maxInitDate"
+                doneText="Listo"
+                cancelText="Cancelar"
+                (ionChange)="setFormData('date', $event.target.value)"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-list>
+              <ion-radio-group [value]="formData.action">
+                <ion-list-header>
+                  <ion-label color="medium">Acción</ion-label>
+                </ion-list-header>
+                <ion-item *ngFor="let a of listActions; let i=index">
+                  <ion-label>{{a}}</ion-label>
+                  <ion-radio
+                    slot="start"
+                    [value]="i"
+                    (ionFocus)="setFormData('action', $event.target.value)"
+                  ></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-item>
+              <ion-label position="floating" color="medium">Observaciones (*)</ion-label>
+              <ion-textarea
+                [value]="formData.observation"
+                rows="5"
+                class="ion-text-uppercase"
+                placeholder="Indica alguna observación..."
+                (ionChange)="setFormData('observation', $event.target.value?.toUpperCase())"
+              ></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-item lines="none">
+              <ion-label color="medium">Soy el visitador</ion-label>
+              <ion-checkbox
+                slot="start"
+                [checked]="iAmVisitor"
+                (ionChange)="setCheckedValue()"
+              ></ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="!iAmVisitor" class="ion-no-padding">
+            <ion-item>
+              <ion-label position="floating" color="medium">Miembro visitante (*)</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="getMemberVisitorNames()"
+                autocomplete="off"
+                (click)="openMembersModal()"
+              ></ion-input>
+            </ion-item>
+            <ion-text color="medium">
+              <i class="toSmall">Busque y seleccione al miembro quien realizó la visita.</i>
+            </ion-text>
+          </ion-col>
+          <ion-col size="12" class="ion-margin-top">
+            <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+          </ion-col>
+          <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+            <ion-button color="light" (click)="confirmCancelForm()">
+              <ion-icon name="close-outline" slot="start"></ion-icon>
+              <ion-text>Cancelar</ion-text>
+            </ion-button>
+            <ion-button color="primary" (click)="confirmSave()">
+              <ion-icon name="save-outline" slot="start"></ion-icon>
+              <ion-text>Guardar</ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
