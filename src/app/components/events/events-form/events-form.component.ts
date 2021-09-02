@@ -129,7 +129,7 @@ export class EventsFormComponent implements OnInit {
 
   getHours(hours: string|null|undefined) {
     if (!hours || hours === 'Invalid Date') return null;
-    if (/([0-9]{2}:[0-9]{2})/.test(hours)) return hours;
+    if (/^([0-9]{2}:[0-9]{2})/.test(hours)) return hours;
     return hours ? dayjs(hours).format('HH:mm') : null;
   }
 
