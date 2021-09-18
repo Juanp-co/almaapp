@@ -1,0 +1,184 @@
+<ion-content>
+  <ion-header>
+    <app-minheader title="Grupo familiar"></app-minheader>
+  </ion-header>
+
+  <ion-row *ngIf="group; else noGroup">
+    <ion-col size="12" size-sm="6">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="5">
+              <ion-text><b>Número:</b></ion-text>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>{{group.number}}</ion-text>
+            </ion-col>
+            <ion-col size="5">
+              <ion-text><b>Sector:</b></ion-text>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>{{group.sector || 'No indicado.'}}</ion-text>
+            </ion-col>
+            <ion-col size="5">
+              <ion-text><b>Sub-sector:</b></ion-text>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>{{group.subSector || 'No indicado.'}}</ion-text>
+            </ion-col>
+            <ion-col size="5">
+              <ion-text><b>Dirección</b></ion-text>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>{{group.direction || 'No indicada.'}}</ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-text-center">
+            <ion-col size-sm="6" class="ion-no-padding" *ngIf="showButtonReport">
+              <ion-button color="medium" (click)="openModalReport()">
+                <ion-icon name="create-outline" slot="start"></ion-icon>
+                <ion-text>Nuevo reporte</ion-text>
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="6" class="ion-no-padding">
+              <ion-button color="{{showMap ? 'light' : 'primary'}}" (click)="setShowMap()">
+                <ion-icon name="{{showMap ? 'people' : 'location'}}-outline" slot="start"></ion-icon>
+                <ion-text>{{showMap ? 'Ver miembros' : 'Ver mapa'}}</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-col>
+
+    <ion-col size="12" class="ion-margin-start {{!showMap ? '' : 'ion-hide'}}">
+      <h3 class="ion-color-primary">Miembros</h3>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center position-sticky {{!showMap ? '' : 'ion-hide'}}">
+      <ion-row>
+        <ion-col size-sm="6">
+          <ion-button
+            [color]="showPrincipal ? 'primary' : 'light'"
+            expand="block"
+            (click)="setChangeList()"
+          >
+            <ion-text>Principales</ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-sm="6">
+          <ion-button
+            [color]="!showPrincipal ? 'primary' : 'light'"
+            expand="block"
+            (click)="setChangeList()"
+          >
+            <ion-text>Asistentes</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="12" class="{{!showMap ? '' : 'ion-hide'}}">
+      <ion-row>
+        <ion-col size="12" class="{{showPrincipal ? '' : 'ion-hide'}}">
+          <ion-row>
+            <ion-col
+              size="12"
+              size-sm="6"
+              *ngFor="let value of principalRoles"
+            >
+              <ion-item>
+                <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+                <ion-text><h4>{{value.label}}</h4></ion-text>
+              </ion-item>
+              <app-personcard
+                [data]="group.members[value.input]"
+                [disabledClick]="true"
+                *ngIf="group.members[value.input]; else noMember"
+              ></app-personcard>
+
+              <ng-template #noMember>
+                <ion-card class="ion-margin-top">
+                  <ion-card-content>
+                    <ion-text>
+                      <p class="ion-text-center">
+                        <ion-icon name="alert-circle-outline"></ion-icon>
+                        No existe ningún miembro asignado.
+                      </p>
+                    </ion-text>
+                  </ion-card-content>
+                </ion-card>
+              </ng-template>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12" class="{{!showPrincipal ? '' : 'ion-hide'}}">
+          <ion-row *ngIf="group.members?.assistants?.length > 0; else noAssistants">
+            <ion-col
+              size="12"
+              size-sm="6"
+              *ngFor="let member of group.members.assistants"
+            >
+              <app-personcard [data]="member" [disabledClick]="true"></app-personcard>
+            </ion-col>
+          </ion-row>
+
+          <ng-template #noAssistants>
+            <ion-row>
+              <ion-col size="12">
+                <ion-card class="ion-margin-top">
+                  <ion-card-content>
+                    <ion-text>
+                      <p class="ion-text-center">
+                        <ion-icon name="alert-circle-outline"></ion-icon>
+                        No existe ningún miembro extra en este grupo familiar.
+                      </p>
+                    </ion-text>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="12" class="ion-no-margin ion-no-padding {{showMap ? '' : 'ion-hide'}}">
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col size="12" class="position-sticky">
+          <ion-item>
+            <ion-icon name="location-outline" color="primary"></ion-icon>
+            <ion-text color="primary">Ubicación del grupo</ion-text>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <app-map
+            [coords]="group.location"
+            [zoom]="15"
+            height="80vh"
+          ></app-map>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+
+    <div class="ion-margin"><br/></div>
+  </ion-row>
+
+  <ng-template #noGroup>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-margin-top">
+          <ion-card-content>
+            <ion-text>
+              <p class="ion-text-center">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                Disculpe, pero usted no se encuentra asociado a ningún grupo familiar.
+              </p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+</ion-content>

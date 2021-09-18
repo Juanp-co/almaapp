@@ -21,6 +21,7 @@ export class EventosPage implements OnInit {
     endDate: null,
   };
   logged = false;
+  showButtonAdd = false;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -32,6 +33,7 @@ export class EventosPage implements OnInit {
 
   async ngOnInit() {
     this.logged = this.globalSer.isLoggeded();
+    this.showButtonAdd = this.globalSer.checkRoleToActions([0, 1, 3]);
   }
 
   async ionViewDidEnter() {
@@ -55,11 +57,11 @@ export class EventosPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  setShowFilter(){
+  setShowFilter() {
     this.showFilter = !this.showFilter;
   }
 
-  async setOrderData(){
+  async setOrderData() {
     const alert = await this.alertCtrl.create({
       header: 'Seleccione',
       inputs: [

@@ -18,10 +18,11 @@ import {CookiesService} from '../../../services/cookies.service';
 })
 export class ReportarPage implements OnInit {
 
+  @Input() selected: any = null;
   @Input() groups: any[] = [];
   styleBg = 'linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/cruz.png")';
   id: any = null;
-  selected: any|null = null;
+  // selected: any|null = null;
   formData: any = {
     brethren: null, // require
     friends: null, // require
@@ -59,7 +60,7 @@ export class ReportarPage implements OnInit {
 
   async saveReport() {
     await this.globalSer.presentLoading('Guardando, por favor espere...');
-    const id = this.selected ? this.selected._id : null;
+    const id = this.selected?._id || null;
     const data = await this.gruposService.addReport(id, this.formData);
 
     if (data) {

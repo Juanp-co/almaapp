@@ -2,7 +2,7 @@
   <ion-card-content>
     <ion-row>
       <ion-col size="5">
-        <ion-text><b>Número</b></ion-text>
+        <ion-text><b>Número:</b></ion-text>
       </ion-col>
       <ion-col size="7">
         <ion-text>{{group.number}}</ion-text>
@@ -27,6 +27,9 @@
       </ion-col>
       <ion-col size="12" *ngIf="select">
         <ion-text><i>Toque para seleccionar</i></ion-text>
+      </ion-col>
+      <ion-col size="12" *ngIf="showData">
+        <ion-text><i>Toque para ver los detalles</i></ion-text>
       </ion-col>
     </ion-row>
   </ion-card-content>

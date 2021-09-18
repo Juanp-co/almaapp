@@ -9,6 +9,7 @@ export class GrupoFamiliarCardComponent implements OnInit {
 
   @Input() group: any;
   @Input() select = false;
+  @Input() showData = false;
 
   constructor() { }
 

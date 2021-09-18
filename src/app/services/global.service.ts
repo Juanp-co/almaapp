@@ -109,7 +109,12 @@ export class GlobalService {
    * @param actionUpdatedData Function to do action with data returned when the modal is closed.
    * @return Promise void return
    */
-  async loadModal(component: any, componentProps: any = {}, backdropDismiss = true, actionUpdatedData: any = null): Promise<void> {
+  async loadModal(
+    component: any,
+    componentProps: any = {},
+    backdropDismiss = true,
+    actionUpdatedData: any = null
+  ): Promise<void> {
     if (component) {
       const modal = await this.modalController.create({
         component,
@@ -137,9 +142,14 @@ export class GlobalService {
     return !!token;
   }
 
-  getRole() {
+  getRoles() {
     const data = this.cookieService.getCookie('data');
-    return data && data.role !== null && data.role !== undefined ? data.role : null;
+    return data?.roles || [];
+  }
+
+  checkRoleToActions(rolesToCompare = [0, 1]) {
+    const roles = this.getRoles();
+    return roles.some(r => rolesToCompare.includes(r));
   }
 
   isLoggeded() {
@@ -154,7 +164,7 @@ export class GlobalService {
 
   async altResponse(res: any): Promise<any> {
     if (res && res.status && res.status === 401) {
-      this.clearAllData();
+      await this.clearAllData();
       return { error: 401 };
     }
 
