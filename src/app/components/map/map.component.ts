@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment.prod';
 })
 export class MapComponent implements OnInit {
 
-  @Input() coodrs: any[];
+  @Input() coords: any[];
   @Input() zoom = 17;
   @Input() height = '90vh';
   @Input() showSimpleMarker = true;
@@ -92,6 +92,6 @@ export class MapComponent implements OnInit {
 
   getCoord(){
     if (this.zoom) this.viewport.zoom = this.zoom;
-    if (this.coodrs) this.coordinates = this.coodrs;
+    if (this.coords) this.coordinates = this.coords;
   }
 }

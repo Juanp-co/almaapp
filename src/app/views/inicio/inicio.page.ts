@@ -13,10 +13,12 @@ import {InicioService} from './inicio.service';
 export class InicioPage implements OnInit {
 
   opciones = [
-    { titulo: 'Red de padres', imagen: 'assets/icon/red.svg', url: 'padres' },
-    { titulo: 'Ofrendas', imagen: 'assets/icon/ofrenda.svg', url: 'ofrenda' },
-    { titulo: 'Escuela', imagen: 'assets/icon/escuela.svg', url: 'escuela' },
-    { titulo: 'Reportes', imagen: 'assets/icon/reportes.svg', url: 'estadistica' }
+    { titulo: 'Red de padres', imagen: 'red', url: 'padres' },
+    { titulo: 'Grupos fam.', imagen: 'connection', url: 'grupos-familiares' },
+    { titulo: 'Organización', imagen: 'structure', url: 'organizacion' },
+    { titulo: 'Ofrendas', imagen: 'ofrenda', url: 'ofrenda' },
+    { titulo: 'Escuela', imagen: 'escuela', url: 'escuela' },
+    { titulo: 'Reportes', imagen: 'reportes', url: 'estadistica' }
   ];
 
   // ===============
@@ -124,10 +126,7 @@ export class InicioPage implements OnInit {
     }
     else {
       const opt = this.opciones[num] || null;
-
-      if (opt) {
-        await this.navCtrl.navigateForward(opt.url);
-      }
+      if (opt) await this.navCtrl.navigateForward(opt.url);
     }
   }
 

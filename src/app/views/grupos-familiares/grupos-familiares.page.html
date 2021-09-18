@@ -6,13 +6,18 @@
   <div *ngIf="groups.length > 0; else noGroups">
     <ion-row>
       <ion-col size="12" class="ion-text-end">
-        <ion-button (click)="openModalReport()">
+        <ion-button (click)="openModalReport()" *ngIf="showButtonReport">
           <ion-icon name="create-outline" slot="start"></ion-icon>
           <ion-text>Agregar reporte</ion-text>
         </ion-button>
       </ion-col>
       <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3">
-        <app-grupo-familiar-card *ngFor="let group of groups" [group]="group"></app-grupo-familiar-card>
+        <app-grupo-familiar-card
+          *ngFor="let group of groups"
+          [group]="group"
+          [showData]="true"
+          (click)="goToDetails(group._id || null)"
+        ></app-grupo-familiar-card>
       </ion-col>
     </ion-row>
   </div>
@@ -23,7 +28,7 @@
         <ion-text>
           <p class="ion-text-center">
             <ion-icon name="alert-circle-outline"></ion-icon>
-            Disculpe, pero usted no se encuentra asociado a ningún grupo.
+            Disculpe, pero usted no se encuentra asociado a ningún grupo familiar.
           </p>
         </ion-text>
       </ion-card-content>
