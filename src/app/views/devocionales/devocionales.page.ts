@@ -59,8 +59,8 @@ export class DevocionalesPage implements OnInit {
     if (newPage <= this.pages) {
       this.queryParams.page = newPage;
       await this.getDevotionals();
-      // event.target.complete();
-      event.target.disabled = true;
+      event.target.disabled = newPage === this.pages;
+      event.target.complete();
     }
   }
 

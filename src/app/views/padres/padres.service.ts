@@ -32,6 +32,18 @@ export class PadresService {
     return res && res.success ? res.data : null;
   }
 
+  async getUsersAdmin(query = {}) {
+    const res: any = await this.axios.getData('/admin/users', query);
+    if (res && res.success) return res.data?.users || [];
+    return this.globalSer.altResponse(res);
+  }
+
+  async getTotalUsersAdmin(query = {}) {
+    const res: any = await this.axios.getData('/admin/users/counters', query);
+    if (res && res.success) return res.data?.totals || 0;
+    return 0;
+  }
+
   async saveMember(data: any) {
     const res: any = await this.axios.postData('/user/referrals', data);
 
