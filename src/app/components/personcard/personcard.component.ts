@@ -30,12 +30,9 @@ export class PersoncardComponent implements OnInit {
     }
   }
 
-  checkIdMember(id: string): boolean {
+  checkIdMember(id: string) {
     const dataLogin: any = this.cookiesService.getCookie('data');
-    if (dataLogin) {
-      return dataLogin._id !== id;
-    }
-    return false;
+    return dataLogin?._id !== id;
   }
 
   async goToDetails(id: string|null = null) {

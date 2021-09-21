@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {NavController} from '@ionic/angular';
 import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 import {PadresService} from './padres.service';
@@ -13,22 +12,38 @@ import {ModalVisitsPage} from './modal-visits/modal-visits.page';
 })
 export class PadresPage implements OnInit {
   referrals: any[] = [];
+  users: any[] = [];
   totalsGroups = 0;
   referred: any = null;
-  totals = 0;
+  loadAdminData = false;
+  allSons = false;
+  pages = 0;
+  totals: any = {
+    own: 0,
+    all: 0
+  };
+  queryParams: any = {
+    limit: 10,
+    page: 1,
+    input: 'names',
+    value: 1,
+    search: null
+  };
 
   constructor(
+    private cookiesService: CookiesService,
     private padreService: PadresService,
     private globalSer: GlobalService,
     private router: Router,
   ) { }
 
   async ngOnInit() {
-    // await this.getData();
+    this.loadAdminData = this.globalSer.checkRoleToActions([0, 1, 3]);
   }
 
   async ionViewWillEnter() {
-    await this.getData();
+    this.getData();
+    if (this.loadAdminData) this.getTotalsUsersAdmin();
   }
 
   async getData() {
@@ -36,8 +51,31 @@ export class PadresPage implements OnInit {
     if (data) {
       this.referrals = data.referrals;
       this.referred = data.referred;
-      this.totals = data.totals;
+      this.totals.own = data.totals;
       this.totalsGroups = data.totalsGroups;
+    }
+  }
+
+  async getTotalsUsersAdmin() {
+    const counter = await this.padreService.getTotalUsersAdmin(this.queryParams);
+    this.totals.all = counter || 0;
+    if (this.totals.all > 0) this.pages = this.globalSer.getPagination(this.totals.all, this.queryParams.limit);
+    else this.pages = 0;
+    if (this.pages > 0) this.getUsersAdmin();
+  }
+
+  async getUsersAdmin() {
+    const users = await this.padreService.getUsersAdmin(this.queryParams);
+    if (users) this.users = [...this.users, ...users];
+  }
+
+  async loadData(event: any = null) {
+    const newPage = this.queryParams.page + 1;
+    if (newPage <= this.pages) {
+      this.queryParams.page = newPage;
+      await this.getUsersAdmin();
+      event.target.disabled = newPage === this.pages;
+      event.target.complete();
     }
   }
 
@@ -61,5 +99,9 @@ export class PadresPage implements OnInit {
       false,
       updateVisits
     );
+  }
+
+  setAllSons() {
+    this.allSons = !this.allSons;
   }
 }
