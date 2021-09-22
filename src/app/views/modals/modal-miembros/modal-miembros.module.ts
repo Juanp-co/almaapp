@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalMiembrosPageRoutingModule } from './modal-miembros-routing.module';
 
 import { ModalMiembrosPage } from './modal-miembros.page';
-import {ComponentsModule} from '../../../../components/components.module';
+import {ComponentsModule} from '../../../components/components.module';
 
 @NgModule({
   imports: [

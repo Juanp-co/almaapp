@@ -11,8 +11,8 @@ import {
 import {PadresService} from '../padres.service';
 import {GlobalService} from '../../../services/global.service';
 import {documentType} from '../../../../Utils/profile.data';
-import {ModalMiembrosPage} from './modal-miembros/modal-miembros.page';
-import {ModalGruposFamiliaresPage} from './modal-grupos-familiares/modal-grupos-familiares.page';
+import {ModalGruposFamiliaresPage} from '../../modals/modal-grupos-familiares/modal-grupos-familiares.page';
+import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
 
 @Component({
   selector: 'app-nuevo-miembro',

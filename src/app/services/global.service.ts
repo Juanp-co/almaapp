@@ -148,7 +148,7 @@ export class GlobalService {
   }
 
   checkRoleToActions(rolesToCompare = [0, 1]) {
-    const roles = this.getRoles();
+    const roles = this.getRoles() || [];
     return roles.some(r => rolesToCompare.includes(r));
   }
 

@@ -4,6 +4,7 @@ import {GruposService} from '../grupos.service';
 import {GlobalService} from '../../../services/global.service';
 import {ReportarPage} from '../reportar/reportar.page';
 import {CookiesService} from '../../../services/cookies.service';
+import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
 
 @Component({
   selector: 'app-detalles',
@@ -16,8 +17,10 @@ export class DetallesPage implements OnInit {
   group: any = null;
   userData: any = null;
   showMap = false;
+  adminRequest = false;
   showPrincipal = true;
   showButtonReport = false;
+  showButtonRemove = false;
   principalRoles = [
     { input: 'leader', label: 'Líder' },
     { input: 'host', label: 'Anfitrión' },
@@ -35,12 +38,17 @@ export class DetallesPage implements OnInit {
   ngOnInit() {
     this.id = this.activateRoute.snapshot.paramMap.get('id');
     this.userData = this.cookiesService.getCookie('data');
+    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 3]);
+    // validar role para saber si consultar al endpoint de grupos o al admin
     this.getData();
   }
 
   async getData() {
     await this.globalSer.presentLoading();
-    const data: any = await this.gruposService.getFamilyGroupData(this.id);
+    const data: any = this.adminRequest ?
+      await this.gruposService.getFamilyGroupAdminData(this.id)
+      :
+      await this.gruposService.getFamilyGroupData(this.id);
 
     if (data && !data.error) {
       this.group = data;
@@ -51,9 +59,36 @@ export class DetallesPage implements OnInit {
         }
       ];
       this.showButtonReport = this.userData?._id === this.group?.members?.leader?._id;
+      this.showButtonRemove = this.globalSer.checkRoleToActions([0, 1, 3]) || this.showButtonReport;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async updateMembers(data: any = {}) {
+    await this.globalSer.presentLoading('Actualizando, por favor espere ...');
+
+    // get ids
+    const members = {
+      leaderId: data.leader?._id || null,
+      helperId: data.helper?._id || null,
+      hostId: data.host?._id || null,
+      masterId: data.master?._id || null,
+      assistantsIds: data.assistants?.map(a => a._id) || [],
+    };
+
+    const updated = await this.gruposService.updateMembersGroup(this.id, { members });
+
+    if (updated && !updated.error) {
+      this.group.members = {...updated};
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado la información exitosamente.');
+    }
+    else if (updated && updated.error) {
       await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
@@ -79,6 +114,64 @@ export class DetallesPage implements OnInit {
       content,
       false
     );
+  }
+
+  /*
+    Members
+   */
+  async openMembersModal(typeMember: string) {
+    await this.globalSer.presentLoading();
+    const updateOnDismiss = async (member) => {
+      if (member) {
+        const data: any = this.group.members ? {...this.group.members} : null;
+        if (data) {
+          if (typeMember === 'assistants') data[typeMember].push(member);
+          else data[typeMember] = member;
+          this.updateMembers(data);
+        }
+      }
+    };
+    const { members } = this.group;
+    let ignoreIds: string[] = [];
+
+    if (members.leader) ignoreIds.push(members.leader._id);
+    if (members.host) ignoreIds.push(members.host._id);
+    if (members.helper) ignoreIds.push(members.helper._id);
+    if (members.master) ignoreIds.push(members.master._id);
+    if (members.assistants?.length > 0) ignoreIds = ignoreIds.concat(members.assistants?.map(m => m._id) || []);
+
+    await this.globalSer.dismissLoading();
+    await this.globalSer.loadModal(
+      ModalMiembrosPage,
+      { ignoreIds },
+      false,
+      updateOnDismiss
+    );
+  }
+
+  removeMember(input: string, id: string|null = null) {
+    if (id) {
+      const confirm = () => {
+        const data: any = this.group.members ? {...this.group.members} : null;
+        if (data) {
+          if (input !== 'assistants') data.assistants = data.assistants?.filter(a => a._id !== id) || [];
+          else data[input] = null;
+          this.updateMembers(data);
+        }
+      };
+
+      this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea quitar a este miembro del grupo?',
+        confirmAction: () => confirm()
+      });
+    }
+    else {
+      this.globalSer.presentAlert(
+        '¡Alerta!',
+        'Disculpe, pero ha ocurrido un error al momento de obtener el miembro a eliminar.'
+      );
+    }
   }
 
 }

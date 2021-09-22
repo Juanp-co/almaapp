@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalGruposFamiliaresPageRoutingModule } from './modal-grupos-familiares-routing.module';
 
 import { ModalGruposFamiliaresPage } from './modal-grupos-familiares.page';
-import {ComponentsModule} from '../../../../components/components.module';
+import {ComponentsModule} from '../../../components/components.module';
 
 @NgModule({
   imports: [
