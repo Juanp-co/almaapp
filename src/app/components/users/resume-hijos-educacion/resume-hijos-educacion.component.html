@@ -5,7 +5,7 @@
         <ion-button
           expand="block"
           color="{{!showCourses ? 'primary' : 'medium'}}"
-          (click)="setShowGroup(true)"
+          (click)="setShowGroup()"
         >
           Núcleo familiar
         </ion-button>
@@ -14,7 +14,7 @@
         <ion-button
           expand="block"
           color="{{!showCourses ? 'primary' : 'medium'}}"
-          (click)="setShowGroup(true)"
+          (click)="setShowGroup()"
         >
           Hijos espirituales
         </ion-button>
@@ -74,7 +74,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ng-template #noGroup *ngIf="showGroup">
+    <ng-template #noGroup>
       <div class="{{ !showCourses ? 'ion-margin-bottom ion-padding-bottom' : '' }}">
         <ion-card class="{{!showCourses ? '' : 'ion-hide'}}">
           <ion-card-content>

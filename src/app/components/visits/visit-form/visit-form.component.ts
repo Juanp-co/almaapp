@@ -90,9 +90,10 @@ export class VisitFormComponent implements OnInit {
       : null;
   }
 
-  setFormData(input, value) {
+  setFormData(input: string, ev: any) {
+    const { value } = ev.target || {};
     if (input === 'date') this.formData[input] = value ? `${value}`.substr(0, 10) : null;
-    else this.formData[input] = value;
+    else this.formData[input] = value || null;
   }
 
   validate() {

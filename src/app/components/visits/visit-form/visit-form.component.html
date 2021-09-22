@@ -29,7 +29,7 @@
                 [max]="maxInitDate"
                 doneText="Listo"
                 cancelText="Cancelar"
-                (ionChange)="setFormData('date', $event.target.value)"
+                (ionChange)="setFormData('date', $event)"
               ></ion-datetime>
             </ion-item>
           </ion-col>
@@ -44,7 +44,7 @@
                   <ion-radio
                     slot="start"
                     [value]="i"
-                    (ionFocus)="setFormData('action', $event.target.value)"
+                    (ionFocus)="setFormData('action', $event)"
                   ></ion-radio>
                 </ion-item>
               </ion-radio-group>
@@ -58,7 +58,7 @@
                 rows="5"
                 class="ion-text-uppercase"
                 placeholder="Indica alguna observación..."
-                (ionChange)="setFormData('observation', $event.target.value?.toUpperCase())"
+                (ionChange)="setFormData('observation', $event)"
               ></ion-textarea>
             </ion-item>
           </ion-col>
