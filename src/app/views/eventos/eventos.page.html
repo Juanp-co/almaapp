@@ -6,8 +6,7 @@
   <ion-row class="ion-margin">
     <ion-col [size]="6">
       <ion-button color="light" (click)="setShowFilter()">
-        <ion-icon name="filter-outline" slot="start" *ngIf="!showFilter"></ion-icon>
-        <ion-icon name="close-outline" slot="start" *ngIf="showFilter"></ion-icon>
+        <ion-icon name="{{!showFilter ? 'filter' : 'close'}}-outline" slot="start"></ion-icon>
         <ion-text>Filtrar</ion-text>
       </ion-button>
     </ion-col>
@@ -37,7 +36,7 @@
           min="2020-01-01"
           doneText="Listo"
           cancelText="Cancelar"
-          (ionChange)="setDate('initDate', $event.target.value)"
+          (ionChange)="setDate('initDate', $event)"
         >
         </ion-datetime>
       </ion-item>
@@ -49,7 +48,7 @@
           min="2020-01-01"
           doneText="Listo"
           cancelText="Cancelar"
-          (ionChange)="setDate('endDate', $event.target.value)"
+          (ionChange)="setDate('endDate', $event)"
         >
         </ion-datetime>
       </ion-item>
