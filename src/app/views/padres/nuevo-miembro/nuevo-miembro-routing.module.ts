@@ -10,11 +10,11 @@ const routes: Routes = [
   },
   {
     path: 'modal-miembros',
-    loadChildren: () => import('./modal-miembros/modal-miembros.module').then( m => m.ModalMiembrosPageModule)
+    loadChildren: () => import('../../modals/modal-miembros/modal-miembros.module').then(m => m.ModalMiembrosPageModule)
   },
   {
     path: 'modal-grupos-familiares',
-    loadChildren: () => import('./modal-grupos-familiares/modal-grupos-familiares.module').then( m => m.ModalGruposFamiliaresPageModule)
+    loadChildren: () => import('../../modals/modal-grupos-familiares/modal-grupos-familiares.module').then(m => m.ModalGruposFamiliaresPageModule)
   }
 ];
 

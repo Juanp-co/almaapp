@@ -8,7 +8,7 @@ import {PersonaService} from '../persona.service';
 import {GlobalService} from '../../../services/global.service';
 import {ModalDetallesVisitaPage} from '../modal-detalles-visita/modal-detalles-visita.page';
 import {CookiesService} from '../../../services/cookies.service';
-import {ModalMiembrosPage} from '../../padres/nuevo-miembro/modal-miembros/modal-miembros.page';
+import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
 import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({

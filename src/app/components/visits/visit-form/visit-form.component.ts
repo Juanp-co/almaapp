@@ -4,7 +4,7 @@ import {GlobalService} from '../../../services/global.service';
 import {CookiesService} from '../../../services/cookies.service';
 import {ModalController} from '@ionic/angular';
 import {PersonaService} from '../../../views/persona/persona.service';
-import {ModalMiembrosPage} from '../../../views/padres/nuevo-miembro/modal-miembros/modal-miembros.page';
+import {ModalMiembrosPage} from '../../../views/modals/modal-miembros/modal-miembros.page';
 import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({

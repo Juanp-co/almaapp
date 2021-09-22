@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GlobalService} from '../../../../services/global.service';
 import {ModalController} from '@ionic/angular';
-import {PadresService} from '../../padres.service';
-import {onlyNumbersInputValidation2} from '../../../../../Utils/validations.functions';
+import {ModalService} from '../modal.service';
+import {GlobalService} from '../../../services/global.service';
+import {onlyNumbersInputValidation2} from '../../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-modal-grupos-familiares',
@@ -34,7 +34,7 @@ export class ModalGruposFamiliaresPage implements OnInit {
   constructor(
     private globalSer: GlobalService,
     private modalController: ModalController,
-    private padresService: PadresService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class ModalGruposFamiliaresPage implements OnInit {
   async searchGroups() {
     if (this.init) this.init = false;
     this.searching = true;
-    const data = await this.padresService.getFamiliesGroups(this.queryParams);
+    const data = await this.modalService.getFamiliesGroups(this.queryParams);
 
     if (data && !data.error) this.groups = data || [];
     else if (data && data.error) {

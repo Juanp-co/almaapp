@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrganizacionService} from './organizacion.service';
 import {GlobalService} from '../../services/global.service';
 import {ToastController} from '@ionic/angular';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-organizacion',
@@ -11,6 +12,7 @@ import {ToastController} from '@ionic/angular';
 export class OrganizacionPage implements OnInit {
 
   showGroups = false;
+  adminRequest = false;
   showGroupData = null;
   organization: any = {
     lvls: {
@@ -41,10 +43,12 @@ export class OrganizacionPage implements OnInit {
   constructor(
     private globalSer: GlobalService,
     private organizacionService: OrganizacionService,
+    private router: Router,
     private toastController: ToastController,
   ) { }
 
   ngOnInit() {
+    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 3]);
     this.getOrganization();
     this.getFamiliesGroups();
   }
@@ -109,7 +113,10 @@ export class OrganizacionPage implements OnInit {
    */
   async setViewGroupData(data: any = null) {
     if (data) {
-      if (
+      if (this.adminRequest) {
+        await this.router.navigate([`/grupos-familiares/${data._id}`]);
+      }
+      else if (
         data.location?.coordinates?.length === 2
         && data.location?.coordinates[0] !== 0
         && data.location?.coordinates[1] !== 0
@@ -128,7 +135,6 @@ export class OrganizacionPage implements OnInit {
           duration: 3000
         });
         toast.present();
-        // await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado la foto de perfil exitosamente.');
       }
     }
     else this.showGroupData = null;
