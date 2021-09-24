@@ -25,7 +25,7 @@ export class DetallesPage implements OnInit {
     { input: 'leader', label: 'Líder' },
     { input: 'host', label: 'Anfitrión' },
     { input: 'master', label: 'Maestro' },
-    { input: 'helper', label: 'Ayudante' },
+    { input: 'helper', label: 'Auxiliar' },
   ];
 
   constructor(
@@ -38,7 +38,7 @@ export class DetallesPage implements OnInit {
   ngOnInit() {
     this.id = this.activateRoute.snapshot.paramMap.get('id');
     this.userData = this.cookiesService.getCookie('data');
-    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 3]);
+    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 2]);
     // validar role para saber si consultar al endpoint de grupos o al admin
     this.getData();
   }
@@ -59,7 +59,7 @@ export class DetallesPage implements OnInit {
         }
       ];
       this.showButtonReport = this.userData?._id === this.group?.members?.leader?._id;
-      this.showButtonRemove = this.globalSer.checkRoleToActions([0, 1, 3]) || this.showButtonReport;
+      this.showButtonRemove = this.globalSer.checkRoleToActions([0, 1, 2]) || this.showButtonReport;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
