@@ -32,6 +32,13 @@ export class OrganizacionPage implements OnInit {
     peoples: false,
   };
 
+  counters = {
+    pastors: 0,
+    supervisors: 0,
+    leaders: 0,
+    peoples: 0,
+  };
+
   optsOrganization = [
     { label: 'Pastores', key: 'pastors', icon: 'pastor' },
     { label: 'Supervisores', key: 'supervisors', icon: 'supervisor' },
@@ -48,7 +55,7 @@ export class OrganizacionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 3]);
+    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 2]);
     this.getOrganization();
     this.getFamiliesGroups();
   }
@@ -63,8 +70,8 @@ export class OrganizacionPage implements OnInit {
         this.organization.users = data.users || [];
         // set data
         ['pastors', 'supervisors', 'leaders', 'peoples'].forEach(k => {
-          const totals = data.lvls[k]?.length || 0;
-          if (totals > 0) {
+          this.counters[k] = data.lvls[k]?.length || 0;
+          if (this.counters[k] > 0) {
             data.lvls[k].forEach(i => {
               const user = this.organization.users.find(u => u._id === i) || null;
               if (user) {
@@ -113,7 +120,7 @@ export class OrganizacionPage implements OnInit {
    */
   async setViewGroupData(data: any = null) {
     if (data) {
-      if (this.adminRequest) {
+      if (this.adminRequest || data.isLeader) {
         await this.router.navigate([`/grupos-familiares/${data._id}`]);
       }
       else if (

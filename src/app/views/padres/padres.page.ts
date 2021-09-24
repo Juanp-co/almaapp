@@ -38,7 +38,7 @@ export class PadresPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.loadAdminData = this.globalSer.checkRoleToActions([0, 1, 3]);
+    this.loadAdminData = this.globalSer.checkRoleToActions([0, 1, 2]);
   }
 
   async ionViewWillEnter() {

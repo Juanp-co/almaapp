@@ -35,13 +35,13 @@
           </ion-row>
           <ion-row class="ion-text-center">
             <ion-col size-sm="6" class="ion-no-padding" *ngIf="showButtonReport">
-              <ion-button color="medium" (click)="openModalReport()">
+              <ion-button color="medium" size="small" (click)="openModalReport()">
                 <ion-icon name="create-outline" slot="start"></ion-icon>
                 <ion-text>Nuevo reporte</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size-sm="6" class="ion-no-padding">
-              <ion-button color="{{showMap ? 'light' : 'primary'}}" (click)="setShowMap()">
+              <ion-button color="{{showMap ? 'light' : 'primary'}}" size="small" (click)="setShowMap()">
                 <ion-icon name="{{showMap ? 'people' : 'location'}}-outline" slot="start"></ion-icon>
                 <ion-text>{{showMap ? 'Ver miembros' : 'Ver mapa'}}</ion-text>
               </ion-button>

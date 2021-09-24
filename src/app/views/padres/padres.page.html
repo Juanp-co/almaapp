@@ -35,7 +35,7 @@
           <ion-text *ngIf="!allSons"><b class="ion-margin-start">Mis hijos ({{ totals.own || 0 }})</b></ion-text>
           <ion-text *ngIf="allSons"><b class="ion-margin-start">Todos ({{ totals.all || 0 }})</b></ion-text>
         </ion-col>
-        <ion-col class="ion-text-end" *ngIf="totals.own > 0 || totals.all > 0">
+        <ion-col size="4" class="ion-text-end" *ngIf="totals.own > 0 || totals.all > 0">
           <ion-button color="primary" (click)="goToAddNewMember()">
             <ion-icon name="person-add-outline" slot="start"></ion-icon>
             <ion-text>Nuevo</ion-text>
