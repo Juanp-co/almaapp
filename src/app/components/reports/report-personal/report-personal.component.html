@@ -1,0 +1,17 @@
+<ion-row class="ion-justify-content-center ion-margin-bottom ion-padding-bottom" *ngIf="data">
+  <ion-col size="12" *ngIf="data.courses">
+    <app-chart [data]="data.courses" title="Mis cursos" typeChart="bar"></app-chart>
+  </ion-col>
+  <ion-col size="12" *ngIf="data.referrals">
+    <app-chart [data]="data.referrals" title="Mis hijos espirituales" typeChart="pie"></app-chart>
+  </ion-col>
+  <ion-col size="12" *ngIf="data.visits">
+    <app-chart [data]="data.visits" title="Visitas" typeChart="pie"></app-chart>
+  </ion-col>
+  <ion-col size="12" *ngIf="data.typeVisits">
+    <app-chart [data]="data.typeVisits" title="Tipos de visitas" typeChart="bar"></app-chart>
+  </ion-col>
+  <ion-col size="12">
+    <br>
+  </ion-col>
+</ion-row>
