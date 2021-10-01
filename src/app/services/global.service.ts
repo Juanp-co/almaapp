@@ -187,4 +187,8 @@ export class GlobalService {
     return pages;
   }
 
+  getCurrency(amount: any = 0) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(amount);
+  }
+
 }

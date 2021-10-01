@@ -3,17 +3,70 @@
     <app-minheader title="Estadística"></app-minheader>
   </ion-header>
 
-  <ion-row class="ion-no-padding">
+  <ion-row *ngIf="adminRequest">
+    <ion-col>
+      <ion-text color="primary"><h4>Ver reporte:</h4></ion-text>
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      <ion-row>
+        <ion-col size-sm="6">
+          <ion-button
+            expand="full"
+            color="{{ showPersonal ? 'primary' : 'light' }}"
+            (click)="setPersonalReport(true)"
+          >
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-text>Personal</ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-sm="6">
+          <ion-button
+            expand="full"
+            color="{{ showPersonal ? 'light' : 'primary' }}"
+            (click)="setPersonalReport()"
+          >
+            <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
+            <ion-text>General</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12" class="toSmall">
+      <ion-text color="medium">
+        <i>
+          <ion-icon name="information-circle-outline"></ion-icon>
+          Para mejor visualización de las gráficas, le recomendamos girar el dispositivo
+          <ion-icon name="phone-portrait-outline"></ion-icon>
+          <ion-icon name="phone-landscape-outline"></ion-icon>.
+        </i>
+      </ion-text>
+    </ion-col>
     <ion-col size="12">
+      <div class="separator"></div>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-text class="ion-margin-start" color="primary">
+        <h4>{{showPersonal ? 'Mi reporte' : 'Reporte de grupos familiares'}}</h4>
+      </ion-text>
       <div class="ion-margin-bottom">
-        <ion-button color="light" (click)="setShowFilter()">
-          <ion-icon name="filter-outline" slot="start" *ngIf="!showFilter"></ion-icon>
-          <ion-icon name="close-outline" slot="start" *ngIf="showFilter"></ion-icon>
+        <ion-button color="light" (click)="setShowFilter()" *ngIf="showPersonal">
+          <ion-icon name="{{showFilter ? 'close' : 'filter'}}-outline" slot="start"></ion-icon>
           <ion-text>Filtrar</ion-text>
+        </ion-button>
+        <ion-button color="light" (click)="setShowFilter()" *ngIf="!showPersonal">
+          <ion-icon name="{{showFilterFg ? 'close' : 'filter'}}-outline" slot="start"></ion-icon>
+          <ion-text>Filtrar</ion-text>
+        </ion-button>
+        <ion-button color="light" (click)="showListTotality()" *ngIf="!showPersonal">
+          <ion-icon name="calculator-outline" slot="start"></ion-icon>
+          <ion-text>{{ opts[totalityOpt] }}</ion-text>
         </ion-button>
       </div>
     </ion-col>
-    <ion-col size="12" *ngIf="showFilter">
+    <ion-col size="12" *ngIf="showFilter && showPersonal">
       <ion-card>
         <ion-card-content class="ion-no-padding">
           <ion-row class="ion-no-padding">
@@ -61,39 +114,122 @@
         </ion-card-content>
       </ion-card>
     </ion-col>
-    <ion-col size="12" class="ion-margin-start ion-margin-end">
-      <ion-text color="medium">
-        <i>
-          <ion-icon name="information-circle-outline"></ion-icon>
-          Para mejor visualización de las gráficas, le recomendamos girar el dispositivo
-          <ion-icon name="phone-portrait-outline"></ion-icon>
-          <ion-icon name="phone-landscape-outline"></ion-icon>.
-        </i>
-      </ion-text>
+    <ion-col size="12" *ngIf="showFilterFg && !showPersonal">
+      <ion-card>
+        <ion-card-content class="ion-no-padding">
+          <ion-row class="ion-no-padding">
+            <ion-col size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nº Sector</ion-label>
+                <ion-input
+                  [(ngModel)]="queryParamsFg.sector"
+                  autocomplete="off"
+                  maxlength="4"
+                  (keypress)="validateOnlyNumber($event)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nº Sub-sector</ion-label>
+                <ion-input
+                  [(ngModel)]="queryParamsFg.subSector"
+                  autocomplete="off"
+                  maxlength="4"
+                  (keypress)="validateOnlyNumber($event)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nº del grupo</ion-label>
+                <ion-input
+                  [(ngModel)]="queryParamsFg.number"
+                  autocomplete="off"
+                  maxlength="4"
+                  (keypress)="validateOnlyNumber($event)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">A partir de:</ion-label>
+                <ion-datetime
+                  [(ngModel)]="queryParamsFg.initDate"
+                  displayFormat="DD/MM/YYYY"
+                  [min]="minInitDate"
+                  [max]="maxInitDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Hasta:</ion-label>
+                <ion-datetime
+                  [(ngModel)]="queryParamsFg.endDate"
+                  displayFormat="DD/MM/YYYY"
+                  [min]="minEndDate"
+                  [max]="maxEndDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-margin-top ion-text-center">
+            <ion-col size="12" class="ion-justify-content-center">
+              <ion-button class="ion-text-center" color="light" (click)="resetQueryParams()">
+                <ion-icon name="trash-outline"></ion-icon>
+                <ion-text>Limpiar</ion-text>
+              </ion-button>
+              <ion-button class="ion-text-center" color="primary" (click)="findDataFg()">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                <ion-text>Aplicar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
     </ion-col>
   </ion-row>
 
-  <ion-row class="ion-justify-content-center ion-margin-bottom ion-padding-bottom" *ngIf="data">
-    <ion-col size="12" *ngIf="data.courses">
-      <app-chart
-        [data]="data.courses"
-        title="Mis cursos"
-        typeChart="bar"
-      ></app-chart>
-    </ion-col>
-    <ion-col size="12" *ngIf="data.referrals">
-      <app-chart
-        [data]="data.referrals"
-        title="Mis hijos espirituales"
-        typeChart="pie"
-      ></app-chart>
-    </ion-col>
-    <ion-col size="12" *ngIf="data.referrals">
-      <app-chart
-        [data]="data.visits"
-        title="Visitas"
-        typeChart="pie"
-      ></app-chart>
-    </ion-col>
-  </ion-row>
+  <div class="w-100" *ngIf="showPersonal">
+    <app-report-personal [data]="data" *ngIf="data; else noReportsPersonal"></app-report-personal>
+
+    <ng-template #noReportsPersonal>
+      <ion-row>
+        <ion-col size="12">
+          <ion-card class="ion-no-padding">
+            <ion-text color="medium">
+              <p class="ion-text-center">
+                <ion-icon name="alert-circle-outline"></ion-icon> {{ showFilter ? 'No se encontraron resultados.' : 'No se logró obtener la información.' }}
+              </p>
+            </ion-text>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </div>
+
+  <div class="w-100" *ngIf="!showPersonal">
+    <app-report-general [data]="data2Alt" *ngIf="data2Alt; else noReports"></app-report-general>
+
+    <ng-template #noReports>
+      <ion-row>
+        <ion-col size="12">
+          <ion-card class="ion-no-padding">
+            <ion-text color="medium">
+              <p class="ion-text-center">
+                <ion-icon name="alert-circle-outline"></ion-icon> {{ showFilterFg ? 'No se encontraron resultados.' : 'No se logró obtener la información.' }}
+              </p>
+            </ion-text>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </div>
 </ion-content>

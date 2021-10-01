@@ -14,7 +14,13 @@ export class EstadisticaService {
 
   async getReports(query = {}) {
     const res: any = await this.axios.getData('/user/reports', query);
-    if (res && res.success) return res.data.reports;
+    if (res && res.success) return res.data?.reports || null;
+    return this.globalSer.altResponse(res);
+  }
+
+  async getReportsFamiliesGroups(query = {}) {
+    const res: any = await this.axios.getData('/admin/reports/families-groups', query);
+    if (res && res.success) return res.data?.reports || null;
     return this.globalSer.altResponse(res);
   }
 }

@@ -33,7 +33,7 @@ export class EventosPage implements OnInit {
 
   async ngOnInit() {
     this.logged = this.globalSer.isLoggeded();
-    this.showButtonAdd = this.globalSer.checkRoleToActions([0, 1, 2]);
+    this.showButtonAdd = this.globalSer.checkRoleToActions([0, 1]);
   }
 
   async ionViewDidEnter() {

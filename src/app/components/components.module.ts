@@ -22,6 +22,8 @@ import {ResumeProfileComponent} from './users/resume-profile/resume-profile.comp
 import {VideoPlayerComponent} from './video-player/video-player.component';
 import {VisitscardComponent} from './visits/visitscard/visitscard.component';
 import {VisitFormComponent} from './visits/visit-form/visit-form.component';
+import {ReportGeneralComponent} from './reports/report-general/report-general.component';
+import {ReportPersonalComponent} from './reports/report-personal/report-personal.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {VisitFormComponent} from './visits/visit-form/visit-form.component';
     PaginatorComponent,
     PersoncardComponent,
     PersoncardtwoComponent,
+    ReportGeneralComponent,
+    ReportPersonalComponent,
     ResumeHijosEducacionComponent,
     ResumeProfileComponent,
     VideoPlayerComponent,
@@ -61,6 +65,8 @@ import {VisitFormComponent} from './visits/visit-form/visit-form.component';
     PaginatorComponent,
     PersoncardComponent,
     PersoncardtwoComponent,
+    ReportGeneralComponent,
+    ReportPersonalComponent,
     ResumeHijosEducacionComponent,
     ResumeProfileComponent,
     VideoPlayerComponent,
