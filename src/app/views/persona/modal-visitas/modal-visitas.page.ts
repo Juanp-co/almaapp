@@ -172,7 +172,7 @@ export class ModalVisitasPage implements OnInit {
   validate() {
     const { action, date, observation } = this.formData;
     if (!date) return 'Disculpe, pero debe indicar la fecha en la que se realizó la visita.';
-    if (action === null) return 'Disculpe, pero debe seleccionar la acción realizda en la visita.';
+    if (action === null) return 'Disculpe, pero debe seleccionar la acción realizada en la visita.';
     if (!observation || observation?.length < 5) return 'Disculpe, pero debe indicar una observación válida para la visita.';
     if (!this.iAmVisitor && !this.memberSelected) return 'Disculpe, pero debe seleccionar al miembro que realizó la visita.';
     return null;
