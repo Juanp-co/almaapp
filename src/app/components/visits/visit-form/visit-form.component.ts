@@ -93,14 +93,14 @@ export class VisitFormComponent implements OnInit {
   setFormData(input: string, ev: any) {
     const { value } = ev.target || {};
     if (input === 'date') this.formData[input] = value ? `${value}`.substr(0, 10) : null;
-    else this.formData[input] = value || null;
+    else this.formData[input] = ![null, undefined].includes(value) ? value : null;
   }
 
   validate() {
     const { action, date, observation } = this.formData;
     if (!this.member) return 'Disculpe, pero seleccionar al miembro que visitó.';
     if (!date) return 'Disculpe, pero debe indicar la fecha en la que se realizó la visita.';
-    if (action === null) return 'Disculpe, pero debe seleccionar la acción realizda en la visita.';
+    if (action === null) return 'Disculpe, pero debe seleccionar la acción realizada en la visita.';
     if (!observation || observation?.length < 5) return 'Disculpe, pero debe indicar una observación válida para la visita.';
     if (!this.iAmVisitor && !this.memberVisitor) return 'Disculpe, pero debe seleccionar al miembro que realizó la visita.';
     return null;
