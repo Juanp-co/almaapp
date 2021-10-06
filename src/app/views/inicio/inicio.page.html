@@ -83,8 +83,26 @@
         </div>
       </div>
     </ion-col>
-    <ion-col *ngIf="showButtonSocial || userData"><br><br><br></ion-col>
+  </ion-row>
 
+  <ion-row *ngIf="!userData">
+    <ion-col size-sm="6">
+      <ion-button expand="block" (click)="goTo('acceder')">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        <ion-text>Acceder</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col size-sm="6">
+      <ion-button expand="block" color="light" (click)="goTo('registro')">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        <ion-text>Registrarme</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col size="12"><br></ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="showButtonSocial || userData">
+    <ion-col><br><br><br></ion-col>
   </ion-row>
 
   <ion-fab class="ion-margin-end" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
