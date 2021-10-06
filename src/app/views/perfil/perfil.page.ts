@@ -50,6 +50,7 @@ export class PerfilPage implements OnInit {
 
   async getData() {
     await this.globalSer.presentLoading('Cargando ...');
+    this.userData = null;
     const data = await this.perfilService.getProfileData();
 
     if (data && !data.error) {
