@@ -154,7 +154,7 @@ export class DetallesPage implements OnInit {
       const confirm = () => {
         const data: any = this.group.members ? {...this.group.members} : null;
         if (data) {
-          if (input !== 'assistants') data.assistants = data.assistants?.filter(a => a._id !== id) || [];
+          if (input === 'assistants') data.assistants = data?.assistants?.filter(a => a._id !== id) || [];
           else data[input] = null;
           this.updateMembers(data);
         }
