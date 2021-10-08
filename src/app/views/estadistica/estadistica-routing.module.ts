@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: EstadisticaPage
+  },
+  {
+    path: 'visitas-pendientes',
+    loadChildren: () => import('./visitas-pendientes/visitas-pendientes.module').then( m => m.VisitasPendientesPageModule)
   }
 ];
 
