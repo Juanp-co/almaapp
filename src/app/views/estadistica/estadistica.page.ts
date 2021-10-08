@@ -48,6 +48,9 @@ export class EstadisticaPage implements OnInit {
 
   async ngOnInit() {
     this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 2]);
+  }
+
+  async ionViewDidEnter() {
     this.getData();
     if (this.adminRequest)
       this.getDataFamiliesGroups();
@@ -59,6 +62,7 @@ export class EstadisticaPage implements OnInit {
 
   async getData() {
     await this.globalSer.presentLoading();
+    this.data = null;
     const data = await this.estadisticaService.getReports(this.queryParams);
 
     if (data && !data.error) {

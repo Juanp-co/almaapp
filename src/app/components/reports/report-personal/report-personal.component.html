@@ -6,7 +6,12 @@
     <app-chart [data]="data.referrals" title="Mis hijos espirituales" typeChart="pie"></app-chart>
   </ion-col>
   <ion-col size="12" *ngIf="data.visits">
-    <app-chart [data]="data.visits" title="Visitas" typeChart="pie"></app-chart>
+    <app-chart
+      [data]="data.visits"
+      title="Visitas"
+      typeChart="pie"
+      [handleShow]="data?.visits?.membersPendingVisits?.length > 0 ? showListMembers : null"
+    ></app-chart>
   </ion-col>
   <ion-col size="12" *ngIf="data.typeVisits">
     <app-chart [data]="data.typeVisits" title="Tipos de visitas" typeChart="bar"></app-chart>

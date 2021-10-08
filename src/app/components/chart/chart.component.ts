@@ -20,6 +20,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
   @Input() data: any;
   @Input() title = 'Cargando ...';
   @Input() hide = false;
+  @Input() handleShow: () => void;
   @Input() typeChart = 'doughnut';
   @Input() precision = false;
   @ViewChild('chartElem', { static: false }) chartElem: ElementRef<HTMLElement>;
@@ -38,7 +39,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
     this.index = page - 1;
     if (this.chart) this.chart.destroy();
     this.createBarChart(this.data);
-  }
+  };
 
   constructor(
     private androidPermissions: AndroidPermissions,

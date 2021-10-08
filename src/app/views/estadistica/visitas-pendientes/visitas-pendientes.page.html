@@ -1,0 +1,35 @@
+<ion-content>
+
+  <ion-header>
+    <app-minheader title="Visitas pendientes" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-row *ngIf="members?.length > 0; else noMembers">
+    <ion-col
+      size="12"
+      size-sm="6"
+      size-md="4"
+      *ngFor="let m of members"
+    >
+      <app-personcard
+        [data]="m"
+        [disabledClick]="true"
+        (click)="selectAndCloseModal(m._id)"
+      ></app-personcard>
+    </ion-col>
+  </ion-row>
+
+  <ng-template #noMembers>
+    <ion-card class="ion-margin-top">
+      <ion-card-content class="ion-text-center">
+        <ion-text>
+          <p class="ion-text-center">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            No existen miembros pendientes por visitas.
+          </p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+</ion-content>
