@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>CCAD</name>
-    <description>Aplicación CCAD - Centro Cristiano Asamblea de Dios - Sucursal Peréira.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="co.ccadv.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>CCADV</name>
+    <description>Aplicación CCAD - Centro Cristiano Asamblea de Dios Villavicencio.</description>
+    <author email="info@inventy.co" href="http://inventy.co/">Inventy LOT SAS</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
