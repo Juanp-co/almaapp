@@ -61,7 +61,10 @@ export class PadresPage implements OnInit {
     this.totals.all = counter || 0;
     if (this.totals.all > 0) this.pages = this.globalSer.getPagination(this.totals.all, this.queryParams.limit);
     else this.pages = 0;
-    if (this.pages > 0) this.getUsersAdmin();
+    if (this.pages > 0) {
+      this.users = [];
+      this.getUsersAdmin();
+    }
   }
 
   async getUsersAdmin() {
@@ -70,11 +73,17 @@ export class PadresPage implements OnInit {
   }
 
   async loadData(event: any = null) {
-    const newPage = this.queryParams.page + 1;
-    if (newPage <= this.pages) {
-      this.queryParams.page = newPage;
-      await this.getUsersAdmin();
-      event.target.disabled = newPage === this.pages;
+    if (this.users?.length !== this.totals && this.queryParams.page < this.pages) {
+      const newPage = this.queryParams.page + 1;
+      if (newPage <= this.pages) {
+        this.queryParams.page = newPage;
+        await this.getUsersAdmin();
+        event.target.disabled = newPage === this.pages;
+        event.target.complete();
+      }
+    }
+    else {
+      event.target.disabled = true;
       event.target.complete();
     }
   }

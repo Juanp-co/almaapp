@@ -58,10 +58,10 @@
           <ion-col size="7">
             <ion-text>{{member.phone || 'No indicado'}}</ion-text>
           </ion-col>
-          <ion-col size="5">
+          <ion-col size="5" *ngIf="!!member.roles">
             <ion-text><b>Roles:</b></ion-text>
           </ion-col>
-          <ion-col size="7">
+          <ion-col size="7" *ngIf="!!member.roles">
             <ion-text>{{getRoleValue()}}</ion-text>
           </ion-col>
           <ion-col size="5">
