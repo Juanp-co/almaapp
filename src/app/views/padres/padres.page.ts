@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {CookiesService} from '../../services/cookies.service';
-import {GlobalService} from '../../services/global.service';
-import {PadresService} from './padres.service';
 import {ModalVisitsPage} from './modal-visits/modal-visits.page';
+import {PadresService} from './padres.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-padres',
@@ -31,14 +30,13 @@ export class PadresPage implements OnInit {
   };
 
   constructor(
-    private cookiesService: CookiesService,
     private padreService: PadresService,
     private globalSer: GlobalService,
     private router: Router,
   ) { }
 
   async ngOnInit() {
-    this.loadAdminData = this.globalSer.checkRoleToActions([0, 1, 2]);
+    this.loadAdminData = await this.globalSer.checkRoleToActions([0, 1, 2]);
   }
 
   async ionViewWillEnter() {

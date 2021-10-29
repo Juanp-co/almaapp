@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CookiesService} from '../../services/cookies.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-personcard',
@@ -18,20 +18,20 @@ export class PersoncardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private cookiesService: CookiesService,
+    private storageService: StorageService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.member = this.data;
     this.group = this.getGroup;
     if (this.disabledClick) this.showButton = false;
     else if (this.member && this.member._id) {
-      this.showButton = this.checkIdMember(this.member._id);
+      this.showButton = await this.checkIdMember(this.member._id);
     }
   }
 
-  checkIdMember(id: string) {
-    const dataLogin: any = this.cookiesService.getCookie('data');
+  async checkIdMember(id: string) {
+    const dataLogin: any = await this.storageService.get('data');
     return dataLogin?._id !== id;
   }
 

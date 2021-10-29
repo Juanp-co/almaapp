@@ -14,9 +14,7 @@ export class CrearEventoPage implements OnInit {
     private navCtrl: NavController,
   ) { }
 
-  ngOnInit() {
-    if (!this.globalSer.isLoggeded()) {
-      this.navCtrl.back();
-    }
+  async ngOnInit() {
+    if (!(await this.globalSer.isLoggeded())) this.navCtrl.back();
   }
 }

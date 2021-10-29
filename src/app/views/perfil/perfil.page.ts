@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {ModalPasswordPage} from './modal-password/modal-password.page';
 import {IPerfl} from './perfil.model';
 import {PerfilService} from './perfil.service';
-import {ModalPasswordPage} from './modal-password/modal-password.page';
-import {CookiesService} from '../../services/cookies.service';
 import {DataService} from '../../services/data.service';
 import {GlobalService} from '../../services/global.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-perfil',
@@ -33,18 +33,15 @@ export class PerfilPage implements OnInit {
     private dataService: DataService,
     private globalSer: GlobalService,
     private perfilService: PerfilService,
-    private cookieService: CookiesService,
-    private router: Router
-  ) {
-    // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
-  }
+    private router: Router,
+    private storageService: StorageService,
+  ) {}
 
-  async ngOnInit() { }
+  async ngOnInit() {}
 
   async ionViewDidEnter() {
     // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
+    if (!(await this.globalSer.checkSession())) this.router.navigate(['/']);
     else await this.getData();
   }
 
@@ -54,7 +51,7 @@ export class PerfilPage implements OnInit {
     const data = await this.perfilService.getProfileData();
 
     if (data && !data.error) {
-      this.cookieService.setCookie('data', data);
+      await this.storageService.set('data', data);
       this.userData = data;
       this.group.data = await this.perfilService.getGroup() || null;
       this.group.totals = this.group.data?.members?.length || 0;
@@ -75,8 +72,8 @@ export class PerfilPage implements OnInit {
 
     if (updated && !updated.error) {
       const { data, msg } = updated;
-      const infoUser = await this.cookieService.getCookie('data') || {};
-      this.cookieService.setCookie('data', {...infoUser, ...data});
+      const infoUser = await this.storageService.get('data') || {};
+      await this.storageService.set('data', {...infoUser, ...data});
       this.userData = {...this.userData, ...data};
       if (!remove) this.editPicEnable();
       await this.globalSer.dismissLoading();

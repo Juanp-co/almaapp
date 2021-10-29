@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Axios from 'axios';
-import { CookiesService } from './cookies.service';
+import {StorageService} from './storage.service';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class AxiosService {
 
   axios: any = null;
 
-  constructor(private cookiesService: CookiesService) {
+  constructor(private storageService: StorageService) {
     this.axios = Axios.create({
       baseURL: environment.urlApi,
       withCredentials: false
@@ -64,15 +64,15 @@ export class AxiosService {
     return ret;
   }
 
-  setToken() {
+  async setToken() {
     if (this.axios) {
-      const token: string = this.cookiesService.getCookie('token');
+      const token: string = await this.storageService.get('token');
       if (token) {
         this.axios.defaults.headers.common['x-access-token'] = token;
       }
       else {
-        this.cookiesService.removeCookie('data');
-        this.cookiesService.removeCookie('token');
+        await this.storageService.remove('data');
+        await this.storageService.remove('token');
         delete this.axios.defaults.headers.common['x-access-token'];
       }
     }
@@ -81,7 +81,7 @@ export class AxiosService {
 
   async getData(endpoint: string, data: any = {}) {
     try {
-      this.setToken();
+      await this.setToken();
       const res = await this.axios.get(endpoint, { params: data });
       return { success: true, data: res.data };
     }
@@ -90,7 +90,7 @@ export class AxiosService {
 
   async postData(endpoint: string, data: any = {}) {
     try {
-      this.setToken();
+      await this.setToken();
       const res = await this.axios.post(endpoint, data);
       return { success: true, data: res.data };
     }
@@ -99,7 +99,7 @@ export class AxiosService {
 
   async putData(endpoint: string, data: any = {}) {
     try{
-      this.setToken();
+      await this.setToken();
       const res = await this.axios.put(endpoint, data);
       return { success: true, data: res.data };
     }
@@ -108,7 +108,7 @@ export class AxiosService {
 
   async deleteData(endpoint: string) {
     try {
-      this.setToken();
+      await this.setToken();
       const res = await this.axios.delete(endpoint);
       return { success: true, data: res.data };
     }

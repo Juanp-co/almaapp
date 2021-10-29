@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ModalController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {GlobalService} from '../../../services/global.service';
-import {CookiesService} from '../../../services/cookies.service';
-import {ModalController} from '@ionic/angular';
 import {PersonaService} from '../../../views/persona/persona.service';
 import {ModalMiembrosPage} from '../../../views/modals/modal-miembros/modal-miembros.page';
 import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
@@ -28,7 +27,6 @@ export class VisitFormComponent implements OnInit {
   };
 
   constructor(
-    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private modalController: ModalController,
     private personaService: PersonaService,

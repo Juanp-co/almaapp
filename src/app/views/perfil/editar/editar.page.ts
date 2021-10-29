@@ -3,7 +3,6 @@ import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {EditarService} from './editar.service';
 import {IEditar} from './editar.model';
-import {CookiesService} from '../../../services/cookies.service';
 import {GlobalService} from '../../../services/global.service';
 import {
   checkDate,
@@ -13,6 +12,7 @@ import {
   checkPhone,
   onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
+import {StorageService} from '../../../services/storage.service';
 
 @Component({
   selector: 'app-editar',
@@ -34,9 +34,9 @@ export class EditarPage implements OnInit {
 
   constructor(
     private editarService: EditarService,
-    private cookieService: CookiesService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
+    private storageService: StorageService,
   ) {
     this.educationLevel = editarService.educationLevel;
     this.professions = editarService.professionsList;
@@ -50,9 +50,9 @@ export class EditarPage implements OnInit {
 
   async ngOnInit() {
     await this.globalSer.presentLoading();
-    const token = this.cookieService.getCookie('token');
+    const token = await this.storageService.get('token');
     if (token) {
-      const userData: IEditar | any = this.cookieService.getCookie('data');
+      const userData: IEditar | any = await this.storageService.get('data');
       if (userData) {
         this.formData = {...userData} as IEditar;
         this.formData.company = this.formData.company ? 'Si' : 'No';
@@ -84,7 +84,7 @@ export class EditarPage implements OnInit {
 
   async errorSession() {
     await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-    this.globalSer.clearAllData();
+    await this.globalSer.clearAllData();
     await this.globalSer.dismissLoading();
     await this.navCtrl.navigateBack(['/']);
   }
@@ -176,8 +176,8 @@ export class EditarPage implements OnInit {
       const updated = await this.editarService.updateProfile(data);
 
       if (updated && !updated.error) {
-        const userData = this.cookieService.getCookie('data');
-        if (userData) this.cookieService.setCookie('data', {...userData, ...updated});
+        const userData = await this.storageService.get('data');
+        if (userData) await this.storageService.set('data', {...userData, ...updated});
         await this.globalSer.dismissLoading();
         await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
         await this.back();
