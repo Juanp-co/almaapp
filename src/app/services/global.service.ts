@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AlertController, LoadingController, ModalController, NavController} from '@ionic/angular';
-import {CookiesService} from './cookies.service';
+import {StorageService} from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class GlobalService {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
-    private cookieService: CookiesService,
+    private storageService: StorageService,
     private modalController: ModalController
   ) { }
 
@@ -136,30 +136,30 @@ export class GlobalService {
     COOKIES ACTIONS, SESSION AND RESPONSE AXIOS REDUCE
    */
 
-  checkSession() {
-    const token = this.cookieService.getCookie('token');
-    if (!token) this.clearAllData();
+  async checkSession() {
+    const token = await this.storageService.get('token');
+    if (!token) await this.clearAllData();
     return !!token;
   }
 
-  getRoles() {
-    const data = this.cookieService.getCookie('data');
+  async getRoles() {
+    const data = await this.storageService.get('data');
     return data?.roles || [];
   }
 
-  checkRoleToActions(rolesToCompare = [0, 1]) {
-    const roles = this.getRoles() || [];
+  async checkRoleToActions(rolesToCompare = [0, 1]) {
+    const roles = await this.getRoles() || [];
     return roles.some(r => rolesToCompare.includes(r));
   }
 
-  isLoggeded() {
-    const token = this.cookieService.getCookie('token') || null;
+  async isLoggeded() {
+    const token = await this.storageService.get('token') || null;
     return !!token;
   }
 
-  clearAllData() {
-    this.cookieService.removeCookie('token');
-    this.cookieService.removeCookie('data');
+  async clearAllData() {
+    await this.storageService.remove('token');
+    await this.storageService.remove('data');
   }
 
   async altResponse(res: any): Promise<any> {

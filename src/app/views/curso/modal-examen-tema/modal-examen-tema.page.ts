@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import dayjs from 'dayjs';
-import {GlobalService} from '../../../services/global.service';
 import {ICursoExamen, ICursoExamenFinalizado} from '../course.model';
-import {CookiesService} from '../../../services/cookies.service';
 import {CursoService} from '../curso.service';
+import {GlobalService} from '../../../services/global.service';
+import {StorageService} from '../../../services/storage.service';
 
 @Component({
   selector: 'app-modal-examen-tema',
@@ -34,14 +34,14 @@ export class ModalExamenTemaPage implements OnInit {
   questionsModel: any = {};
 
   constructor(
-    private cookiesService: CookiesService,
-    private globalSer: GlobalService,
     private cursoService: CursoService,
+    private globalSer: GlobalService,
     private modalController: ModalController,
+    private storageService: StorageService,
   ) { }
 
   async ngOnInit() {
-    const params: any = this.cookiesService.getCookie('params-app');
+    const params: any = await this.storageService.get('params-app');
     this.logo = `${params?.logo || '/assets/logo.png'}`;
     this.setSectionsQuestions();
   }
@@ -174,13 +174,13 @@ export class ModalExamenTemaPage implements OnInit {
 
     if (answer && !answer.error) {
       this.finishedTest = answer;
-      const dataCourseUser: any = this.cookiesService.getCookie(this.slug);
+      const dataCourseUser: any = await this.storageService.get(this.slug);
       if (dataCourseUser) {
         const index = dataCourseUser.course ? dataCourseUser.course?.temary.findIndex(t => t._id === this.themeId) : -1;
         if (index > -1) {
           dataCourseUser.course.temary[index].view = 2;
           dataCourseUser.course.temary[index].date = dayjs().format('YYYY-MM-DD HH:mm:ss');
-          this.cookiesService.setCookie(this.slug, dataCourseUser);
+          await this.storageService.set(this.slug, dataCourseUser);
         }
       }
       await this.globalSer.dismissLoading();

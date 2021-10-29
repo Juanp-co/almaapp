@@ -27,14 +27,12 @@ export class EscuelaPage implements OnInit {
     private escuelaServ: EscuelaService,
     private router: Router,
   ) {
-    // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
   }
 
-  ngOnInit() {}
+  async ngOnInit() {}
 
   async ionViewWillEnter() {
-    if (!this.globalSer.checkSession())
+    if (!(await this.globalSer.checkSession()))
       this.router.navigate(['/']);
     else await this.getCoursesList();
   }

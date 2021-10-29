@@ -32,12 +32,11 @@ export class EventosPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.logged = this.globalSer.isLoggeded();
-    this.showButtonAdd = this.globalSer.checkRoleToActions([0, 1]);
+    this.logged = await this.globalSer.isLoggeded();
+    this.showButtonAdd = await this.globalSer.checkRoleToActions([0, 1]);
   }
 
-  async ionViewDidEnter() {
-    // check if exist session
+  ionViewDidEnter() {
     this.getEventsList();
   }
 

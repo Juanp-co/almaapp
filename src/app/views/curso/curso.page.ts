@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CursoService} from './curso.service';
 import {ICursoData} from './course.model';
-import {GlobalService} from '../../services/global.service';
-import {CookiesService} from '../../services/cookies.service';
-import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
+import {CursoService} from './curso.service';
 import {ModalContenidoTemaPage} from './modal-contenido-tema/modal-contenido-tema.page';
 import {ModalExamenTemaPage} from './modal-examen-tema/modal-examen-tema.page';
+import {GlobalService} from '../../services/global.service';
+import {StorageService} from '../../services/storage.service';
+import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-curso',
@@ -23,19 +23,16 @@ export class CursoPage implements OnInit, OnDestroy {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private cookiesService: CookiesService,
+    private coursesService: CursoService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
-    private coursesService: CursoService,
     private router: Router,
-  ) {
-    // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
-  }
+    private storageService: StorageService,
+  ) {}
 
   async ngOnInit() {
     // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/']);
+    if (!(await this.globalSer.checkSession())) this.router.navigate(['/']);
     else await this.getCourse();
   }
 
@@ -50,7 +47,7 @@ export class CursoPage implements OnInit, OnDestroy {
       this.course.description = setSaltLinesOrBr(this.course.description, true);
       this.dataCourseUser = data.dataCourseUser;
       if (data.dataCourseUser) {
-        this.cookiesService.setCookie(this.slug, this.dataCourseUser);
+        await this.storageService.set(this.slug, this.dataCourseUser);
         this.activeClickTemary = true;
       }
       await this.globalSer.dismissLoading();
@@ -70,11 +67,11 @@ export class CursoPage implements OnInit, OnDestroy {
 
   async ionViewDidEnter() {
     // get data course
-    this.dataCourseUser = this.cookiesService.getCookie(this.slug);
+    this.dataCourseUser = await this.storageService.get(this.slug);
   }
 
-  ngOnDestroy() {
-    this.cookiesService.removeCookie(this.slug);
+  async ngOnDestroy() {
+    await this.storageService.remove(this.slug);
   }
 
   /*
@@ -94,7 +91,7 @@ export class CursoPage implements OnInit, OnDestroy {
           const index = this.dataCourseUser.course.temary.findIndex((d: any) => d.temaryId === this.course.temary[i]._id);
           if (index > -1) {
             this.dataCourseUser.course.temary[index].view = this.course.temary[i].view;
-            this.cookiesService.setCookie(this.slug, this.dataCourseUser);
+            await this.storageService.set(this.slug, this.dataCourseUser);
           }
           let acc = 0;
           this.dataCourseUser.course.temary.forEach(t => { acc += t.view === 2 ? 1 : 0; });

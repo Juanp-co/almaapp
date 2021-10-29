@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {AccederService} from './acceder.service';
-import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
+import {StorageService} from '../../services/storage.service';
 import {onlyNumbersInputValidation2} from '../../../Utils/validations.functions';
 
 @Component({
@@ -29,19 +29,18 @@ export class AccederPage implements OnInit {
 
   constructor(
     private accederService: AccederService,
-    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
+    private storageService: StorageService,
   ) { }
 
   async ngOnInit() {
-    const token = await this.cookiesService.getCookie('token');
+    const token = await this.storageService.get('token');
     if (token) this.goTo();
     else this.getParams();
   }
 
   async goTo(link = 'inicio') {
-    console.log(link);
     await this.navCtrl.navigateForward(`/${link}`);
   }
 
@@ -53,8 +52,8 @@ export class AccederPage implements OnInit {
 
       if (res && !res.error) {
         const { data, token } = res;
-        this.cookiesService.setCookie('token', token);
-        this.cookiesService.setCookie('data', data);
+        await this.storageService.set('token', token);
+        await this.storageService.set('data', data);
         await this.globalSer.dismissLoading();
         this.goTo();
       }
@@ -71,7 +70,7 @@ export class AccederPage implements OnInit {
     const data: any = await this.accederService.getParamsApp();
 
     if (data) {
-      this.cookiesService.setCookie('params-app', data);
+      await this.storageService.set('params-app', data);
       this.params = {...this.params, ...data};
       this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
       this.logo = `${this.params.logo || '/assets/logo.png'}`;

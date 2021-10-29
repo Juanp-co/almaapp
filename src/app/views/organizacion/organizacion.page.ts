@@ -54,8 +54,8 @@ export class OrganizacionPage implements OnInit {
     private toastController: ToastController,
   ) { }
 
-  ngOnInit() {
-    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 2]);
+  async ngOnInit() {
+    this.adminRequest = await this.globalSer.checkRoleToActions([0, 1, 2]);
     this.getOrganization();
     this.getFamiliesGroups();
   }

@@ -18,7 +18,6 @@ export class VisitasPendientesPage implements OnInit {
   }
 
   async selectAndCloseModal(id) {
-    console.log('id', id);
     await this.modalController.dismiss(id);
   }
 

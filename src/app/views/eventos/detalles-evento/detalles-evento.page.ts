@@ -6,8 +6,8 @@ import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/es';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {EventosService} from '../eventos.service';
-import {CookiesService} from '../../../services/cookies.service';
 import {GlobalService} from '../../../services/global.service';
+import {StorageService} from '../../../services/storage.service';
 
 @Component({
   selector: 'app-detalles-evento',
@@ -32,10 +32,10 @@ export class DetallesEventoPage implements OnInit {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private cookiesService: CookiesService,
     private eventsService: EventosService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
+    private storageService: StorageService,
   ) {
     dayjs.extend(duration);
     dayjs.extend(relativeTime);
@@ -43,7 +43,7 @@ export class DetallesEventoPage implements OnInit {
 
   async ngOnInit() {
     this.id = this.activateRoute.snapshot.paramMap.get('_id');
-    const userData: any = await this.cookiesService.getCookie('data');
+    const userData: any = await this.storageService.get('data');
 
     if (userData) this.userid = userData._id;
 

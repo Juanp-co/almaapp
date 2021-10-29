@@ -7,9 +7,9 @@ import {
   checkTitlesOrDescriptions, onlyNumbersInputValidation,
   onlyNumbersInputValidation2
 } from '../../../../Utils/validations.functions';
-import {GlobalService} from '../../../services/global.service';
 import {GruposService} from '../grupos.service';
-import {CookiesService} from '../../../services/cookies.service';
+import {GlobalService} from '../../../services/global.service';
+import {StorageService} from '../../../services/storage.service';
 
 @Component({
   selector: 'app-reportar',
@@ -47,14 +47,14 @@ export class ReportarPage implements OnInit {
   logo = '/assets/logo.png';
 
   constructor(
-    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private gruposService: GruposService,
     private modalController: ModalController,
+    private storageService: StorageService,
   ) { }
 
-  ngOnInit() {
-    const params: any = this.cookiesService.getCookie('params-app');
+  async ngOnInit() {
+    const params: any = await this.storageService.get('params-app');
     this.logo = `${params?.logo || '/assets/logo.png'}`;
   }
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GruposService} from '../grupos.service';
-import {GlobalService} from '../../../services/global.service';
 import {ReportarPage} from '../reportar/reportar.page';
-import {CookiesService} from '../../../services/cookies.service';
 import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
+import {GlobalService} from '../../../services/global.service';
+import {StorageService} from '../../../services/storage.service';
 
 @Component({
   selector: 'app-detalles',
@@ -30,15 +30,15 @@ export class DetallesPage implements OnInit {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private gruposService: GruposService,
+    private storageService: StorageService,
   ) { }
 
-  ngOnInit() {
-    this.id = this.activateRoute.snapshot.paramMap.get('id');
-    this.userData = this.cookiesService.getCookie('data');
-    this.adminRequest = this.globalSer.checkRoleToActions([0, 1, 2]);
+  async ngOnInit() {
+    this.id = await this.activateRoute.snapshot.paramMap.get('id');
+    this.userData = await this.storageService.get('data');
+    this.adminRequest = await this.globalSer.checkRoleToActions([0, 1, 2]);
     // validar role para saber si consultar al endpoint de grupos o al admin
     this.getData();
   }
@@ -59,7 +59,7 @@ export class DetallesPage implements OnInit {
         }
       ];
       this.showButtonReport = this.userData?._id === this.group?.members?.leader?._id;
-      this.showButtonRemove = this.globalSer.checkRoleToActions([0, 1, 2]) || this.showButtonReport;
+      this.showButtonRemove = await this.globalSer.checkRoleToActions([0, 1, 2]) || this.showButtonReport;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {

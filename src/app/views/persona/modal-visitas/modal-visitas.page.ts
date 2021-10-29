@@ -5,10 +5,10 @@ import 'dayjs/locale/es';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {PersonaService} from '../persona.service';
-import {GlobalService} from '../../../services/global.service';
 import {ModalDetallesVisitaPage} from '../modal-detalles-visita/modal-detalles-visita.page';
-import {CookiesService} from '../../../services/cookies.service';
 import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
+import {GlobalService} from '../../../services/global.service';
+import {StorageService} from '../../../services/storage.service';
 import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({
@@ -36,10 +36,10 @@ export class ModalVisitasPage implements OnInit {
   };
 
   constructor(
-    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private modalController: ModalController,
     private personaService: PersonaService,
+    private storageService: StorageService,
   ) {
     dayjs.extend(duration);
     dayjs.extend(relativeTime);
@@ -63,7 +63,7 @@ export class ModalVisitasPage implements OnInit {
       await this.globalSer.presentAlert('¡Éxito!', created || 'Se ha registrado la visita exitosamente.');
       data.action = data.action === 1 ? 'Llamada' : 'Visita';
       this.data.unshift({
-        consolidator: this.memberSelected || this.getMyDataToCard(),
+        consolidator: this.memberSelected || (await this.getMyDataToCard()),
         ...data
       });
       await this.setVisits();
@@ -124,8 +124,8 @@ export class ModalVisitasPage implements OnInit {
     this.showForm = !this.showForm;
   }
 
-  getMyDataToCard() {
-    const data: any = this.cookiesService.getCookie('data');
+  async getMyDataToCard() {
+    const data: any = await this.storageService.get('data');
 
     if (data) {
       return {

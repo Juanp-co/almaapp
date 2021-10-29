@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import {AxiosService} from '../../services/axios.service';
-import {CookiesService} from '../../services/cookies.service';
-import { GlobalService } from '../../services/global.service';
 import {InicioService} from './inicio.service';
+import {AxiosService} from '../../services/axios.service';
+import { GlobalService } from '../../services/global.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-inicio',
@@ -42,10 +42,10 @@ export class InicioPage implements OnInit {
 
   constructor(
     private axiosService: AxiosService,
-    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private inicioService: InicioService,
+    private storageService: StorageService,
   ) { }
 
   async ngOnInit() {
@@ -55,7 +55,7 @@ export class InicioPage implements OnInit {
     this.getParams();
     this.getEvents();
     this.getDevotionals();
-    const token = await this.cookiesService.getCookie('token');
+    const token = await this.storageService.get('token');
     if (token) {
       this.logged = true;
       await this.getDataLogin();
@@ -63,13 +63,13 @@ export class InicioPage implements OnInit {
   }
 
   async getDataLogin() {
-    const data = this.cookiesService.getCookie('data');
+    const data = await this.storageService.get('data');
 
     if (!data) {
       const res: any = await this.inicioService.getSessionData();
 
       if (res && res.success) {
-        this.cookiesService.setCookie('data', res);
+        await this.storageService.set('data', res);
         this.userData = res;
       }
       else if (res && res.error) {
@@ -83,7 +83,7 @@ export class InicioPage implements OnInit {
     const data: any = await this.inicioService.getParamsApp();
     if (data) {
       this.params = {...this.params, ...data};
-      this.cookiesService.setCookie('params-app', this.params);
+      await this.storageService.set('params-app', this.params);
       this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
       this.logo = `${this.params.logo || '/assets/logo.png'}`;
       this.showButtonSocial = (

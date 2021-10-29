@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
-import {CookiesService} from '../../services/cookies.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-minheader',
@@ -22,20 +22,18 @@ export class MinheaderComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     private navCtrl: NavController,
-    private cookiesService: CookiesService,
+    private storageService: StorageService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.titleHeader = this.title;
-    const params: any = this.cookiesService.getCookie('params-app');
+    const params: any = await this.storageService.get('params-app');
     this.logo = `${params?.logo || '/assets/logo.png'}`;
   }
 
   async back() {
-    if (this.slugValue) this.cookiesService.removeCookie(this.slugValue);
-    if (this.pathUrl) {
-      await this.navCtrl.back();
-    }
+    if (this.slugValue) await this.storageService.remove(this.slugValue);
+    if (this.pathUrl) await this.navCtrl.back();
     else await this.navCtrl.back();
   }
 
