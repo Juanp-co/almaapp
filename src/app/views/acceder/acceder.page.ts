@@ -41,6 +41,7 @@ export class AccederPage implements OnInit {
   }
 
   async goTo(link = 'inicio') {
+    console.log(link);
     await this.navCtrl.navigateForward(`/${link}`);
   }
 
