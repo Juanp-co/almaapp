@@ -7,7 +7,7 @@ import {documentType} from '../../../Utils/profile.data';
 import {
   checkDate,
   checkEmail,
-  checkPassword,
+  checkPassword, checkPhone,
   onlyNumbersInputValidation
 } from '../../../Utils/validations.functions';
 
@@ -19,23 +19,19 @@ import {
 export class RecuperarAccesoPage implements OnInit {
 
   successRecovery = false;
-  documentTypes = documentType;
   formData: any = {
-    document: null,
+    phone: null,
     check: {
       email: null,
       birthday: null,
+      ommiteChecking: undefined,
     },
     password: null,
     repPassword: null
   };
-  formData2: any = {
-    documentType: null,
-    document: null,
-  };
   view = 0;
   views: any[] = [
-    { msg: 'Por favor, indique su número de documento.' },
+    { msg: 'Por favor, indique su número de teléfono.' },
     { msg: null, check: null },
     { msg: null, setNewPassword: false },
   ];
@@ -58,16 +54,21 @@ export class RecuperarAccesoPage implements OnInit {
   }
 
   async checkDocument() {
-    await this.globalSer.presentLoading('Verificando número de documento, por favor espere ...');
+    await this.globalSer.presentLoading('Verificando número de teléfono, por favor espere ...');
 
-    this.formData.document = `${this.formData2.documentType}${this.formData2.document}`;
-
-    const res = await this.recuperarService.checkDocument(this.formData);
+    const res = await this.recuperarService.checkPhone(this.formData);
 
     if (res && !res.error) {
       this.views[1].msg = res.msg;
-      this.views[1].check = res.check;
-      this.view = 1;
+      if (!!res.check) {
+        this.views[1].check = res.check;
+        this.view = 1;
+      }
+      else {
+        this.formData.check.ommiteChecking = true;
+        this.views[1].setNewPassword = true;
+        this.view = 2;
+      }
       await this.globalSer.dismissLoading();
     }
     else await this.globalSer.dismissLoading();
@@ -87,9 +88,7 @@ export class RecuperarAccesoPage implements OnInit {
   }
 
   async changePassword() {
-    await this.globalSer.presentLoading('Verificando número de documento, por favor espere ...');
-
-    this.formData.document = `${this.formData2.documentType}${this.formData2.document}`;
+    await this.globalSer.presentLoading('Asignando nueva contraseña, por favor espere ...');
 
     const res = await this.recuperarService.changePassword(this.formData);
 
@@ -128,33 +127,6 @@ export class RecuperarAccesoPage implements OnInit {
     }
   }
 
-  getDocumentLabel(value: any) {
-    if (!value) return null;
-    const da = this.documentTypes.find(d => d.val === value);
-    return da ? da.label : null;
-  }
-
-  async showAlertDocumentList(selected: any = null) {
-    const inputs: any = [];
-    for (const value of this.documentTypes) {
-      inputs.push({
-        name: `documentType`,
-        type: 'radio',
-        label: value.label,
-        value: value.val,
-        checked: selected !== null && selected === value.val,
-      });
-    }
-
-    await this.globalSer.alertWithList({
-      header: 'Seleccione',
-      inputs,
-      confirmAction: (selectedValue) => {
-        this.formData2.documentType = selectedValue;
-      }
-    });
-  }
-
   validateOnlyNumbers(event: any) {
     onlyNumbersInputValidation(event);
   }
@@ -173,8 +145,7 @@ export class RecuperarAccesoPage implements OnInit {
 
   validateData(view: number|null = null): string|null {
     if (view === 0) {
-      if (!/^([CC|CE|PE|TI|PAS]){2,3}/.test(this.formData2.documentType)) return 'Disculpe, pero debe indicar el tipo de documento.';
-      if (!/[0-9]{5,10}/.test(this.formData2.document)) return 'Disculpe, pero debe indicar el número de documento de identidad.';
+      if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar el número de teléfono correcto.';
       return null;
     }
 

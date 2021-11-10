@@ -12,8 +12,8 @@ export class RecuperarService {
     private globalSer: GlobalService
   ) { }
 
-  async checkDocument(data: any) {
-    const res: any = await this.axios.postData('/recovery-password/check-document', data);
+  async checkPhone(data: any) {
+    const res: any = await this.axios.postData('/recovery-password/check-phone', data);
 
     if (res && res.success) return res.data;
     return this.globalSer.altResponse(res);

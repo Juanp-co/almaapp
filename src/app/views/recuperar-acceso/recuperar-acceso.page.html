@@ -15,25 +15,13 @@
           <ion-row *ngIf="view === 0">
             <ion-col size="12">
               <ion-item>
-                <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
+                <ion-label position="floating" color="medium">Nº de teléfono</ion-label>
                 <ion-input
-                  [readonly]="true"
-                  [value]="formData2.documentType ? getDocumentLabel(formData2.documentType) : ''"
-                  (click)="showAlertDocumentList(formData2.documentType)"
-                ></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
-                <ion-input
-                  [(ngModel)]="formData2.document"
-                  autocomplete="off"
-                  maxlength="10"
-                  (keypress)="validateOnlyNumbers($event)"
+                  [(ngModel)]="formData.phone"
                   class="ion-text-uppercase"
-                >
-                </ion-input>
+                  maxlength="12"
+                  (keypress)="validateOnlyNumbers($event)"
+                ></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12" class="ion-margin-top">

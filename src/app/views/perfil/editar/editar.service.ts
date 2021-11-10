@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {bloodType, civilStatus, companyType, gender, educationLevels, professions} from '../../../../Utils/profile.data';
+import {bloodType, civilStatus, companyType, gender, educationLevels, professions, documentType} from '../../../../Utils/profile.data';
 import {departments} from '../../../../Utils/locations.data';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
@@ -9,6 +9,7 @@ import {GlobalService} from '../../../services/global.service';
 })
 export class EditarService {
 
+  documentTypesList: any[] = documentType;
   professionsList: any[] = professions;
   companyTypeList: string[] = companyType;
   departmentsList: any[] = departments;
