@@ -9,28 +9,59 @@
         <ion-row class="ion-justify-content-center">
           <ion-col size="12">
             <ion-item>
+              <ion-label position="floating" color="medium">Tipo de documento</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
+                autocomplete="asdasdasdasd"
+                class="no-selected-text"
+                (click)="showAlertDocumentList(formData.documentType)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Número de documento</ion-label>
+              <ion-input
+                [(ngModel)]="formData.document"
+                autocomplete="asdasdsadasd"
+                maxlength="10"
+                (keypress)="validateOnlyNumbers($event)"
+                class="ion-text-uppercase"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
               <ion-label position="floating" color="medium">Teléfono (*)</ion-label>
-              <ion-input [(ngModel)]="formData.phone" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              <ion-input
+                [(ngModel)]="formData.phone"
+                autocomplete="asdasd"
+                (keypress)="validateOnlyNumbers($event)"
+                class="ion-text-uppercase"
+              >
+              </ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
-              <ion-input [(ngModel)]="formData.names" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              <ion-input [(ngModel)]="formData.names" autocomplete="asdasd" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Apellido(s) (*)</ion-label>
-              <ion-input [(ngModel)]="formData.lastNames" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              <ion-input [(ngModel)]="formData.lastNames" autocomplete="asdasd" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
-          <ion-col size="12" size-sm="6">
+          <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Cargo(s) o posición</ion-label>
               <ion-input
                 [(ngModel)]="formData.position"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 maxlength="50"
                 (keyup)="validateOnlyLetters($event)"
                 class="ion-text-uppercase"
@@ -40,7 +71,7 @@
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Correo electrónico</ion-label>
-              <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              <ion-input [(ngModel)]="formData.email" autocomplete="asdasd" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12">
@@ -49,7 +80,7 @@
               <ion-datetime
                 [(ngModel)]="formData.birthday"
                 displayFormat="DD/MM/YYYY"
-                min="1910-03-14"
+                min="1910-01-01"
                 max="{{maxDate}}"
                 doneText="Listo"
                 cancelText="Cancelar"
@@ -64,7 +95,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="gender[formData.gender] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertList('gender', 'gender', formData.gender)"
               ></ion-input>
             </ion-item>
@@ -75,7 +106,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="bloodType[formData.bloodType] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertList('bloodType', 'bloodType', formData.bloodType)"
               ></ion-input>
             </ion-item>
@@ -86,7 +117,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="civilStatus[formData.civilStatus] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertList('civilStatus', 'civilStatus', formData.civilStatus)"
               ></ion-input>
             </ion-item>
@@ -97,7 +128,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="educationLevel[formData.educationLevel] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertList('educationLevel', 'educationLevel', formData.educationLevel)"
               ></ion-input>
             </ion-item>
@@ -108,7 +139,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="professions[formData.profession] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertList('profession', 'professions', formData.profession)"
               ></ion-input>
             </ion-item>
@@ -119,7 +150,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="formData.company"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertYesOrNotList('company', formData.company)"
               ></ion-input>
             </ion-item>
@@ -130,7 +161,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="companyType[formData.companyType] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 class="ion-text-uppercase"
                 (click)="showAlertList('companyType', 'companyType', formData.companyType)"
               ></ion-input>
@@ -142,7 +173,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="formData.baptized"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertYesOrNotList('baptized', formData.baptized)"
               ></ion-input>
             </ion-item>
@@ -153,7 +184,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="formData.meetingNew"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 (click)="showAlertYesOrNotList('meetingNew', formData.meetingNew)"
               ></ion-input>
             </ion-item>
@@ -164,7 +195,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="departments[formData.department] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 class="ion-text-uppercase"
                 (click)="showAlertList('department', 'departments', formData.department)"
               ></ion-input>
@@ -176,7 +207,7 @@
               <ion-input
                 [readonly]="true"
                 [value]="cities[formData.city] || ''"
-                autocomplete="off"
+                autocomplete="asdasdasdasd"
                 class="ion-text-uppercase"
                 (click)="showAlertList('city', 'cities', formData.city)"
               ></ion-input>
@@ -185,13 +216,13 @@
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Barrio o localidad</ion-label>
-              <ion-input [(ngModel)]="formData.locality" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              <ion-input [(ngModel)]="formData.locality" autocomplete="asdasd" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12">
             <ion-item>
               <ion-label position="floating" color="medium">Dirección</ion-label>
-              <ion-input [(ngModel)]="formData.direction" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              <ion-input [(ngModel)]="formData.direction" autocomplete="asdasd" class="ion-text-uppercase"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

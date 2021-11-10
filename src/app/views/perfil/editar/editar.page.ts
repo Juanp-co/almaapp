@@ -1,9 +1,10 @@
 import { Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
-import {EditarService} from './editar.service';
 import {IEditar} from './editar.model';
+import {EditarService} from './editar.service';
 import {GlobalService} from '../../../services/global.service';
+import {StorageService} from '../../../services/storage.service';
 import {
   checkDate,
   checkEmail,
@@ -12,7 +13,6 @@ import {
   checkPhone,
   onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
-import {StorageService} from '../../../services/storage.service';
 
 @Component({
   selector: 'app-editar',
@@ -20,6 +20,7 @@ import {StorageService} from '../../../services/storage.service';
   styleUrls: ['./editar.page.scss'],
 })
 export class EditarPage implements OnInit {
+  documentTypes = [];
   professions = [];
   companyType = [];
   educationLevel = [];
@@ -38,6 +39,7 @@ export class EditarPage implements OnInit {
     private navCtrl: NavController,
     private storageService: StorageService,
   ) {
+    this.documentTypes = editarService.documentTypesList;
     this.educationLevel = editarService.educationLevel;
     this.professions = editarService.professionsList;
     this.bloodType = editarService.bloodTypeList;
@@ -55,6 +57,8 @@ export class EditarPage implements OnInit {
       const userData: IEditar | any = await this.storageService.get('data');
       if (userData) {
         this.formData = {...userData} as IEditar;
+        this.formData.documentType = this.formData.document?.replace(/[0-9]{5,12}/, '') || null;
+        this.formData.document = this.formData.document?.replace(/[A-Za-z]{1,3}/, '') || null;
         this.formData.company = this.formData.company ? 'Si' : 'No';
         this.formData.baptized = this.formData.baptized ? 'Si' : 'No';
         this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
@@ -140,6 +144,12 @@ export class EditarPage implements OnInit {
     validations
    */
 
+  getDocumentLabel(value: any) {
+    if (!value) return null;
+    const da = this.documentTypes.find(d => d.val === value);
+    return da?.label || null;
+  }
+
   validateOnlyNumbers(event: any) {
     onlyNumbersInputValidation(event);
   }
@@ -148,8 +158,35 @@ export class EditarPage implements OnInit {
     onlyLettersInputValidation(event);
   }
 
+  async showAlertDocumentList(selected: any = null) {
+    const inputs: any = [];
+    for (const value of this.documentTypes) {
+      inputs.push({
+        name: `documentType`,
+        type: 'radio',
+        label: value.label,
+        value: value.val,
+        checked: selected !== null && selected === value.val,
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione',
+      inputs,
+      confirmAction: (selectedValue) => {
+        this.formData.documentType = selectedValue;
+      }
+    });
+  }
+
   validateData(): string|null {
     const { formData } = this;
+    if (formData.documentType || formData.document) {
+      if (!['CC', 'TI', 'PAS', 'CE', 'PE'].includes(`${formData.documentType}`))
+        return 'Disculpe, pero debe seleccionar un tipo de documento.';
+      if (!/[0-9]{5,11}/.test(`${formData.document}`))
+        return 'Disculpe, pero debe indicar su número de documento.';
+    }
     if (!checkPhone(formData.phone)) return 'Disculpe, pero debe indicar su número de teléfono.';
     if (!checkNameOrLastName(formData.names)) return 'Disculpe, pero debe indicar su nombre.';
     if (!checkNameOrLastName(formData.lastNames)) return 'Disculpe, pero debe indicar su apellido.';
@@ -169,6 +206,9 @@ export class EditarPage implements OnInit {
     else {
       await this.globalSer.presentLoading('Actualizando perfil, por favor espere ...');
       const data: any = Object.assign({}, this.formData);
+      if (data.documentType && data.document)
+        data.document = `${data.documentType?.toUpperCase()}${data.document}`;
+      else data.document = null;
       data.company = data.company === 'Si';
       data.baptized = data.baptized === 'Si';
       data.meetingNew = data.meetingNew === 'Si';

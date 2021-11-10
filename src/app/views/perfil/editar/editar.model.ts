@@ -1,4 +1,5 @@
 export interface IEditar {
+  documentType: string | null;
   document: string | null;
   email: string | null;
   phone: string | null;
