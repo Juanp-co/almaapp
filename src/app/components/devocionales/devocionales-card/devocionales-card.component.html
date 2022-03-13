@@ -5,7 +5,13 @@
       class="img_header"
     ></div>
     <ion-card-content>
-      <ion-card-subtitle class="title-card">{{model.sortTitle}}</ion-card-subtitle>
+      <ion-card-subtitle class="title-card">
+        <ion-icon
+          [name]="model.viewed ? 'checkmark-done-sharp' : 'time-sharp'"
+          [color]="model.viewed ? 'success' : 'medium'"
+        ></ion-icon>
+        {{model.sortTitle}}
+      </ion-card-subtitle>
       <div class="description">
         <i>{{ model.created_at }}</i>
       </div>

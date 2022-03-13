@@ -19,6 +19,7 @@ export class DevocionalesCardComponent implements OnInit {
     picture: null,
     title: null,
     sortTitle: null,
+    viewed: false,
     created_at: null,
   };
 
@@ -35,6 +36,7 @@ export class DevocionalesCardComponent implements OnInit {
       this.model.title = this.item.title;
       this.model.sortTitle = this.item.title?.length > 25 ? `${this.item.title.substr(0, 25)} ...` : this.item.title;
       this.model.picture = this.item.picture || null;
+      this.model.viewed = this.item.viewed || false;
       this.model.created_at = dayjs(this.item.created_at, 'YYYY-MM-DD HH:mm:ss', true)
         .locale('es')
         .format('dddd, DD [de] MMMM [de] YYYY');
