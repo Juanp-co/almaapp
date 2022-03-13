@@ -37,7 +37,7 @@ export class DevocionalesCard2Component implements OnInit {
       this.model.picture = this.item.picture || null;
       this.model.created_at = dayjs(this.item.created_at, 'YYYY-MM-DD HH:mm:ss', true)
         .locale('es')
-        .format('dddd, DD [de] MMMM [de] YYYY hh:mm a');
+        .format('dddd, DD [de] MM [de] YYYY');
     }
   }
 

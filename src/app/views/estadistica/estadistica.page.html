@@ -1,9 +1,9 @@
-<ion-content>
+<ion-content color="light">
   <ion-header>
     <app-minheader title="Estadística"></app-minheader>
   </ion-header>
 
-  <ion-row *ngIf="adminRequest">
+  <ion-row class="ion-padding-start ion-padding-end" *ngIf="adminRequest">
     <ion-col>
       <ion-text color="primary"><h4>Ver reporte:</h4></ion-text>
     </ion-col>
@@ -46,7 +46,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-row class="ion-padding-start ion-padding-end">
     <ion-col size="12">
       <ion-text class="ion-margin-start" color="primary">
         <h4>{{showPersonal ? 'Mi reporte' : 'Reporte de grupos familiares'}}</h4>

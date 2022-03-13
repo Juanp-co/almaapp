@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content color="light">
   <ion-row
     class="fondoCool ion-justify-content-end ion-padding"
     [style.background-image]="styleBg"
@@ -14,60 +14,64 @@
     </ion-col>
   </ion-row>
 
-  <div class="ion-margin-top ion-padding-top">
-    <br><br><br>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="auto">
-        <h4>
-          <ion-text color="primary">
-            Inicio de sesión
-          </ion-text>
-        </h4>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="9">
-        <ion-item>
-          <ion-label position="floating" color="medium">Nº de teléfono</ion-label>
-          <ion-input
-            [(ngModel)]="phone"
-            class="ion-text-uppercase"
-            maxlength="12"
-            (keypress)="validateOnlyNumber2($event)"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="9">
-        <ion-item>
-          <ion-label position="floating" color="medium">Contraseña</ion-label>
-          <ion-input type="password" [(ngModel)]="pass"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="9">
-        <p (click)="goTo('recuperar-acceso')">
-          <ion-text color="medium" class="ion-text-start">¿Olvidaste tu contraseña?</ion-text>
-        </p>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center ion-margin-top">
-      <ion-col size="auto">
-        <ion-button expand="block" color="light" (click)="goTo('registro')">
-          Registro
-        </ion-button>
-      </ion-col>
-      <ion-col size="auto">
-        <ion-button expand="block" color="primary" (click)="ingresar()">
-          Ingresar
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" class="ion-text-center">
-        <br>
-        <p (click)="goTo('inicio')">
-          <ion-text color="medium" class="ion-text-start">Ir a la pantalla inicial</ion-text>
-        </p>
-      </ion-col>
-    </ion-row>
-  </div>
+  <ion-card class="ion-padding-top">
+    <ion-card-header>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="auto">
+          <h3>
+            <ion-text color="primary">ACCEDER</ion-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <div>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="10">
+            <ion-item>
+              <ion-label position="floating" color="medium">Nº de teléfono</ion-label>
+              <ion-input
+                [(ngModel)]="phone"
+                class="ion-text-uppercase"
+                maxlength="12"
+                (keypress)="validateOnlyNumber2($event)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="10">
+            <ion-item>
+              <ion-label position="floating" color="medium">Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="pass"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="10" class="ion-margin-top">
+            <p (click)="goTo('recuperar-acceso')">
+              <ion-text color="medium" class="ion-text-start"><b>¿Olvidaste tu contraseña?</b></ion-text>
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-margin-top">
+          <ion-col size="auto">
+            <ion-button expand="block" color="light" (click)="goTo('registro')">
+              Registro
+            </ion-button>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button expand="block" color="primary" (click)="ingresar()">
+              Ingresar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <br>
+            <p (click)="goTo('inicio')">
+              <ion-text color="medium" class="ion-text-start"><b>Ir a la pantalla inicial</b></ion-text>
+            </p>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
