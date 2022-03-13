@@ -3,6 +3,7 @@ import {IonInfiniteScroll} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {DevocionalesService} from './devocionales.service';
 import {GlobalService} from '../../services/global.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-devocionales',
@@ -17,7 +18,7 @@ export class DevocionalesPage implements OnInit {
   totals = 0;
   pages = 0;
   queryParams: any = {
-    limit: 5,
+    limit: 10,
     page: 1,
     input: 'created_at',
     value: -1,
@@ -28,7 +29,8 @@ export class DevocionalesPage implements OnInit {
 
   constructor(
     private devocionalesService: DevocionalesService,
-    private globalSer: GlobalService
+    private globalSer: GlobalService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -50,8 +52,9 @@ export class DevocionalesPage implements OnInit {
   }
 
   async getDevotionals() {
-    const data: any = await this.devocionalesService.getDevotionals(this.queryParams);
-    this.devotionals = [...this.devotionals, ...data];
+    const data: any[] = await this.devocionalesService.getDevotionals(this.queryParams);
+    // this.devotionals = [...this.devotionals, ...data];
+    await this.checkViewed(data);
   }
 
   async loadData(event: any = null) {
@@ -62,6 +65,21 @@ export class DevocionalesPage implements OnInit {
       event.target.disabled = newPage === this.pages;
       event.target.complete();
     }
+  }
+
+  async checkViewed(data: any[]) {
+    const list: string[] = await this.storageService.get('devotionals_ids') || [];
+    const d = [...this.devotionals, ...data];
+
+    data?.forEach((v: any) => {
+      if (!v.viewed) v.viewed = !!list.includes(v._id);
+    });
+
+    this.devotionals = d.sort((a: any, b: any) => {
+      if (a.viewed > b.viewed) return 1;
+      if (a.viewed < b.viewed) return -1;
+      return 0;
+    });
   }
 
 }

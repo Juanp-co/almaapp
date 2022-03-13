@@ -25,13 +25,6 @@ export class OrganizacionPage implements OnInit {
   };
   groups: any[] = [];
 
-  views = {
-    pastors: true,
-    supervisors: false,
-    leaders: false,
-    peoples: false,
-  };
-
   counters = {
     pastors: 0,
     supervisors: 0,
@@ -56,8 +49,8 @@ export class OrganizacionPage implements OnInit {
 
   async ngOnInit() {
     this.adminRequest = await this.globalSer.checkRoleToActions([0, 1, 2]);
-    this.getOrganization();
-    this.getFamiliesGroups();
+    await this.getOrganization();
+    await this.getFamiliesGroups();
   }
 
   async getOrganization() {

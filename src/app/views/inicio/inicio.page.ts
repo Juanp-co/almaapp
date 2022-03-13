@@ -104,9 +104,23 @@ export class InicioPage implements OnInit {
   }
 
   async getDevotionals() {
-    const data: any = await this.inicioService.getDevotionals({ limit: 6, input: 'created_at', value: -1 });
+    const list: string[] = await this.storageService.get('devotionals_ids');
+    const data: any[] = await this.inicioService.getDevotionals({
+      limit: 6,
+      input: 'created_at',
+      value: -1,
+    });
     if (data) {
-      this.devotionals = data || [];
+      data?.forEach((v: any) => {
+        if (!v.viewed) v.viewed = !!list.includes(v._id);
+      });
+
+      this.devotionals = data.sort((a: any, b: any) => {
+        if (a.viewed > b.viewed) return 1;
+        if (a.viewed < b.viewed) return -1;
+        return 0;
+      });
+      // this.devotionals = data || [];
     }
   }
 

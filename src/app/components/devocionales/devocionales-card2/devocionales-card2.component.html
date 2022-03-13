@@ -6,8 +6,14 @@
     ></div>
     <ion-card-content>
       <ion-row>
-        <ion-col size="12">
-          <ion-card-title>{{model.sortTitle}}</ion-card-title>
+        <ion-col size="12" class="ion-align-items-center">
+          <ion-card-title color="primary">
+            <ion-icon
+              [name]="model.viewed ? 'checkmark-done-sharp' : 'time-sharp'"
+              [color]="model.viewed ? 'success' : 'medium'"
+            ></ion-icon>
+            {{model.sortTitle}}
+          </ion-card-title>
           <div class="description">
             <i>{{ model.created_at }}</i>
           </div>
