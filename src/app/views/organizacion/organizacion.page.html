@@ -1,11 +1,11 @@
-<ion-content>
+<ion-content color="light">
   <ion-header class="sticky-menu">
     <app-minheader [title]="showGroups ? 'Grupos familiares' : 'Organización'"></app-minheader>
   </ion-header>
 
   <ion-row class="{{ !showGroups ? '' : 'ion-hide' }}">
     <ion-col size="12" class="ion-margin-start {{!viewSelected ? '' : 'ion-hide'}}">
-      <h4>Estructura de la organización</h4>
+      <ion-text color="primary"><h4>Estructura de la organización</h4></ion-text>
     </ion-col>
     <ion-col size="12" class="{{!viewSelected ? '' : 'ion-hide'}}">
       <ion-list>
@@ -60,9 +60,9 @@
     <ion-col class="ion-no-margin ion-no-padding">
       <ion-row class="ion-align-items-center">
         <ion-col size="12" class="ion-margin-start" *ngIf="!showGroupData">
-          <h4>Grupos familiares</h4>
+          <ion-text color="primary"><h4>Grupos familiares</h4></ion-text>
         </ion-col>
-        <ion-col size="12" *ngIf="!showGroupData">
+        <ion-col size="12" *ngIf="!showGroupData && groups?.length > 0">
           <ion-list>
             <ion-item button *ngFor="let group of groups" (click)="setViewGroupData(group)" mode="md">
               <ion-label>

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content color="light">
   <ion-header>
     <app-minheader title="Detalles evento"></app-minheader>
   </ion-header>
@@ -13,89 +13,93 @@
     </ion-col>
   </ion-row>
 
-  <ion-row class="ion-margin" *ngIf="eventData && !showEditForm">
-    <ion-col size="12">
-      <ion-row>
-        <ion-col
-          size="12"
-          class="banner-event"
-          [ngStyle]="{backgroundImage: 'url('+eventData.picture+')', height: '300px'}"
-          *ngIf="eventData.picture"
-        >
+  <ion-card>
+    <ion-card-content>
+      <ion-row *ngIf="eventData && !showEditForm">
+        <ion-col size="12">
+          <ion-row>
+            <ion-col
+              size="12"
+              class="banner-event"
+              [ngStyle]="{backgroundImage: 'url('+eventData.picture+')', height: '300px'}"
+              *ngIf="eventData.picture"
+            >
+            </ion-col>
+            <ion-col size="12" *ngIf="!eventData.picture">
+              <ion-img class="pictureIcon" [src]="'/assets/icon/evento_lista.svg'"></ion-img>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col size="12" *ngIf="!eventData.picture">
-          <ion-img class="pictureIcon" [src]="'/assets/icon/evento_lista.svg'"></ion-img>
+        <ion-col size="12">
+          <ion-text color="primary">
+            <h2 class="title-event">{{ eventData.title ? eventData.title : '' }}</h2>
+          </ion-text>
+          <hr class="border">
         </ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size="12">
-      <ion-text color="primary">
-        <h2 class="title-event">{{ eventData.title ? eventData.title : '' }}</h2>
-      </ion-text>
-      <hr class="border">
-    </ion-col>
 
-    <ion-col size="12" [sizeSm]="6">
-      <ion-row>
-        <ion-col size="12">
-          <ion-text color="medium"><b>Creado por:</b></ion-text>
+        <ion-col size="12" [sizeSm]="6">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Creado por:</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ eventData.user ? this.eventData.user.names + ' ' + this.eventData.user.lastNames : 'Anónimo' }}</ion-text>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col size="12">
-          <ion-text color="medium">{{ eventData.user ? this.eventData.user.names + ' ' + this.eventData.user.lastNames : 'Anónimo' }}</ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-col>
 
-    <ion-col size="12" [sizeSm]="6">
-      <ion-row>
-        <ion-col size="12">
-          <ion-text color="medium"><b>Dirigido a:</b></ion-text>
+        <ion-col size="12" [sizeSm]="6">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Dirigido a:</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ getRoleValue() }}</ion-text>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col size="12">
-          <ion-text color="medium">{{ getRoleValue() }}</ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-col>
 
-    <ion-col size="12" [sizeSm]="6">
-      <ion-row>
-        <ion-col size="12">
-          <ion-text color="medium"><b>Fecha:</b></ion-text>
+        <ion-col size="12" [sizeSm]="6">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Fecha:</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ eventData.date ? eventData.date : '????' }}</ion-text>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col size="12">
-          <ion-text color="medium">{{ eventData.date ? eventData.date : '????' }}</ion-text>
+        <ion-col size="12" [sizeSm]="3">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Hora inicio:</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ eventData?.initHour || '????' }}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12" [sizeSm]="3">
+          <ion-row>
+            <ion-col size="12" *ngIf="eventData?.endHour">
+              <ion-text color="medium"><b>Hora fin:</b></ion-text>
+            </ion-col>
+            <ion-col size="12" *ngIf="eventData?.endHour">
+              <ion-text color="medium">{{ eventData.endHour || '????' }}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col [size]="12" class="ion-padding-top">
+          <ion-text><b class="no-selected-text">Descripción:</b></ion-text>
+          <ion-text color="medium">
+            <div [innerHTML]="eventData.description"></div>
+          </ion-text>
         </ion-col>
       </ion-row>
-    </ion-col>
-    <ion-col size="12" [sizeSm]="3">
-      <ion-row>
-        <ion-col size="12">
-          <ion-text color="medium"><b>Hora inicio:</b></ion-text>
-        </ion-col>
-        <ion-col size="12">
-          <ion-text color="medium">{{ eventData?.initHour || '????' }}</ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size="12" [sizeSm]="3">
-      <ion-row>
-        <ion-col size="12" *ngIf="eventData?.endHour">
-          <ion-text color="medium"><b>Hora fin:</b></ion-text>
-        </ion-col>
-        <ion-col size="12" *ngIf="eventData?.endHour">
-          <ion-text color="medium">{{ eventData.endHour || '????' }}</ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col [size]="12" class="ion-margin-top">
-      <ion-text><b class="no-selected-text">Descripción:</b></ion-text>
-      <ion-text color="medium">
-        <div [innerHTML]="eventData.description"></div>
-      </ion-text>
-    </ion-col>
-  </ion-row>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-row class="ion-margin" *ngIf="!eventData && !showEditForm">
+  <ion-row class="ion-padding" *ngIf="!eventData && !showEditForm">
     <ion-col size="12">
       <ion-card class="ion-no-margin ion-no-padding">
         <ion-card-content>
@@ -111,7 +115,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row class="ion-margin" *ngIf="!showEditForm">
+  <ion-row class="ion-padding" *ngIf="!showEditForm">
     <ion-col size="12" class="ion-text-center">
       <ion-button color="medium" (click)="goBack()">
         <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
@@ -127,6 +131,4 @@
       </ion-button>
     </ion-col>
   </ion-row>
-
-
 </ion-content>

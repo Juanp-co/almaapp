@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content color="light">
   <ion-header>
     <app-minheader title="Escuela"></app-minheader>
   </ion-header>
@@ -13,8 +13,17 @@
 
     <div *ngIf="courses && courses.length > 0; else noCourses" >
       <ion-list>
-        <ion-item class="ion-margin-bottom" *ngFor='let course of courses' button (click)="course.enable ? goToDetails(course.slug) : msgCantView()">
-          <ion-img src="assets/icon/level-{{course.level}}{{course.enable ? '' : '-gray'}}.svg" class="icon-courses" slot="start"></ion-img>
+        <ion-item
+          class="ion-margin-bottom"
+          (click)="course.enable ? goToDetails(course.slug) : msgCantView()"
+          *ngFor='let course of courses'
+          button
+        >
+          <ion-img
+            src="assets/icon/level-{{course.level}}{{course.enable ? '' : '-gray'}}.svg"
+            class="icon-courses"
+            slot="start"
+          ></ion-img>
           <ion-text class="ion-margin-bottom" color="medium">
             <b>{{ course.title }}</b><br>
             <span>{{ course.description }}</span>
