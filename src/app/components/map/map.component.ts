@@ -76,8 +76,6 @@ export class MapComponent implements OnInit {
       });
     });
 
-
-
     listCoords.forEach((marker) => {
       const { geometry } = marker;
       if (geometry?.coordinates?.length === 2) {

@@ -1,6 +1,7 @@
 <ion-content color="light">
   <ion-header class="sticky-menu">
-    <app-minheader [title]="showGroups ? 'Grupos familiares' : 'Organización'"></app-minheader>
+    <app-minheader title="Grupos familiares" *ngIf="showGroups"></app-minheader>
+    <app-minheader title="Organización" *ngIf="!showGroups"></app-minheader>
   </ion-header>
 
   <ion-row class="{{ !showGroups ? '' : 'ion-hide' }}">
@@ -56,54 +57,80 @@
     </ion-col>
   </ion-row>
 
+  <!-- Grupos familiares -->
   <ion-row class="{{ showGroups ? '' : 'ion-hide' }} ion-align-items-center">
     <ion-col class="ion-no-margin ion-no-padding">
-      <ion-row class="ion-align-items-center">
-        <ion-col size="12" class="ion-margin-start" *ngIf="!showGroupData">
-          <ion-text color="primary"><h4>Grupos familiares</h4></ion-text>
-        </ion-col>
-        <ion-col size="12" *ngIf="!showGroupData && groups?.length > 0">
-          <ion-list>
-            <ion-item button *ngFor="let group of groups" (click)="setViewGroupData(group)" mode="md">
-              <ion-label>
+      <ion-row>
+        <ion-col size="12" class="{{ !showGroupData && sectorSelected && !subSectorSelected ? '' : 'ion-hide' }} position-sticky">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-button fill="clear" color="light" (click)="setSubSectorsList()">
+                <ion-icon name="chevron-back-outline" color="medium"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-text color="primary">
                 <h3>
-                  <b>Grupo #{{group.number}}</b>
+                  Sector #{{sectorSelected || '0000'}} - ({{subSectors?.length || 0}})
                 </h3>
-                <p>
-                  Sector # {{group.sector}}
-                </p>
-                <p>
-                  Sub-sector # {{group.subSector}}
-                </p>
-              </ion-label>
-              <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-            </ion-item>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12" class="{{ !showGroupData && sectorSelected && subSectorSelected ? '' : 'ion-hide' }} position-sticky">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-button fill="clear" color="light" (click)="setViewSubGroupsData()">
+                <ion-icon name="chevron-back-outline" color="medium"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-text color="primary">
+                <h3>
+                  S # {{sectorSelected || '0000'}} SS # {{subSectorSelected || '0000'}} ({{subSectorsGroups?.length || 0}})
+                </h3>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12" class="ion-margin-start {{!showGroupData && !sectorSelected && !subSectorSelected ? '' : 'ion-hide'}}">
+          <ion-text color="primary"><h3>Grupos familiares</h3></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" *ngIf="!showGroupData && !sectorSelected && sectors?.length > 0">
+          <ion-list>
+            <app-group-item-list
+              [list]="sectors"
+              label="Sector"
+              keyItem="sector"
+              [simpleValue]="true"
+              [handleClick]="handleClickAction1"
+            ></app-group-item-list>
+          </ion-list>
+        </ion-col>
+        <ion-col size="12" *ngIf="!showGroupData && sectorSelected && !subSectorSelected">
+          <ion-list>
+            <app-group-item-list
+              [list]="subSectors"
+              label="Sub-Sector"
+              keyItem="subSector"
+              [handleClick]="handleClickAction2"
+            ></app-group-item-list>
+          </ion-list>
+        </ion-col>
+        <ion-col size="12" *ngIf="!showGroupData && sectorSelected && subSectorSelected">
+          <ion-list>
+            <app-group-item-list
+              [list]="subSectorsGroups"
+              label="Grupo"
+              keyItem="number"
+              [handleClick]="handleClickAction3"
+            ></app-group-item-list>
           </ion-list>
         </ion-col>
         <ion-col size="12" *ngIf="showGroupData" class="ion-no-margin ion-no-padding">
-          <ion-row class="ion-no-margin ion-no-padding">
-            <ion-col size="12" class="position-sticky">
-              <ion-row class="ion-align-items-center">
-                <ion-col size="2">
-                  <ion-button color="light" (click)="setViewGroupData()">
-                    <ion-icon name="chevron-back-outline"></ion-icon>
-                  </ion-button>
-                </ion-col>
-                <ion-col>
-                  <h3>
-                    <b>Ubicación del grupo</b>
-                  </h3>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-            <ion-col size="12">
-              <app-map
-                [coords]="showGroupData.coords"
-                [zoom]="15"
-                height="80vh"
-              ></app-map>
-            </ion-col>
-          </ion-row>
+          <app-group-item-location [data]="showGroupData" [handleBack]="handleClickAction3"></app-group-item-location>
         </ion-col>
       </ion-row>
     </ion-col>
