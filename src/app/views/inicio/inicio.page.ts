@@ -84,7 +84,7 @@ export class InicioPage implements OnInit {
     if (data) {
       this.params = {...this.params, ...data};
       await this.storageService.set('params-app', this.params);
-      this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${this.params.banner || '/assets/cruz.png'}), url("/assets/cruz.png")`;
+      this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${this.params.banner || '/assets/cruz.png'}'), url("/assets/cruz.png")`;
       this.logo = `${this.params.logo || '/assets/logo.png'}`;
       this.showButtonSocial = (
         this.params.facebook ||
@@ -120,7 +120,6 @@ export class InicioPage implements OnInit {
         if (a.viewed < b.viewed) return -1;
         return 0;
       });
-      // this.devotionals = data || [];
     }
   }
 
@@ -168,6 +167,4 @@ export class InicioPage implements OnInit {
       await this.globalSer.presentAlert('Alerta', 'Ha ocurrido un error inesperado al momento de abrir el enlace.');
     }
   }
-
-
 }

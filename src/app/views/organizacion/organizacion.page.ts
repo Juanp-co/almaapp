@@ -23,7 +23,12 @@ export class OrganizacionPage implements OnInit {
     },
     users: []
   };
-  groups: any[] = [];
+  sectors: any[] = [];
+  sectorSelected: any = null;
+  subSectorSelected: any = null;
+  subSectors: any = null;
+  subSectorsGroups: any = null;
+  groupsData: any[] = [];
 
   counters = {
     pastors: 0,
@@ -88,7 +93,8 @@ export class OrganizacionPage implements OnInit {
     const res: any = await this.organizacionService.getFamiliesGroups();
 
     if (res && !res.error) {
-      this.groups = res || [];
+      this.groupsData = res || [];
+      this.sectors = [...new Set(res?.map(r => r.sector) || [])];
       await this.globalSer.dismissLoading();
     }
     else if (res && res.error) {
@@ -111,30 +117,63 @@ export class OrganizacionPage implements OnInit {
   /*
   Actions family groups
    */
-  async setViewGroupData(data: any = null) {
-    if (data) {
-      if (this.adminRequest || data.isLeader) {
-        await this.router.navigate([`/grupos-familiares/${data._id}`]);
-      }
-      else if (
-        data.location?.coordinates?.length === 2
-        && data.location?.coordinates[0] !== 0
-        && data.location?.coordinates[1] !== 0
-      ) {
-        this.showGroupData = data;
-        this.showGroupData.coords = [
-          {
-            type: 'Feature',
-            geometry: data.location
-          }
-        ];
-      }
-      else {
-        const toast = await this.toastController.create({
-          message: 'Disculpe, pero este grupo no ha registrado su ubicación.',
-          duration: 3000
-        });
-        toast.present();
+  setSubSectorsList(sectorGroup: any = null) {
+    console.log('sectorGroup', sectorGroup);
+    if (sectorGroup) {
+      this.subSectors = [
+        ...new Set(this.groupsData?.filter(gd => gd.sector === sectorGroup) || [])
+      ];
+      this.sectorSelected = sectorGroup;
+    }
+    else {
+      this.subSectors = null;
+      this.sectorSelected = null;
+    }
+  }
+
+  setViewSubGroupsData(ss) {
+    console.log('ss', ss);
+    if (ss) {
+      this.subSectorsGroups = [
+        ...new Set(this.groupsData.filter(gd => gd.sector === this.sectorSelected && gd.subSector === ss))
+      ];
+      this.subSectorSelected = ss;
+    }
+    else {
+      this.subSectorsGroups = null;
+      this.subSectorSelected = null;
+    }
+  }
+
+  async setViewGroupData(v) {
+    if (v) {
+      const group = this.groupsData.find(gd => (
+        gd.sector === this.sectorSelected && gd.subSector === this.subSectorSelected && gd.number === v
+      ));
+      if (group) {
+        if (this.adminRequest || group.isLeader) {
+          await this.router.navigate([`/grupos-familiares/${group._id}`]);
+        }
+        else if (
+          group.location?.coordinates?.length === 2
+          && group.location?.coordinates[0] !== 0
+          && group.location?.coordinates[1] !== 0
+        ) {
+          this.showGroupData = group;
+          this.showGroupData.coords = [
+            {
+              type: 'Feature',
+              geometry: group.location
+            }
+          ];
+        }
+        else {
+          const toast = await this.toastController.create({
+            message: 'Disculpe, pero este grupo no ha registrado su ubicación.',
+            duration: 3000
+          });
+          toast.present();
+        }
       }
     }
     else this.showGroupData = null;
@@ -144,4 +183,8 @@ export class OrganizacionPage implements OnInit {
     this.viewSelected = null;
     this.showGroups = active;
   }
+
+  handleClickAction1 = (v: any): void => { this.setSubSectorsList(v); };
+  handleClickAction2 = (v: any): void => { this.setViewSubGroupsData(v); };
+  handleClickAction3 = (v: any): void => { this.setViewGroupData(v); };
 }

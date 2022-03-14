@@ -11,7 +11,9 @@ import {DevocionalesCard2Component} from './devocionales/devocionales-card2/devo
 import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {Eventcard2Component} from './events/eventcard2/eventcard2.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
-import {GrupoFamiliarCardComponent} from './grupo-familiar-card/grupo-familiar-card.component';
+import {GrupoFamiliarCardComponent} from './grupos-familiares/grupo-familiar-card/grupo-familiar-card.component';
+import {GroupItemListComponent} from './grupos-familiares/group-item-list/group-item-list.component';
+import {GroupItemLocationComponent} from './grupos-familiares/group-item-location/group-item-location.component';
 import {MapComponent} from './map/map.component';
 import {MinheaderComponent} from './minheader/minheader.component';
 import {PaginatorComponent} from './paginator/paginator.component';
@@ -35,6 +37,8 @@ import {ReportPersonalComponent} from './reports/report-personal/report-personal
     Eventcard2Component,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
+    GroupItemListComponent,
+    GroupItemLocationComponent,
     MapComponent,
     MinheaderComponent,
     PaginatorComponent,
@@ -60,6 +64,8 @@ import {ReportPersonalComponent} from './reports/report-personal/report-personal
     Eventcard2Component,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
+    GroupItemListComponent,
+    GroupItemLocationComponent,
     MapComponent,
     MinheaderComponent,
     PaginatorComponent,
