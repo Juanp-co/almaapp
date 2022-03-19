@@ -10,6 +10,7 @@ import {GlobalService} from '../../services/global.service';
   styleUrls: ['./padres.page.scss'],
 })
 export class PadresPage implements OnInit {
+  timer;
   referrals: any[] = [];
   users: any[] = [];
   totalsGroups = 0;
@@ -37,7 +38,7 @@ export class PadresPage implements OnInit {
 
   async ngOnInit() {
     this.loadAdminData = await this.globalSer.checkRoleToActions([0, 1, 2]);
-    if (this.loadAdminData) this.getTotalsUsersAdmin();
+    if (this.loadAdminData) await this.getTotalsUsersAdmin();
   }
 
   async ionViewWillEnter() {
@@ -93,13 +94,8 @@ export class PadresPage implements OnInit {
 
   async showVisits() {
     await this.globalSer.presentLoading();
-    const updateVisits = (data) => {
-      // if (data) this.visits = data;
-    };
-    const content: any = {
-      // data: this.visits,
-      // id: this.id
-    };
+    const updateVisits = (data) => {};
+    const content: any = {};
     await this.globalSer.dismissLoading();
     await this.globalSer.loadModal(
       ModalVisitsPage,
@@ -109,7 +105,17 @@ export class PadresPage implements OnInit {
     );
   }
 
+  searchInput(value) {
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(async () => {
+      this.queryParams.search = value.target.value || null ;
+      this.getTotalsUsersAdmin();
+    }, 200);
+  }
+
   setAllSons() {
+    this.queryParams.search = null;
+    if (this.allSons) this.getTotalsUsersAdmin();
     this.allSons = !this.allSons;
   }
 }
