@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {IonicModule} from '@ionic/angular';
-
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import {ChartComponent} from './chart/chart.component';

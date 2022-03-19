@@ -80,20 +80,28 @@ export class InicioPage implements OnInit {
   }
 
   async getParams() {
+    const paramsData: any = await this.storageService.get('params-app');
+    if (paramsData) await this.setDataParams(paramsData);
+
     const data: any = await this.inicioService.getParamsApp();
     if (data) {
-      this.params = {...this.params, ...data};
-      await this.storageService.set('params-app', this.params);
-      this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${this.params.banner || '/assets/cruz.png'}'), url("/assets/cruz.png")`;
-      this.logo = `${this.params.logo || '/assets/logo.png'}`;
-      this.showButtonSocial = (
-        this.params.facebook ||
-        this.params.instagram ||
-        this.params.twitter ||
-        this.params.web ||
-        this.params.youtube
-      );
+      if (paramsData.logo === data.logo || paramsData.banner !== data.banner) this.setDataParams(data);
     }
+  }
+
+  async setDataParams(data: any = {}) {
+
+    this.params = {...this.params, ...data};
+    await this.storageService.set('params-app', this.params);
+    this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${this.params.banner || '/assets/cruz.png'}'), url("/assets/cruz.png")`;
+    this.logo = `${this.params.logo || '/assets/logo.png'}`;
+    this.showButtonSocial = (
+      this.params.facebook ||
+      this.params.instagram ||
+      this.params.twitter ||
+      this.params.web ||
+      this.params.youtube
+    );
   }
 
   async getEvents() {
