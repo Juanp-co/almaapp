@@ -78,7 +78,6 @@ export class AxiosService {
     }
   }
 
-
   async getData(endpoint: string, data: any = {}) {
     try {
       await this.setToken();

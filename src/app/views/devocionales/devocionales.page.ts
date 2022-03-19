@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonInfiniteScroll} from '@ionic/angular';
-import dayjs from 'dayjs';
 import {DevocionalesService} from './devocionales.service';
 import {GlobalService} from '../../services/global.service';
 import {StorageService} from '../../services/storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-devocionales',
@@ -17,6 +17,7 @@ export class DevocionalesPage implements OnInit {
   devotionals: any = [];
   totals = 0;
   pages = 0;
+  isAdmin = false;
   queryParams: any = {
     limit: 10,
     page: 1,
@@ -30,13 +31,14 @@ export class DevocionalesPage implements OnInit {
   constructor(
     private devocionalesService: DevocionalesService,
     private globalSer: GlobalService,
+    private router: Router,
     private storageService: StorageService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    this.isAdmin = await this.globalSer.checkRoleToActions([0, 1, 2]);
     this.getTotalsDevotionals();
   }
 
@@ -53,7 +55,6 @@ export class DevocionalesPage implements OnInit {
 
   async getDevotionals() {
     const data: any[] = await this.devocionalesService.getDevotionals(this.queryParams);
-    // this.devotionals = [...this.devotionals, ...data];
     await this.checkViewed(data);
   }
 
@@ -80,6 +81,10 @@ export class DevocionalesPage implements OnInit {
       if (a.viewed < b.viewed) return -1;
       return 0;
     });
+  }
+
+  async goToAdd() {
+    await this.router.navigate([`/devocionales/crear`]);
   }
 
 }
