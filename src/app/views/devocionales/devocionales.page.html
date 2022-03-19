@@ -3,6 +3,15 @@
     <app-minheader title="Devocionales y predicaciones"></app-minheader>
   </ion-header>
 
+  <ion-row class="ion-justify-content-end ion-padding-end ion-padding-top" *ngIf="isAdmin">
+    <ion-col size="auto">
+      <ion-button color="primary" (click)="goToAdd()">
+        <ion-icon name="add" slot="start"></ion-icon>
+        <ion-text>Crear devocional</ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
   <ion-row *ngIf="totals > 0; else noDevotionals">
     <ion-col size="12" size-sm="6" *ngFor="let item of devotionals">
       <app-devocionales-card2 [item]="item"></app-devocionales-card2>

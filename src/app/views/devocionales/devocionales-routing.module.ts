@@ -9,6 +9,10 @@ const routes: Routes = [
     component: DevocionalesPage
   },
   {
+    path: 'crear',
+    loadChildren: () => import('./crear/crear.module').then( m => m.CrearPageModule)
+  },
+  {
     path: ':id',
     loadChildren: () => import('./detalles/detalles.module').then( m => m.DetallesPageModule)
   }

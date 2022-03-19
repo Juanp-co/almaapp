@@ -1,0 +1,40 @@
+::ng-deep {
+  .max-width-640 { --width: 640px; }
+
+  .ck-editor__editable_inline {
+    min-height: 250px;
+    max-height: 350px;
+    color: #333333 !important;
+  }
+
+  .max-height-pic {
+    max-height: 120px;
+    margin: 0 auto !important;
+  }
+
+  .card-item { height: 100%; }
+
+  .pictureIcon {
+    width: auto !important;
+    height: 150px !important;
+  }
+}
+
+.label-button {
+  height: 100% !important;
+  width: 100% !important;
+  border: 1px solid #fff;
+}
+
+.banner-default {
+  border-radius: 5px 5px 0 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center !important;
+}
+
+.banner-loaded {
+  border-radius: 5px 5px 0 0;
+  background-size: cover !important;
+  background-position: center !important;
+}

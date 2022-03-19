@@ -36,14 +36,12 @@ export class PadresPage implements OnInit {
     private router: Router,
   ) { }
 
-  async ngOnInit() {
-    this.loadAdminData = await this.globalSer.checkRoleToActions([0, 1, 2]);
-    if (this.loadAdminData) await this.getTotalsUsersAdmin();
-  }
+  async ngOnInit() {}
 
   async ionViewWillEnter() {
+    this.loadAdminData = await this.globalSer.checkRoleToActions([0, 1, 2]);
+    if (this.loadAdminData) await this.getTotalsUsersAdmin();
     this.getData();
-    if (this.loadAdminData) this.getTotalsUsersAdmin();
   }
 
   async getData() {
