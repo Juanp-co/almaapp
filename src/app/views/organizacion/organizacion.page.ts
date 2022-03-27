@@ -118,7 +118,6 @@ export class OrganizacionPage implements OnInit {
   Actions family groups
    */
   setSubSectorsList(sectorGroup: any = null) {
-    console.log('sectorGroup', sectorGroup);
     if (sectorGroup) {
       this.subSectors = [
         ...new Set(this.groupsData?.filter(gd => gd.sector === sectorGroup) || [])
@@ -132,7 +131,6 @@ export class OrganizacionPage implements OnInit {
   }
 
   setViewSubGroupsData(ss) {
-    console.log('ss', ss);
     if (ss) {
       this.subSectorsGroups = [
         ...new Set(this.groupsData.filter(gd => gd.sector === this.sectorSelected && gd.subSector === ss))

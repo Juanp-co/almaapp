@@ -1,4 +1,5 @@
 export interface IPerfl {
+  _id?: string | null;
   document: string | null;
   email: string | null;
   phone: string | null;

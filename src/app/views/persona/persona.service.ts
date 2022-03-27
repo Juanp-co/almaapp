@@ -19,6 +19,13 @@ export class PersonaService {
     return this.globalSer.altResponse(res);
   }
 
+  async getGroup(id: string) {
+    const res: any = await this.axios.getData(`/group/${id}`);
+
+    if (res && res.success) return res.data;
+    return this.globalSer.altResponse(res);
+  }
+
   async saveVisit(data: any) {
     const res: any = await this.axios.postData('user/referrals/visit', data);
 

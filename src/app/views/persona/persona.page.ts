@@ -12,6 +12,7 @@ import { GlobalService } from '../../services/global.service';
 })
 export class PersonaPage implements OnInit {
 
+  showInfo = true;
   member: any = null;
   courses: any = {
     totals: 0,
@@ -22,9 +23,9 @@ export class PersonaPage implements OnInit {
     data: null
   };
   visits: any[] = [];
+  group: any = null;
   id: any = null;
   path = '/user/referrals';
-  showInfo = true;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -38,7 +39,7 @@ export class PersonaPage implements OnInit {
       this.id = paramMap.get('personId');
     });
     this.activateRoute.queryParams.subscribe(params => {
-      if (params.group) this.path = '/user/group';
+      if (params.group) this.path = '/user/group/person';
     });
 
     if (this.id) {
@@ -52,6 +53,7 @@ export class PersonaPage implements OnInit {
         this.referrals.list = data.referrals || [];
         this.referrals.totals = data.totalReferrals || 0;
         this.visits = data.visits || [];
+        this.group = { data: data.group || null, totals: data.group?.members?.length || 0 };
         await this.globalSer.dismissLoading();
       }
       else if (data && data.error) {

@@ -6,6 +6,9 @@ import {PerfilService} from './perfil.service';
 import {DataService} from '../../services/data.service';
 import {GlobalService} from '../../services/global.service';
 import {StorageService} from '../../services/storage.service';
+import {NucleoFamiliaFormPage} from '../modals/nucleo-familia-form/nucleo-familia-form.page';
+import {MembersGroupsPage} from '../modals/members-groups/members-groups.page';
+import {InvitationsGroupsPage} from '../modals/invitations-groups/invitations-groups.page';
 
 @Component({
   selector: 'app-perfil',
@@ -26,6 +29,7 @@ export class PerfilPage implements OnInit {
   formPic: any = {
     picture: null
   };
+  totalsInvitations = 0;
   showInfo = true;
   showEditPic = false;
 
@@ -56,6 +60,7 @@ export class PerfilPage implements OnInit {
       this.group.data = await this.perfilService.getGroup() || null;
       this.group.totals = this.group.data?.members?.length || 0;
       this.courses.list = await this.perfilService.getCourses();
+      this.totalsInvitations = await this.perfilService.getTotalsInvitations();
       this.courses.totals = this.courses.list?.length || 0;
       await this.globalSer.dismissLoading();
     }
@@ -87,12 +92,86 @@ export class PerfilPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
+  async removeMemberFamilyGroup(data: any = {}) {
+    await this.globalSer.presentLoading('Quitando miembro del núcleo familiar. Por favor, espere...');
+    const updated: any = await this.perfilService.removeMemberFamilyGroup(this.group?.data?._id, data);
+
+    if (updated && !updated.error) {
+      this.group.data.members = this.group.data.members.filter(m => m._id !== data.members[0]);
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', updated.msg || 'Se ha actualizado el listado de miembros exitosamente.');
+    }
+    else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
   setShowView() {
     this.showInfo = !this.showInfo;
   }
 
   async goToEdit() {
     await this.router.navigate(['perfil/editar']);
+  }
+
+  async showCreateFamilyModal() {
+    const content: any = {
+      group: this.group.data
+    };
+    const updateOnDismiss = async (data) => {
+      if (data) {
+        if (!this.group.data) {
+          data.members = [
+            {
+              _id: this.userData._id,
+              names: this.userData.names,
+              lastNames: this.userData.lastNames,
+              document: this.userData.document,
+              gender: this.userData.gender,
+              phone: this.userData.phone,
+              picture: this.userData.picture,
+              position: this.userData.position,
+            }
+          ]
+        }
+        this.group.data = { ...this.group.data, ...data };
+      }
+    };
+    await this.globalSer.loadModal(
+      NucleoFamiliaFormPage,
+      content,
+      false,
+      updateOnDismiss
+    );
+  }
+
+  async openMembersModal() {
+    await this.globalSer.loadModal(
+      MembersGroupsPage,
+      {
+        ignoreIds: this.group?.data?.members?.map(m => m._id) || [],
+        groupId: this.group?.data?._id || null,
+      },
+      false
+    );
+  }
+
+  async openInvitationsModal() {
+    const refreshGroup = async () => {
+      this.totalsInvitations = await this.perfilService.getTotalsInvitations();
+      this.group.data = await this.perfilService.getGroup() || null;
+      this.group.totals = this.group.data?.members?.length || 0;
+    };
+    await this.globalSer.loadModal(
+      InvitationsGroupsPage,
+      {
+        totals: this.totalsInvitations
+      },
+      false,
+      refreshGroup
+    );
   }
 
   async openChangePasswordModal() {
@@ -157,7 +236,20 @@ export class PerfilPage implements OnInit {
     });
   }
 
+  async confirmRemoveMemberGroup(id: string|null = null) {
+    if (id) {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea quitar a este miembro de su núcleo familiar?',
+        confirmAction: () => this.removeMemberFamilyGroup({ members: [id] })
+      });
+    }
+  }
+
   removePhoto = (): void => { this.confirmDeletePicture(); };
   changePhoto = (): void => { this.editPicEnable(); };
+  createFamily = (): void => { this.showCreateFamilyModal(); };
+  addMembersFamily = (): void => { this.openMembersModal(); };
+  removeMembersFamily = (id): void => { this.confirmRemoveMemberGroup(id); };
 
 }

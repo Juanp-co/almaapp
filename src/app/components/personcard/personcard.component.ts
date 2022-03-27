@@ -12,6 +12,8 @@ export class PersoncardComponent implements OnInit {
   @Input() data: any;
   @Input() getGroup: any;
   @Input() disabledClick = false;
+  @Input() removeButton = false;
+  @Input() handleRemoveMembersFamily: (id) => void;
   member: any = null;
   group = false;
   showButton = false;
@@ -33,6 +35,10 @@ export class PersoncardComponent implements OnInit {
   async checkIdMember(id: string) {
     const dataLogin: any = await this.storageService.get('data');
     return dataLogin?._id !== id;
+  }
+
+  handleRemove(id: string|null = null) {
+    if (this.removeButton && id) this.handleRemoveMembersFamily(id);
   }
 
   async goToDetails(id: string|null = null) {

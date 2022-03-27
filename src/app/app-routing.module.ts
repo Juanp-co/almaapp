@@ -77,6 +77,18 @@ const routes: Routes = [
     path: 'organizacion',
     loadChildren: () => import('./views/organizacion/organizacion.module').then( m => m.OrganizacionPageModule)
   },
+  {
+    path: 'nucleo-familia-form',
+    loadChildren: () => import('./views/modals/nucleo-familia-form/nucleo-familia-form.module').then( m => m.NucleoFamiliaFormPageModule)
+  },
+  {
+    path: 'members-groups',
+    loadChildren: () => import('./views/modals/members-groups/members-groups.module').then( m => m.MembersGroupsPageModule)
+  },
+  {
+    path: 'invitations-groups',
+    loadChildren: () => import('./views/modals/invitations-groups/invitations-groups.module').then( m => m.InvitationsGroupsPageModule)
+  },
 ];
 
 @NgModule({
