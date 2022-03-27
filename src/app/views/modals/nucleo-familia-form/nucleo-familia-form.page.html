@@ -1,0 +1,45 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Mi núcleo familiar" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-content class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12" class="ion-padding-top ion-padding-horizontal">
+          <ion-text color="primary">
+            <h2><b>{{ form._id ? 'Editar' : 'Registrar' }} familia</b></h2>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Título del núcleo familiar (*)</ion-label>
+            <ion-input [(ngModel)]="form.name" autocomplete="off" class="ion-text-uppercase"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Código (opcional)</ion-label>
+            <ion-input [(ngModel)]="form.code" autocomplete="off" class="ion-text-uppercase"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" class="ion-margin-top">
+          <ion-text><i>(*) Campos obligatorios.</i></ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-bottom">
+        <ion-col size="12" class="ion-text-center">
+          <ion-button color="light" (click)="closeModal()">
+            <ion-icon name="close" slot="start"></ion-icon>
+            Cancelar
+          </ion-button>
+          <ion-button color="primary" (click)="confirmAction(form._id !== null)">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            Guardar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

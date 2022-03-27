@@ -67,7 +67,10 @@
       <div class="scrolling-wrapper">
         <div class="card3" *ngFor="let item of opciones; let i=index" (click)="irMenu(i)">
           <ion-card>
-            <div [ngStyle]="{'background-image': 'url(assets/icon/' + item.imagen + '.svg)'}" class="img_header3"></div>
+            <div
+              [ngStyle]="{'background-image': 'url(assets/icon/' + item.imagen + ')'}"
+              class="img_header3"
+            ></div>
             <ion-card-content>
               <ion-card-subtitle class="ion-text-center">{{item.titulo}}</ion-card-subtitle>
             </ion-card-content>
@@ -102,10 +105,10 @@
   </ion-row>
 
   <ion-row *ngIf="showButtonSocial || userData">
-    <ion-col><br><br><br></ion-col>
+    <ion-col><br><br><br><br></ion-col>
   </ion-row>
 
-  <ion-fab class="ion-margin-end" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
+  <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
     <ion-fab-button color="primary" (click)="goTo('perfil')">
       <ion-icon name="person-outline"></ion-icon>
     </ion-fab-button>

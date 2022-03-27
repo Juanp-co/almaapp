@@ -28,15 +28,18 @@
       </ion-col>
     </ion-row>
 
-
     <app-resume-hijos-educacion
+      [id]="member._id"
+      [isMember]="true"
+      [showGroup]="true"
       [coursesData]="courses"
       [referralsData]="referrals"
+      [groupData]="group"
     >
     </app-resume-hijos-educacion>
 
     <ion-row>
-      <ion-col><br/></ion-col>
+      <ion-col><br/><br/></ion-col>
     </ion-row>
   </div>
   <ng-template #noData>

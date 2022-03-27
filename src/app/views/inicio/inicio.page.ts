@@ -13,12 +13,12 @@ import {StorageService} from '../../services/storage.service';
 export class InicioPage implements OnInit {
 
   opciones = [
-    { titulo: 'Red de padres', imagen: 'red', url: 'padres' },
-    { titulo: 'Grupos fam.', imagen: 'connection', url: 'grupos-familiares' },
-    { titulo: 'Organización', imagen: 'structure', url: 'organizacion' },
-    { titulo: 'Ofrendas', imagen: 'ofrenda', url: 'ofrenda' },
-    { titulo: 'Escuela', imagen: 'escuela', url: 'escuela' },
-    { titulo: 'Reportes', imagen: 'reportes', url: 'estadistica' }
+    { titulo: 'Red de padres', imagen: 'red.svg', url: 'padres' },
+    { titulo: 'Grupos fam.', imagen: 'connection.svg', url: 'grupos-familiares' },
+    { titulo: 'Organización', imagen: 'structure.svg', url: 'organizacion' },
+    { titulo: 'Ofrendas', imagen: 'ofrenda.svg', url: 'ofrenda' },
+    { titulo: 'Escuela', imagen: 'escuela.svg', url: 'escuela' },
+    { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica' }
   ];
 
   // ===============
@@ -85,7 +85,7 @@ export class InicioPage implements OnInit {
 
     const data: any = await this.inicioService.getParamsApp();
     if (data) {
-      if (paramsData.logo === data.logo || paramsData.banner !== data.banner) this.setDataParams(data);
+      if (paramsData?.logo === data?.logo || paramsData?.banner !== data?.banner) this.setDataParams(data);
     }
   }
 
@@ -94,7 +94,7 @@ export class InicioPage implements OnInit {
     this.params = {...this.params, ...data};
     await this.storageService.set('params-app', this.params);
     this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${this.params.banner || '/assets/cruz.png'}'), url("/assets/cruz.png")`;
-    this.logo = `${this.params.logo || '/assets/logo.png'}`;
+    this.logo = `${this.params?.logo || '/assets/logo.png'}`;
     this.showButtonSocial = (
       this.params.facebook ||
       this.params.instagram ||
@@ -120,7 +120,7 @@ export class InicioPage implements OnInit {
     });
     if (data) {
       data?.forEach((v: any) => {
-        if (!v.viewed) v.viewed = !!list.includes(v._id);
+        if (!v.viewed) v.viewed = !!list?.includes(v._id);
       });
 
       this.devotionals = data.sort((a: any, b: any) => {

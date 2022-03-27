@@ -43,5 +43,19 @@ export class PerfilService {
     return this.globalSer.altResponse(res);
   }
 
+  /* family group remove */
+  async getTotalsInvitations() {
+    const res: any = await this.axios.getData(`/user/group/invitations/totals`);
+    if (res && res.success) return res.data.totals || 0;
+    return this.globalSer.altResponse(res);
+  }
+
+  /* family group remove */
+  async removeMemberFamilyGroup(id: string , data: any = {}) {
+    const res: any = await this.axios.putData(`/user/group/${id}/members/remove`, data);
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
 
 }

@@ -7,10 +7,16 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ResumeHijosEducacionComponent implements OnInit {
 
+  @Input() id: any;
+  @Input() isMember = false;
   @Input() coursesData: any = null;
   @Input() groupData: any = null;
   @Input() referralsData: any = null;
   @Input() showGroup = false;
+  @Input() showRemoveButton = false;
+  @Input() handleClickFamily: () => void;
+  @Input() handleClickAddMembersFamily: () => void;
+  @Input() handleClickRemoveMembersFamily: (id) => void;
   showCourses = false;
 
   courses: any = {
@@ -25,15 +31,17 @@ export class ResumeHijosEducacionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.showGroup) {
-      if (this.groupData) this.group = this.groupData;
-    }
-    else if (this.referralsData) this.referrals = this.referralsData;
+    if (this.showGroup && this.groupData) this.group = this.groupData;
+    if (this.referralsData) this.referrals = this.referralsData;
     if (this.coursesData) this.courses = this.coursesData;
   }
 
-  setShowGroup() {
-    this.showCourses = !this.showCourses;
+  setShowGroup(v: any) {
+    this.showCourses = v;
+  }
+
+  openModalFamily() {
+    if (!!this.handleClickFamily) this.handleClickFamily();
   }
 
 }

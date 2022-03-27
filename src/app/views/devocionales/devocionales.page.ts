@@ -59,11 +59,18 @@ export class DevocionalesPage implements OnInit {
   }
 
   async loadData(event: any = null) {
-    const newPage = this.queryParams.page + 1;
-    if (newPage <= this.pages) {
-      this.queryParams.page = newPage;
-      await this.getDevotionals();
-      event.target.disabled = newPage === this.pages;
+
+    if (this.devotionals?.length !== this.totals && this.queryParams.page < this.pages) {
+      const newPage = this.queryParams.page + 1;
+      if (newPage <= this.pages) {
+        this.queryParams.page = newPage;
+        await this.getDevotionals();
+        event.target.disabled = newPage === this.pages;
+        event.target.complete();
+      }
+    }
+    else {
+      event.target.disabled = true;
       event.target.complete();
     }
   }

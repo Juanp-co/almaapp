@@ -22,4 +22,40 @@ export class ModalService {
     if (res && res.success) return res.data?.members || [];
     return this.globalSer.altResponse(res);
   }
+
+  /* NUCLEO FAMILIAR - GRUPOS */
+  async saveGroup(data: any = {}) {
+    const res: any = await this.axios.postData('/user/group', data);
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
+  async updateGroup(id: string , data: any = {}) {
+    const res: any = await this.axios.putData(`/user/group/${id}`, data);
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
+  async addMemberFamilyGroup(id: string , data: any = {}) {
+    const res: any = await this.axios.putData(`/user/group/${id}/members/add`, data);
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
+  /* invitations */
+  async getInvitations() {
+    const res: any = await this.axios.getData(`/user/group/invitations`);
+    if (res && res.success) return res.data?.invitations || [];
+    return this.globalSer.altResponse(res);
+  }
+  async approveInvitations(id) {
+    const res: any = await this.axios.putData(`/user/group/invitations/${id}`);
+    if (res && res.success) return res.data;
+    return this.globalSer.altResponse(res);
+  }
+  async rejectInvitations(id) {
+    const res: any = await this.axios.deleteData(`/user/group/invitations/${id}`);
+    if (res && res.success) return res.data;
+    return this.globalSer.altResponse(res);
+  }
 }

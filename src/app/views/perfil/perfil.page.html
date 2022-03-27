@@ -90,9 +90,14 @@
 
     <div class="{{showEditPic ? 'ion-hide' : '' }}">
       <app-resume-hijos-educacion
+        [id]="userData._id"
         [coursesData]="courses"
         [groupData]="group"
         [showGroup]="true"
+        [showRemoveButton]="group.data?.userid === userData._id"
+        [handleClickFamily]="createFamily"
+        [handleClickAddMembersFamily]="addMembersFamily"
+        [handleClickRemoveMembersFamily]="removeMembersFamily"
       >
       </app-resume-hijos-educacion>
     </div>
@@ -106,7 +111,14 @@
     </ion-card>
   </ng-template>
 
-  <div class="ion-margin-top ion-margin-bottom"><br></div>
+  <div class="ion-margin-top ion-margin-bottom"><br><br></div>
+
+  <ion-fab class="ion-margin-start ion-margin-bottom" vertical="bottom" horizontal="start" slot="fixed" *ngIf="totalsInvitations > 0">
+    <ion-fab-button color="light" (click)="openInvitationsModal()">
+      <ion-icon name="people-outline"></ion-icon>
+      <ion-label>{{totalsInvitations > 9 ? '9+' : totalsInvitations}}</ion-label>
+    </ion-fab-button>
+  </ion-fab>
 
   <ion-fab class="ion-margin-end ion-margin-bottom" vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData">
     <ion-fab-button color="primary">

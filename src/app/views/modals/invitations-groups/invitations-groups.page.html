@@ -1,0 +1,87 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Invitaciones" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-row *ngIf="totals > 0; else noInvitations">
+    <ion-col size="12" *ngFor="let invitation of invitations">
+      <ion-card>
+        <ion-card-content class="ion-no-padding">
+          <ion-row>
+            <ion-col size="12">
+              <ion-row class="ion-no-margin">
+                <ion-col size="4" class="ion-text-center">
+                  <img
+                    [src]="invitation.member.picture"
+                    height="65"
+                    width="65"
+                    class="img-rounded"
+                    *ngIf="invitation.member.picture"
+                  >
+                  <img
+                    src="/assets/icon/{{invitation.member.gender === 1 ? 'mujer' : 'hombre'}}_lista.svg"
+                    height="65"
+                    class="img-rounded"
+                    *ngIf="!invitation.member.picture"
+                  >
+                </ion-col>
+                <ion-col size="8">
+                  <b>{{ invitation.member.names || '' }} {{ invitation.member.lastNames || '' }}</b>
+                  <br/>
+                  <ion-text>
+                    <ion-icon name="call-outline"></ion-icon>
+                    {{ invitation.member.phone || 'No indicado.' }}<br>
+                  </ion-text>
+                  <ion-text>
+                    Núcleo familiar<br/>
+                  </ion-text>
+                  <ion-text color="primary">
+                    <b>{{ invitation.group.name || '???' }} - {{ invitation.group.code || '?' }}</b><br/>
+                  </ion-text>
+                  <ion-text>
+                    <ion-icon name="people-outline"></ion-icon>
+                    Total de miembros: {{ invitation.group.totalMembers || 0 }}<br>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" class="ion-text-center">
+              <ion-button size="small" (click)="confirmAction(invitation._id, true)">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Aceptar</ion-text>
+              </ion-button>
+              <ion-button color="danger" size="small" (click)="confirmAction(invitation._id)">
+                <ion-icon name="close-outline" slot="start"></ion-icon>
+                <ion-text>Rechazar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ng-template #noInvitations>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-no-padding ion-margin-top ion-margin-bottom">
+          <ion-text color="medium">
+            <p class="ion-text-center">
+              <ion-icon name="alert-circle-outline"></ion-icon> No tiene invitaciones pendientes.
+            </p>
+          </ion-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="totals > 0">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando ..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
