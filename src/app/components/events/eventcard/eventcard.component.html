@@ -1,23 +1,19 @@
 <ion-card
-  class="ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom"
+  class="ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom height-100"
   *ngIf="eventData._id"
   (click)="goToDetails(eventData._id)"
 >
   <ion-card-content class="ion-no-margin ion-no-padding">
-    <ion-row>
+    <ion-row class="">
       <ion-col
         size="12"
-        class="banner-event"
-        [ngStyle]="{backgroundImage: 'url('+eventData.picture+'), url(/assets/icon/evento_lista.svg)', height: '150px'}"
-        *ngIf="eventData.picture"
+        class="{{eventData.picture ? 'banner-event' : 'banner-event-no-picture'}}"
+        [ngStyle]="{backgroundImage: 'url('+(eventData.picture || '/assets/icon/evento_lista.svg')+'), url(/assets/icon/evento_lista.svg)', height: '150px'}"
       >
-      </ion-col>
-      <ion-col size="12" class="ion-text-center" *ngIf="!eventData.picture">
-        <img [src]="'/assets/icon/evento_lista.svg'" height="100" />
       </ion-col>
       <ion-col size="12">
         <ion-text color="primary" class="ion-margin-top ion-margin-bottom">
-          <h3>{{ eventData.title ? eventData.title : '' }}</h3>
+          <h1>{{ eventData.title || '' }}</h1><br>
         </ion-text>
         <ion-text>
           <b>Fecha:</b> {{ eventData.date ? eventData.date : '' }}

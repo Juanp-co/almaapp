@@ -17,7 +17,18 @@ import {StorageService} from '../../../services/storage.service';
 export class DetallesEventoPage implements OnInit {
 
   eventData: any = {};
-  eventDataForm: any = {};
+  eventDataForm: any = {
+    _id: null,
+    title: null,
+    description: null,
+    date: null,
+    dateEnd: null,
+    initHour: null,
+    endHour: null,
+    picture: null,
+    toRoles: [],
+    rolesSelected: '',
+  };
   id: any = null;
   showButtonEdit = false;
   showEditForm = false;
@@ -41,7 +52,9 @@ export class DetallesEventoPage implements OnInit {
     dayjs.extend(relativeTime);
   }
 
-  async ngOnInit() {
+  ngOnInit() {}
+
+  async ionViewWillEnter() {
     this.id = this.activateRoute.snapshot.paramMap.get('_id');
     const userData: any = await this.storageService.get('data');
 
@@ -63,6 +76,7 @@ export class DetallesEventoPage implements OnInit {
 
     if (data && !data.error) {
       await this.setDataToParams(data);
+      this.showButtonEdit = this.userid === data.user?._id;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
@@ -99,13 +113,20 @@ export class DetallesEventoPage implements OnInit {
   setDataToParams(data: any) {
     this.eventDataForm = {...this.eventDataForm, ...data};
     this.eventData = {...this.eventData, ...data};
-    this.eventData.date = dayjs(data.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY');
-    this.eventData.initHour = dayjs(`${data.date} ${data.initHour}`, 'YYYY-MM-DD HH:mm', true).format('hh:mm a');
+    const initFormat = `${data.date} ${data.initHour}`;
+    const endFormat = `${data.dateEnd || data.date} ${data.endHour}`;
+    const formatDateRet = 'dddd, DD [de] MMMM [de] YYYY, hh:mm a';
+    const formatDateWithOutHoursRet = 'dddd, DD [de] MMMM [de] YYYY';
+    this.eventData.date = dayjs(initFormat, 'YYYY-MM-DD HH:mm', true)
+      .locale('es')
+      .format(data.dateEnd ? formatDateRet : formatDateWithOutHoursRet);
+    this.eventData.dateEnd = dayjs(endFormat, 'YYYY-MM-DD HH:mm', true)
+      .locale('es')
+      .format(formatDateRet);
+    this.eventData.initHour = dayjs(initFormat, 'YYYY-MM-DD HH:mm', true).format('hh:mm a');
     this.eventData.endHour = data.endHour ?
-      dayjs(`${data.date} ${data.endHour}`, 'YYYY-MM-DD HH:mm', true).format('hh:mm a')
+      dayjs(`${data.dateEnd || data.date} ${data.endHour}`, 'YYYY-MM-DD HH:mm', true).format('hh:mm a')
       : null;
-    this.showButtonEdit = true;
-    if (data.user) this.showButtonEdit = this.userid === data.user._id;
 
     if (this.showEditForm) this.showEditForm = false;
   }

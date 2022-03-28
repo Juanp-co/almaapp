@@ -138,6 +138,13 @@ To static top bar
   background-position: center !important;
 }
 
+.banner-event-no-picture {
+  border-radius: 5px 5px 0 0;
+  background-size: contain !important;
+  background-repeat: no-repeat;
+  background-position: center !important;
+}
+
 .img-rounded {
   border-radius: 50%;
 }
