@@ -67,8 +67,7 @@ export class InicioPage implements OnInit {
 
     if (!data) {
       const res: any = await this.inicioService.getSessionData();
-
-      if (res && res.success) {
+      if (res) {
         await this.storageService.set('data', res);
         this.userData = res;
       }
@@ -90,7 +89,6 @@ export class InicioPage implements OnInit {
   }
 
   async setDataParams(data: any = {}) {
-
     this.params = {...this.params, ...data};
     await this.storageService.set('params-app', this.params);
     this.styleBg = `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${this.params.banner || '/assets/cruz.png'}'), url("/assets/cruz.png")`;

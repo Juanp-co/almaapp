@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./reportar/reportar.module').then( m => m.ReportarPageModule)
   },
   {
+    path: 'unirse',
+    loadChildren: () => import('./unirse/unirse.module').then( m => m.UnirsePageModule)
+  },
+  {
     path: ':id',
     loadChildren: () => import('./detalles/detalles.module').then( m => m.DetallesPageModule)
   }

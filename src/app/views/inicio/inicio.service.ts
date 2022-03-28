@@ -24,7 +24,7 @@ export class InicioService {
 
   async getSessionData() {
     const res: any = await this.axios.getData(`/user`);
-    if (res && res.success) return res.data || {};
+    if (res && res.success) return res.data?.data || {};
     return this.globalSer.altResponse(res);
   }
 

@@ -20,7 +20,10 @@ export class GruposFamiliaresPage implements OnInit {
     private router: Router,
   ) { }
 
-  async ngOnInit() {
+
+  ngOnInit() {}
+
+  async ionViewDidEnter() {
     await this.getData();
   }
 
@@ -52,6 +55,10 @@ export class GruposFamiliaresPage implements OnInit {
       content,
       false
     );
+  }
+
+  async goToJoin() {
+    await this.router.navigate([`grupos-familiares/unirse`]);
   }
 
   async goToDetails(id) {
