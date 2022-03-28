@@ -104,12 +104,6 @@ export class ModalGruposFamiliaresPage implements OnInit {
       await this.globalSer.presentAlert('Alerta', 'Disculpe, pero ha ocurrido un error al momento de seleccionar al grupo.');
   }
 
-  resetQueryParams() {
-    this.queryParams.sector = null;
-    this.queryParams.subSector = null;
-    this.queryParams.number = null;
-  }
-
   validateOnlyNumber2(event: any) {
     onlyNumbersInputValidation2(event);
   }

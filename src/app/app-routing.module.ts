@@ -89,6 +89,7 @@ const routes: Routes = [
     path: 'invitations-groups',
     loadChildren: () => import('./views/modals/invitations-groups/invitations-groups.module').then( m => m.InvitationsGroupsPageModule)
   },
+
 ];
 
 @NgModule({
