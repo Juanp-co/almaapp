@@ -1,22 +1,31 @@
-<ion-row class="ion-justify-content-center ion-margin-bottom ion-padding-bottom" *ngIf="data">
-  <ion-col size="12" *ngIf="data.courses">
-    <app-chart [data]="data.courses" title="Mis cursos" typeChart="bar"></app-chart>
-  </ion-col>
-  <ion-col size="12" *ngIf="data.referrals">
-    <app-chart [data]="data.referrals" title="Mis hijos espirituales" typeChart="pie"></app-chart>
-  </ion-col>
-  <ion-col size="12" *ngIf="data.visits">
-    <app-chart
-      [data]="data.visits"
-      title="Visitas"
-      typeChart="pie"
-      [handleShow]="data?.visits?.membersPendingVisits?.length > 0 ? showListMembers : null"
-    ></app-chart>
-  </ion-col>
-  <ion-col size="12" *ngIf="data.typeVisits">
-    <app-chart [data]="data.typeVisits" title="Tipos de visitas" typeChart="bar"></app-chart>
-  </ion-col>
+<ion-row *ngIf="data">
   <ion-col size="12">
-    <br>
+    <ion-row class="ion-justify-content-center ion-margin-bottom ion-padding-bottom">
+      <ion-col size="12" *ngFor="let k of dataKeys">
+        <ion-card class="ion-no-margin" *ngIf="data[k]">
+          <ion-card-header>
+            <ion-row class="ion-justify-content-between ion-align-items-center">
+              <ion-col size="7">
+                <ion-text color="primary"><h3>{{data[k].title || '????'}}</h3></ion-text>
+              </ion-col>
+              <ion-col size="5" *ngIf="k === 'visits' && data?.visits?.membersPendingVisits?.length > 0">
+                <ion-button color="light" (click)="showListMembers()">
+                  <ion-icon name="list-outline" slot="start"></ion-icon>
+                  <ion-text>Pendientes</ion-text>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list class="h-250">
+              <ion-item *ngFor="let elem of data[k].data">
+                <ion-label>{{ elem.label }}</ion-label>
+                <ion-text>{{ elem.qty }}</ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-col>
 </ion-row>

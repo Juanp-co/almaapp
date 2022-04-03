@@ -8,13 +8,23 @@
       <ion-card>
         <div
           class="banner-devotional"
-          [ngStyle]="{backgroundImage: 'url(' + (devotional.picture || 'assets/cruz.png') + '), url(assets/cruz.png)', height: '260px'}"
+          [ngStyle]="{backgroundImage: 'url(' + devotional.picture + ')', height: '250px'}"
+          *ngIf="devotional.picture"
+        >
+        </div>
+        <div
+          class="banner-devotional"
+          [ngStyle]="{backgroundImage: 'url(assets/cruz.png)', height: '250px'}"
+          *ngIf="!devotional.picture"
         >
         </div>
         <ion-card-content>
           <ion-row class="ion-no-margin ion-no-padding">
             <ion-col size="12">
-              <ion-card-title>{{devotional.title}}</ion-card-title>
+              <ion-text color="primary">
+                <h1>{{devotional.title}}</h1>
+              </ion-text>
+              <br>
               <ion-card-subtitle>
                 <span *ngIf="devotional.user">Por: {{devotional.user?.names}} {{devotional.user?.lastNames}}</span>
                 <span><br>Fecha: {{devotional.created_at}}</span>
