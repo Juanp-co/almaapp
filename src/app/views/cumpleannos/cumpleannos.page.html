@@ -1,0 +1,43 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Cumpleaños"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col [size]="12" class="ion-text-end ion-padding-end ion-padding-top">
+      <ion-button (click)="filterForRange()">
+        <ion-icon name="filter-outline" slot="start"></ion-icon>
+        <ion-text>{{ options[selected].label }}</ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="birthdays && birthdays[options[selected].value].length > 0; else noBirthdays">
+    <ion-col
+      size="12"
+      sizeSm="6"
+      *ngFor="let m of birthdays[options[selected].value]"
+    >
+      <app-personcard [data]="m"></app-personcard>
+    </ion-col>
+  </ion-row>
+
+  <ng-template #noBirthdays>
+    <ion-row>
+      <ion-col [size]="12">
+        <ion-card>
+          <ion-card-content>
+            <ion-text class="ion-text-center" color="medium">
+              <p>
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                No se encontraron resultados.
+              </p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+
+</ion-content>

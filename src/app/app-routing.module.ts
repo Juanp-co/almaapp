@@ -88,7 +88,11 @@ const routes: Routes = [
   {
     path: 'invitations-groups',
     loadChildren: () => import('./views/modals/invitations-groups/invitations-groups.module').then( m => m.InvitationsGroupsPageModule)
+  },  {
+    path: 'cumpleannos',
+    loadChildren: () => import('./views/cumpleannos/cumpleannos.module').then( m => m.CumpleannosPageModule)
   },
+
 
 ];
 

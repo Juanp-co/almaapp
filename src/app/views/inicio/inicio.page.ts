@@ -11,13 +11,13 @@ import {StorageService} from '../../services/storage.service';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-
   opciones = [
     { titulo: 'Red de padres', imagen: 'red.svg', url: 'padres' },
     { titulo: 'Grupos fam.', imagen: 'connection.svg', url: 'grupos-familiares' },
     { titulo: 'Organización', imagen: 'structure.svg', url: 'organizacion' },
     { titulo: 'Ofrendas', imagen: 'ofrenda.svg', url: 'ofrenda' },
     { titulo: 'Escuela', imagen: 'escuela.svg', url: 'escuela' },
+    { titulo: 'Cumpleaños', imagen: 'birthday.svg', url: 'cumpleannos' },
     { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica' }
   ];
 
