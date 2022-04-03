@@ -34,7 +34,7 @@ export class Eventcard2Component implements OnInit {
   ngOnInit() {
     if (this.data) {
       this.eventData._id = this.data._id;
-      this.eventData.title = this.data.title.length > 25 ? `${this.data.title.substr(0, 25)}...` : this.data.title;
+      this.eventData.title = this.data.title.length > 20 ? `${this.data.title.substr(0, 20)}...` : this.data.title;
       this.eventData.user = this.data.user;
       this.eventData.picture = this.data.picture;
       this.eventData.description = this.data.description;

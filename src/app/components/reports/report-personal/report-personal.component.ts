@@ -11,6 +11,7 @@ import {VisitasPendientesPage} from '../../../views/estadistica/visitas-pendient
 export class ReportPersonalComponent implements OnInit {
 
   @Input() data: any = null;
+  dataKeys = ['courses', 'visits', 'typeVisits', 'referrals'];
 
   constructor(
     private globalSer: GlobalService,

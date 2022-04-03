@@ -17,8 +17,10 @@ export class ReportGeneralComponent implements OnInit {
   observations: any[]|null = null;
   observationsPreview: any[]|null = null;
   dataToReport: any|null = null;
+  dataToReportText: any|null = null;
   showTotals = true;
   showObservations = true;
+  onlyText = true;
 
   constructor(
     private globalSer: GlobalService
@@ -155,6 +157,26 @@ export class ReportGeneralComponent implements OnInit {
         qty: this.globalSer.getCurrency(data.offering || 0)
       },
     };
+    this.dataToReportText = !data ? null : [
+      { label: 'Hermanos', value: data.brethren },
+      { label: 'Amigos', value: data.friends },
+      { label: 'Niños', value: data.christianChildren },
+      { label: 'Niños (amigos)', value: data.christianChildrenFriends },
+      { label: 'Visitas programadas', value: data.scheduledVisits },
+      { label: 'Visitas disipulado', value: data.discipleshipVisits },
+      { label: 'Visitas', value: data.discipleshipVisits },
+      { label: 'Asistencia de hnos.', value: data.churchAttendance },
+      { label: 'Asistencia de niños', value: data.churchAttendanceChildren },
+      { label: 'Reconciliaciones', value: data.reconciliations },
+      { label: 'Conversiones', value: data.conversions },
+      { label: 'Conversiones de niños', value: data.conversionsChildren },
+      { label: 'Visitas', value: data.discipleshipVisits },
+      { label: 'Planif. de hermanos', value: data.discipleshipVisits },
+      { label: 'Lectura bíblica', value: data.brethrenPlanning },
+      { label: 'Consolidaciones', value: data.bibleReading },
+      { label: 'Total de hnos. y niños', value: data.total },
+      { label: 'Total de ofrendas', value: this.globalSer.getCurrency(data.offering || 0) },
+    ];
     await this.globalSer.dismissLoading();
   }
 
@@ -186,6 +208,25 @@ export class ReportGeneralComponent implements OnInit {
           await this.setObservationsValues(data?.observations || null);
         }
       }
+    });
+  }
+
+  async showListModelDataOpt() {
+    const inputs: any[] = [];
+    for (const lg of [{ label: 'Texto', value: true }, { label: 'Gráfico', value: false }]) {
+      inputs.push( {
+        name: `show-mode-data`,
+        type: 'radio',
+        label: lg.label,
+        value: lg.value,
+        checked: lg.value === this.onlyText,
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione',
+      inputs,
+      confirmAction: async (value) => { this.onlyText = value || false; }
     });
   }
 

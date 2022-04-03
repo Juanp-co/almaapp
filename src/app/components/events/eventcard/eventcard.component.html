@@ -12,9 +12,11 @@
       >
       </ion-col>
       <ion-col size="12">
-        <ion-text color="primary" class="ion-margin-top ion-margin-bottom">
-          <h1>{{ eventData.title || '' }}</h1><br>
+        <ion-text color="primary" class="title-card">
+          <h4>{{ eventData.title || '' }} sss</h4>
         </ion-text>
+      </ion-col>
+      <ion-col [size]="12">
         <ion-text>
           <b>Fecha:</b> {{ eventData.date ? eventData.date : '' }}
         </ion-text>

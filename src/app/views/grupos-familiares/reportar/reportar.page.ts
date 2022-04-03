@@ -42,7 +42,7 @@ export class ReportarPage implements OnInit {
     observations: null,
     date: null
   };
-  minInitDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
+  minInitDate = '2020-01-01';
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
   logo = '/assets/logo.png';
 

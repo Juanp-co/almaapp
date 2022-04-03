@@ -44,16 +44,15 @@ export class EstadisticaPage implements OnInit {
   ) {
   }
 
-  async ngOnInit() {
-    // check if exist session
-    if (!(await this.globalSer.checkSession())) this.router.navigate(['/']);
-    this.adminRequest = await this.globalSer.checkRoleToActions([0, 1, 2]);
+  ngOnInit() {
+    this.getData();
+    if (this.adminRequest) this.getDataFamiliesGroups();
   }
 
   async ionViewDidEnter() {
-    this.getData();
-    if (this.adminRequest)
-      this.getDataFamiliesGroups();
+    // check if exist session
+    if (!(await this.globalSer.checkSession())) this.router.navigate(['/']);
+    this.adminRequest = await this.globalSer.checkRoleToActions([0, 1, 2]);
   }
 
   validateOnlyNumber(event: any) {
