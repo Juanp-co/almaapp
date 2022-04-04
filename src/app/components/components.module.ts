@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import {IonicModule} from '@ionic/angular';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+import {BarraSeccionComponent} from './organizacion/barra-seccion/barra-seccion.component';
 import {ChartComponent} from './chart/chart.component';
 import {CoursecardComponent} from './coursecard/coursecard.component';
 import {DevocionalesCardComponent} from './devocionales/devocionales-card/devocionales-card.component';
 import {DevocionalesCard2Component} from './devocionales/devocionales-card2/devocionales-card2.component';
+import {ElemItemComponent} from './users/elem-item/elem-item.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {Eventcard2Component} from './events/eventcard2/eventcard2.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
 import {GrupoFamiliarCardComponent} from './grupos-familiares/grupo-familiar-card/grupo-familiar-card.component';
 import {GroupItemListComponent} from './grupos-familiares/group-item-list/group-item-list.component';
 import {GroupItemLocationComponent} from './grupos-familiares/group-item-location/group-item-location.component';
+import {IglesiaCardComponent} from './organizacion/iglesia-card/iglesia-card.component';
 import {MapComponent} from './map/map.component';
 import {MinheaderComponent} from './minheader/minheader.component';
 import {PaginatorComponent} from './paginator/paginator.component';
@@ -28,16 +31,19 @@ import {ReportPersonalComponent} from './reports/report-personal/report-personal
 
 @NgModule({
   declarations: [
+    BarraSeccionComponent,
     ChartComponent,
     CoursecardComponent,
     DevocionalesCardComponent,
     DevocionalesCard2Component,
+    ElemItemComponent,
     EventcardComponent,
     Eventcard2Component,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
     GroupItemListComponent,
     GroupItemLocationComponent,
+    IglesiaCardComponent,
     MapComponent,
     MinheaderComponent,
     PaginatorComponent,
@@ -55,16 +61,19 @@ import {ReportPersonalComponent} from './reports/report-personal/report-personal
     CommonModule, IonicModule, CKEditorModule
   ],
   exports: [
+    BarraSeccionComponent,
     ChartComponent,
     CoursecardComponent,
     DevocionalesCardComponent,
     DevocionalesCard2Component,
+    ElemItemComponent,
     EventcardComponent,
     Eventcard2Component,
     EventsFormComponent,
     GrupoFamiliarCardComponent,
     GroupItemListComponent,
     GroupItemLocationComponent,
+    IglesiaCardComponent,
     MapComponent,
     MinheaderComponent,
     PaginatorComponent,

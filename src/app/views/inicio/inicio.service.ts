@@ -12,6 +12,11 @@ export class InicioService {
     private globalSer: GlobalService,
   ) { }
 
+  async getChurches(): Promise<any | null> {
+    const res: any = await this.axios.getData('/churches');
+    return res && res.success ? (res.data.churches || []) : [];
+  }
+
   async getEvents(queryParam: any) {
     const res: any = await this.axios.getData(`/events`, queryParam);
     if (res && res.success) return res.data.events || [];

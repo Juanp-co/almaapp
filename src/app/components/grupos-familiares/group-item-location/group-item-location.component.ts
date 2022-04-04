@@ -8,7 +8,6 @@ import {Component, Input, OnInit} from '@angular/core';
 export class GroupItemLocationComponent implements OnInit {
 
   @Input() data: any = null;
-  @Input() handleBack: (item: any) => void;
 
   constructor() { }
 

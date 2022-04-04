@@ -156,6 +156,18 @@
             </ion-item>
           </ion-col>
           <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Iglesia a la que asiste</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="churchesSelected !== null ? churches[churchesSelected].name : ''"
+                autocomplete="off"
+                class="ion-text-uppercase"
+                (click)="showAlertChurchesList()"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
             <ion-item *ngIf="formData.company === 'Si';">
               <ion-label position="floating" color="medium">Tipo de empresa</ion-label>
               <ion-input

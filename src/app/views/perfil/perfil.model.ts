@@ -21,5 +21,6 @@ export interface IPerfl {
   picture: string | null;
   locality: string | null;
   direction: string | null;
+  church: string | null;
   roles: number[] | null;
 }

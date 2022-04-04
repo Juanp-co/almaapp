@@ -29,6 +29,8 @@ export class EditarPage implements OnInit {
   cities = [];
   civilStatus = [];
   gender = [];
+  churches = [];
+  churchesSelected: any = null;
   yesOrNotValues = ['No', 'Si'];
   maxDate: any = null;
   formData: IEditar | null = null;
@@ -55,6 +57,7 @@ export class EditarPage implements OnInit {
     const token = await this.storageService.get('token');
     if (token) {
       const userData: IEditar | any = await this.storageService.get('data');
+      this.churches = await this.storageService.get('churches');
       if (userData) {
         this.formData = {...userData} as IEditar;
         this.formData.documentType = this.formData.document?.replace(/[0-9]{5,12}/, '') || null;
@@ -62,12 +65,16 @@ export class EditarPage implements OnInit {
         this.formData.company = this.formData.company ? 'Si' : 'No';
         this.formData.baptized = this.formData.baptized ? 'Si' : 'No';
         this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
+        const index = this.churches.findIndex(c => c._id === this.formData.church);
+        this.churchesSelected = index === -1 ? null : index;
+        console.log('this.churches', this.churches);
         if (this.formData.department !== null) this.getCity();
-        await this.globalSer.dismissLoading();
       }
       else await this.errorSession();
     }
     else await this.errorSession();
+
+    await this.globalSer.dismissLoading();
   }
 
   async back() {
@@ -112,6 +119,29 @@ export class EditarPage implements OnInit {
     const updateData = (selectedValue: any) => {
       this.formData[input] = selectedValue;
       if (input === 'department') this.getCity(true);
+    };
+
+    await this.globalSer.alertWithList({
+      inputs,
+      confirmAction: updateData
+    });
+  }
+
+  async showAlertChurchesList() {
+    const inputs: any = [];
+    for (const [index, value] of this.churches.entries()) {
+      inputs.push({
+        name: `value-${value._id}`,
+        type: 'radio',
+        label: value.name,
+        value: index,
+        checked: this.formData.church === value._id,
+      });
+    }
+
+    const updateData = (selectedValue: any) => {
+      this.churchesSelected = selectedValue;
+      this.formData.church = this.churches[selectedValue]._id;
     };
 
     await this.globalSer.alertWithList({

@@ -23,6 +23,11 @@ export class EditarService {
     private globalSer: GlobalService,
   ) { }
 
+  async getChurches(): Promise<any | null> {
+    const res: any = await this.axios.getData('/churches');
+    return res && res.success ? (res.data.churches || []) : [];
+  }
+
   async updateProfile(data: any): Promise<any | null> {
     const res: any = await this.axios.putData('/user', data);
 

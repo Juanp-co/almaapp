@@ -1,4 +1,3 @@
-
 <ion-row *ngIf="member">
   <ion-col size="12" size-sm="6" class="ion-no-margin ion-no-padding">
     <ion-row class="ion-no-margin ion-no-padding">
@@ -35,143 +34,40 @@
       </ion-col>
       <ion-col size="12">
         <ion-row class="ion-no-margin ion-no-padding">
-          <ion-col size="5">
-            <ion-text><b>Nombre(s):</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.names || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Apellido(s):</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.lastNames || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5" *ngIf="showDocument">
-            <ion-text><b>Documento:</b></ion-text>
-          </ion-col>
-          <ion-col size="7" *ngIf="showDocument">
-            <ion-text>{{member.document || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Teléfono:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.phone || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5" *ngIf="!!member.roles">
-            <ion-text><b>Roles:</b></ion-text>
-          </ion-col>
-          <ion-col size="7" *ngIf="!!member.roles">
-            <ion-text>{{getRoleValue()}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Cargo(s) o posición:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.position || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Correo electrónico:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.email || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Fecha de nac.:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.birthday || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Sexo:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.gender || 'No indicado'}}</ion-text>
-          </ion-col>
-          <ion-col size="5">
-            <ion-text><b>Estado civil:</b></ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>{{member.civilStatus || 'No indicado'}}</ion-text>
+          <ion-col size="12" class="ion-no-margin ion-no-padding">
+            <app-elem-item label="Nombre(s)" value="{{member.names || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Apellido(s)" value="{{member.lastNames || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Documento" value="{{member.document || 'No indicado'}}" [show]="showDocument"></app-elem-item>
+            <app-elem-item label="Teléfono" value="{{member.phone || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Roles" value="{{getRoleValue()}}" [show]="!!member.roles"></app-elem-item>
+            <app-elem-item label="Cargo(s) o posición" value="{{member.position || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Correo elect." value="{{member.email || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Fecha de nac." value="{{member.birthday || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Sexo" value="{{member.gender || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Estado civil" value="{{member.civilStatus || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Sexo" value="{{member.names || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Iglesia" value="{{member.church || 'No indicado'}}"></app-elem-item>
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
   </ion-col>
   <ion-col size="12" size-sm="6" class="ion-no-margin">
-    <ion-row>
-      <ion-col size="5">
-        <ion-text><b>Nivel educativo:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.educationLevel || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Profesión:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.profession || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Tipo de sangre:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.bloodType || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Empresa:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.company ? 'Si' : 'No'}}</ion-text>
-      </ion-col>
-      <ion-col size="5" *ngIf="member.company">
-        <ion-text><b>Tipo de empresa:</b></ion-text>
-      </ion-col>
-      <ion-col size="7" *ngIf="member.company">
-        <ion-text>{{member.companyType}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Bautizado:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.baptized ? 'Si' : 'No'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Asistí al curso de nuevos:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.meetingNew ? 'Si' : 'No'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Departamento:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{ member.department || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Cuidad:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{ member.city || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Barrio:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.locality || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5">
-        <ion-text><b>Dirección:</b></ion-text>
-      </ion-col>
-      <ion-col size="7">
-        <ion-text>{{member.direction || 'No indicado'}}</ion-text>
-      </ion-col>
-      <ion-col size="5" *ngIf="member.petition">
-        <ion-text><b>Mi petición:</b></ion-text>
-      </ion-col>
-      <ion-col size="7" *ngIf="member.petition">
-        <ion-text>{{member.petition || 'No indicado'}}</ion-text>
+    <ion-row class="ion-no-margin ion-no-padding">
+      <ion-col size="12" class="ion-no-margin ion-no-padding">
+        <app-elem-item label="Nivel educativo" value="{{member.educationLevel || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Profesión" value="{{member.profession || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Tipo de sangre" value="{{member.bloodType || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Empresa" value="{{member.company ? 'Si' : 'No'}}"></app-elem-item>
+        <app-elem-item label="Tipo de empresa" value="{{member.educationLevel || 'No indicado'}}" [show]="member.company">
+        </app-elem-item>
+        <app-elem-item label="Bautizado" value="{{member.baptized ? 'Si' : 'No'}}"></app-elem-item>
+        <app-elem-item label="Asistí al curso de nuevos" value="{{member.meetingNew ? 'Si' : 'No'}}"></app-elem-item>
+        <app-elem-item label="Departamento" value="{{ member.department || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Cuidad" value="{{ member.city || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Barrio" value="{{member.locality || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Dirección" value="{{member.direction || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Mi petición" value="{{member.petition || 'No indicado'}}" [show]="member.petition"></app-elem-item>
       </ion-col>
     </ion-row>
   </ion-col>

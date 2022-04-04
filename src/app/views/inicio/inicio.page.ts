@@ -53,6 +53,7 @@ export class InicioPage implements OnInit {
 
   async ionViewWillEnter() {
     this.getParams();
+    this.getChurches();
     this.getEvents();
     this.getDevotionals();
     const token = await this.storageService.get('token');
@@ -86,6 +87,11 @@ export class InicioPage implements OnInit {
     if (data) {
       if (paramsData?.logo === data?.logo || paramsData?.banner !== data?.banner) this.setDataParams(data);
     }
+  }
+
+  async getChurches() {
+    const churches: any = await this.inicioService.getChurches();
+    await this.storageService.set('churches', churches);
   }
 
   async setDataParams(data: any = {}) {
