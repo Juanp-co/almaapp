@@ -4,6 +4,7 @@ import {NavController} from '@ionic/angular';
 import {PersonaService} from './persona.service';
 import {ModalVisitasPage} from './modal-visitas/modal-visitas.page';
 import { GlobalService } from '../../services/global.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-persona',
@@ -23,6 +24,7 @@ export class PersonaPage implements OnInit {
     data: null
   };
   visits: any[] = [];
+  churches: any[] = [];
   group: any = null;
   id: any = null;
   path = '/user/referrals';
@@ -31,7 +33,8 @@ export class PersonaPage implements OnInit {
     private activateRoute: ActivatedRoute,
     private globalSer: GlobalService,
     private personaService: PersonaService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private storageService: StorageService,
   ) {}
 
   async ngOnInit() {
@@ -44,6 +47,7 @@ export class PersonaPage implements OnInit {
 
     if (this.id) {
       await this.globalSer.presentLoading();
+      this.churches = await this.storageService.get('churches');
       const data: any = await this.personaService.getMember(this.id, this.path);
 
       if (data && !data.error) {
@@ -54,6 +58,8 @@ export class PersonaPage implements OnInit {
         this.referrals.totals = data.totalReferrals || 0;
         this.visits = data.visits || [];
         this.group = { data: data.group || null, totals: data.group?.members?.length || 0 };
+        const church = this.churches.find(c => c._id === this.member.church);
+        this.member.church = church?.name || null;
         await this.globalSer.dismissLoading();
       }
       else if (data && data.error) {

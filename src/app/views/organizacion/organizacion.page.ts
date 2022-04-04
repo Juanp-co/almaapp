@@ -14,15 +14,8 @@ export class OrganizacionPage implements OnInit {
   showGroups = false;
   adminRequest = false;
   showGroupData = null;
-  organization: any = {
-    lvls: {
-      pastors: [],
-      supervisors: [],
-      leaders: [],
-      peoples: []
-    },
-    users: []
-  };
+  organizationData: any = null;
+  organization: any = null;
   sectors: any[] = [];
   sectorSelected: any = null;
   subSectorSelected: any = null;
@@ -43,6 +36,7 @@ export class OrganizacionPage implements OnInit {
     { label: 'Líderes', key: 'leaders', icon: 'leader' },
     { label: 'Personas', key: 'peoples', icon: 'peoples' },
   ];
+  churchSelected = -1;
   viewSelected: any = null;
 
   constructor(
@@ -65,22 +59,37 @@ export class OrganizacionPage implements OnInit {
       const { data } = res || {};
 
       if (data) {
-        this.organization.users = data.users || [];
-        // set data
-        ['pastors', 'supervisors', 'leaders', 'peoples'].forEach(k => {
-          this.counters[k] = data.lvls[k]?.length || 0;
-          if (this.counters[k] > 0) {
-            data.lvls[k].forEach(i => {
-              const user = this.organization.users.find(u => u._id === i) || null;
+        this.organizationData = data;
+        this.organization = [];
+
+        data?.forEach(d => {
+          const m = {
+            church: d.church,
+            lvls: {
+              pastors: [],
+              supervisors: [],
+              leaders: [],
+              peoples: []
+            }
+          };
+
+          // set data
+          ['pastors', 'supervisors', 'leaders', 'peoples'].forEach(k => {
+
+            d.lvls[k].forEach(i => {
+              const user = d.users.find(u => u._id === i) || null;
               if (user) {
                 if (!user.picture) user.picture = `/assets/icon/${user.gender === 1 ? 'mujer' : 'hombre'}_lista.svg`;
-                this.organization.lvls[k].push(user);
+                m.lvls[k].push(user);
               }
             });
-          }
+          });
+
+          this.organization.push(m);
         });
-        await this.globalSer.dismissLoading();
       }
+      else this.organization = [];
+      await this.globalSer.dismissLoading();
     }
     else if (res && res.error) {
       await this.globalSer.dismissLoading();
@@ -104,11 +113,24 @@ export class OrganizacionPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
+  async setViewChurch(index) {
+    await this.globalSer.presentLoading();
+    const church = this.organization[index];
+    if (church) {
+      ['pastors', 'supervisors', 'leaders', 'peoples'].forEach(k => {
+        this.counters[k] = church.lvls[k]?.length || 0;
+      });
+      this.churchSelected = index;
+    }
+    else this.churchSelected = -1;
+    await this.globalSer.dismissLoading();
+  }
+
   async setViewOrganization(opt = null) {
     if (opt) {
       await this.globalSer.presentLoading();
       this.viewSelected = opt;
-      this.viewSelected.list = this.organization.lvls[opt.key];
+      this.viewSelected.list = this.organization[this.churchSelected].lvls[opt.key];
       await this.globalSer.dismissLoading();
     }
     else this.viewSelected = null;
@@ -185,4 +207,6 @@ export class OrganizacionPage implements OnInit {
   handleClickAction1 = (v: any): void => { this.setSubSectorsList(v); };
   handleClickAction2 = (v: any): void => { this.setViewSubGroupsData(v); };
   handleClickAction3 = (v: any): void => { this.setViewGroupData(v); };
+  handleClickChurch = (index): void => { this.setViewChurch(index); };
+  handleClickOrganization = (v: any): void => { this.setViewOrganization(v); };
 }

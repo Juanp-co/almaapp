@@ -1,0 +1,45 @@
+<div class="church-card" *ngIf="data" (click)="handleClickAction()">
+  <ion-card>
+    <div
+      [ngStyle]="{'background-image': 'url(' + (data.picture || '/assets/cruz.png')+ '), url(/assets/cruz.png)', height: '160px'}"
+      class="img_card"
+    ></div>
+    <ion-card-content class="ion-no-padding">
+      <ion-row>
+        <ion-col [size]="12">
+          <ion-text color="primary">
+            <h1>{{data.name}}</h1>
+          </ion-text>
+        </ion-col>
+        <ion-col [size]="12" *ngIf="extendData">
+          <ion-text>
+            <ion-icon name="call-outline"></ion-icon>&nbsp;
+            {{data.phone1 || 'No indicado.'}}&nbsp;
+          </ion-text>
+          <ion-text *ngIf="data.phone2">
+            <br>
+            <ion-icon name="call-outline"></ion-icon>&nbsp;
+            {{data.phone2 || ''}}
+          </ion-text>
+          <ion-text *ngIf="data.email">
+            <br>
+            <ion-icon name="at-outline"></ion-icon>&nbsp;
+            {{data.email || ''}}
+          </ion-text>
+        </ion-col>
+        <ion-col [size]="12" *ngIf="data.description">
+          <ion-text>
+            <ion-icon name="text-outline"></ion-icon>&nbsp;
+            {{data.description}}
+          </ion-text>
+        </ion-col>
+        <ion-col [size]="12" *ngIf="data.address">
+          <ion-text>
+            <ion-icon name="location-outline"></ion-icon>&nbsp;
+            {{data.address}}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</div>

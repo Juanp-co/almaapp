@@ -30,6 +30,7 @@ export class PerfilPage implements OnInit {
     picture: null
   };
   totalsInvitations = 0;
+  churches: any[] = [];
   showInfo = true;
   showEditPic = false;
 
@@ -52,6 +53,7 @@ export class PerfilPage implements OnInit {
   async getData() {
     await this.globalSer.presentLoading('Cargando ...');
     this.userData = null;
+    this.churches = await this.storageService.get('churches');
     const data = await this.perfilService.getProfileData();
 
     if (data && !data.error) {
@@ -62,6 +64,8 @@ export class PerfilPage implements OnInit {
       this.courses.list = await this.perfilService.getCourses();
       this.totalsInvitations = await this.perfilService.getTotalsInvitations();
       this.courses.totals = this.courses.list?.length || 0;
+      const church = this.churches.find(c => c._id === this.userData.church);
+      this.userData.church = church?.name || null;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {

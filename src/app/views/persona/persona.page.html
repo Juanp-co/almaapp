@@ -26,17 +26,18 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
+      <ion-col size="12" class="ion-no-padding ion-no-padding">
+        <app-resume-hijos-educacion
+          [id]="member._id"
+          [isMember]="true"
+          [showGroup]="true"
+          [coursesData]="courses"
+          [referralsData]="referrals"
+          [groupData]="group"
+        >
+        </app-resume-hijos-educacion>
+      </ion-col>
     </ion-row>
-
-    <app-resume-hijos-educacion
-      [id]="member._id"
-      [isMember]="true"
-      [showGroup]="true"
-      [coursesData]="courses"
-      [referralsData]="referrals"
-      [groupData]="group"
-    >
-    </app-resume-hijos-educacion>
 
     <ion-row>
       <ion-col><br/><br/></ion-col>
