@@ -13,13 +13,13 @@
           <div class="">
             <label class="micursor ion-text-center">
               <div
-                class="{{!formData.picture ? 'banner-default' : 'banner-loaded'}}"
+                class="{{!formData.file ? 'banner-default' : 'banner-loaded'}}"
                 [ngStyle]="{backgroundImage: 'url('+ (formData.picture || 'assets/photo.png') +')', height: '180px'}"
               >
                 <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
               </div>
             </label>
-            <ion-text><i>Clic para {{ !data ? 'cargar' : 'cambiar'}} una imagen</i></ion-text>
+            <ion-text><i>Toca para cargar una imagen</i></ion-text>
           </div>
         </ion-col>
         <ion-col size="12" size-sm="6">

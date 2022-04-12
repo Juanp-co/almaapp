@@ -11,19 +11,17 @@
             <ion-col size="12">
               <ion-row class="ion-no-margin">
                 <ion-col size="4" class="ion-text-center">
-                  <img
-                    [src]="invitation.member.picture"
-                    height="65"
-                    width="65"
-                    class="img-rounded"
+                  <div
+                    class="img-profile-card"
+                    [ngStyle]="{'background-image': 'url('+invitation.member.picture+'), url(assets/icon/'+ (invitation.member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
                     *ngIf="invitation.member.picture"
                   >
-                  <img
-                    src="/assets/icon/{{invitation.member.gender === 1 ? 'mujer' : 'hombre'}}_lista.svg"
-                    height="65"
-                    class="img-rounded"
+                  </div>
+                  <div
+                    class="img-profile-card"
+                    [ngStyle]="{'background-image': 'url(assets/icon/'+ (invitation.member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
                     *ngIf="!invitation.member.picture"
-                  >
+                  ></div>
                 </ion-col>
                 <ion-col size="8">
                   <b>{{ invitation.member.names || '' }} {{ invitation.member.lastNames || '' }}</b>

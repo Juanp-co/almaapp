@@ -1,0 +1,27 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Documentos"></app-minheader>
+  </ion-header>
+
+  <ion-row class="ion-justify-content-end ion-margin-top">
+    <ion-col size="12" class="ion-text-end">
+      <ion-button (click)="goToAdd()">
+        <ion-icon name="add" slot="start"></ion-icon>
+        <ion-text>
+          Subir documento
+        </ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="list">
+    <ion-col size="12" sizeSm="6" *ngFor="let doc of list">
+      <app-documentos-card
+        [data]="doc"
+        [showButtonsOwn]="userData._id === doc.user?._id"
+        [handleRemove]="removeDocument"
+      ></app-documentos-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

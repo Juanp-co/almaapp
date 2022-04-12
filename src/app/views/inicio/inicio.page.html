@@ -1,6 +1,4 @@
 <ion-content color="light">
-
-  <!-- COPIAR EL HEADER DEL INICIO PERO MAS CORTO -->
   <ion-row
     class="fondoCool ion-justify-content-end ion-padding"
     [style.background-image]="styleBg"
@@ -19,8 +17,6 @@
   </ion-row>
 
   <ion-row>
-    <!--<ion-col size="12"><br></ion-col>-->
-
     <ion-col size="12" *ngIf="devotionals?.length > 0">
       <div class="scrolling-wrapper">
         <app-devocionales-card *ngFor="let item of devotionals" [item]="item"></app-devocionales-card>

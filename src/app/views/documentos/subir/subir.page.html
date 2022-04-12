@@ -1,0 +1,80 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Subir documento"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col size="12" sizeSm="4" class="ion-text-center ion-margin-top">
+      <div class="">
+        <label class="micursor ion-text-center">
+          <div
+            class="banner-event-no-picture"
+            [ngStyle]="{backgroundImage: 'url('+ (formData.file ? '/assets/icon/pdf.svg' : '/assets/icon/pdf-upload.svg') +')', height: '130px'}"
+          >
+            <input type='file' accept="application/pdf" (change)='openFile($event)' hidden>
+          </div>
+        </label>
+        <br>
+        <ion-text color="medium" class="toSmall"><i>Toca para subir un documento una imagen</i></ion-text>
+        <ion-text color="medium" *ngIf="formData.file">
+          <br>
+          <br>
+          Archivo: {{ formData.fileName }}
+        </ion-text>
+      </div>
+    </ion-col>
+    <ion-col size="12" sizeSm="8">
+      <ion-row>
+        <ion-col size="12" sizeSm="6">
+          <ion-item>
+            <ion-label position="floating" color="medium">Título del documento (*)</ion-label>
+            <ion-input
+              [value]="formData.title"
+              autocomplete="off"
+              maxlength="100"
+              class="ion-text-uppercase"
+              (change)="setFormData('title', $event)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" sizeSm="6">
+          <ion-item>
+            <ion-label position="floating" color="medium">Dirigido a (*)</ion-label>
+            <ion-input
+              [value]="formData.rolesSelected"
+              [readonly]="true"
+              autocomplete="off"
+              class="ion-text-uppercase no-selected-text"
+              (click)="showAlertRolesList()"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" class="ion-margin">
+          <ion-text color="medium" class="toSmall"><i>(*) Campos obligatorios.</i></ion-text>
+        </ion-col>
+        <ion-col size="12" class="ion-margin-top">
+          <ion-row>
+            <ion-col size="6" class="ion-text-center">
+              <ion-button color="light" (click)="gotBack()">
+                <ion-icon name="close" slot="start"></ion-icon>
+                <ion-text>
+                  Cancelar
+                </ion-text>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" class="ion-text-center">
+              <ion-button (click)="validate()">
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                <ion-text>
+                  Guardar
+                </ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

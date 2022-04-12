@@ -2,21 +2,17 @@
   <ion-col size="12" size-sm="6" class="ion-no-margin ion-no-padding">
     <ion-row class="ion-no-margin ion-no-padding">
       <ion-col size="12" class="ion-text-center">
-        <div>
-          <img
-            [src]="member.picture"
-            height="120"
-            width="120"
-            class="img-rounded"
-            *ngIf="member.picture"
-          >
-          <img
-            src="assets/icon/{{member.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
-            height="120"
-            class="img-rounded"
-            *ngIf="!member.picture"
-          >
+        <div
+          class="img-profile"
+          [ngStyle]="{'background-image': 'url('+member.picture+'), url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
+          *ngIf="member.picture"
+        >
         </div>
+        <div
+          class="img-profile"
+          [ngStyle]="{'background-image': 'url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
+          *ngIf="!member.picture"
+        ></div>
         <div *ngIf="picButtons">
           <ion-button size="small" (click)="!!handleChangePhoto ? handleChangePhoto() : null">
             <ion-icon name="image-outline" slot="start"></ion-icon>
@@ -32,7 +28,7 @@
           </ion-button>
         </div>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size="12" class="ion-padding-top">
         <ion-row class="ion-no-margin ion-no-padding">
           <ion-col size="12" class="ion-no-margin ion-no-padding">
             <app-elem-item label="Nombre(s)" value="{{member.names || 'No indicado'}}"></app-elem-item>
