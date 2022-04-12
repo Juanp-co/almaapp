@@ -12,13 +12,13 @@ import {StorageService} from '../../services/storage.service';
 })
 export class InicioPage implements OnInit {
   opciones = [
-    { titulo: 'Red de padres', imagen: 'red.svg', url: 'padres' },
-    { titulo: 'Grupos fam.', imagen: 'connection.svg', url: 'grupos-familiares' },
-    { titulo: 'Organización', imagen: 'structure.svg', url: 'organizacion' },
-    { titulo: 'Ofrendas', imagen: 'ofrenda.svg', url: 'ofrenda' },
-    { titulo: 'Escuela', imagen: 'escuela.svg', url: 'escuela' },
-    { titulo: 'Cumpleaños', imagen: 'birthday.svg', url: 'cumpleannos' },
-    { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica' }
+    { titulo: 'Red de padres', imagen: 'red.svg', url: 'padres', show: true },
+    { titulo: 'Grupos fam.', imagen: 'connection.svg', url: 'grupos-familiares', show: true },
+    { titulo: 'Organización', imagen: 'structure.svg', url: 'organizacion', show: true },
+    { titulo: 'Ofrendas', imagen: 'ofrenda.svg', url: 'ofrenda', show: true },
+    { titulo: 'Escuela', imagen: 'escuela.svg', url: 'escuela', show: true },
+    { titulo: 'Cumpleaños', imagen: 'birthday.svg', url: 'cumpleannos', show: true },
+    { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica', show: true }
   ];
 
   // ===============
@@ -77,6 +77,12 @@ export class InicioPage implements OnInit {
       }
     }
     else this.userData = data || null;
+
+    if (this.userData) {
+      if (await this.globalSer.checkRoleToActions([0, 1, 2, 3])) {
+        this.opciones.push({ titulo: 'Documentos', imagen: 'document.svg', url: 'documentos', show: false });
+      }
+    }
   }
 
   async getParams() {

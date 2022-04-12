@@ -8,6 +8,7 @@ import {ChartComponent} from './chart/chart.component';
 import {CoursecardComponent} from './coursecard/coursecard.component';
 import {DevocionalesCardComponent} from './devocionales/devocionales-card/devocionales-card.component';
 import {DevocionalesCard2Component} from './devocionales/devocionales-card2/devocionales-card2.component';
+import {DocumentosCardComponent} from './documentos/documentos-card/documentos-card.component';
 import {ElemItemComponent} from './users/elem-item/elem-item.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {Eventcard2Component} from './events/eventcard2/eventcard2.component';
@@ -36,6 +37,7 @@ import {ReportPersonalComponent} from './reports/report-personal/report-personal
     CoursecardComponent,
     DevocionalesCardComponent,
     DevocionalesCard2Component,
+    DocumentosCardComponent,
     ElemItemComponent,
     EventcardComponent,
     Eventcard2Component,
@@ -66,6 +68,7 @@ import {ReportPersonalComponent} from './reports/report-personal/report-personal
     CoursecardComponent,
     DevocionalesCardComponent,
     DevocionalesCard2Component,
+    DocumentosCardComponent,
     ElemItemComponent,
     EventcardComponent,
     Eventcard2Component,

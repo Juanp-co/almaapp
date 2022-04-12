@@ -4,19 +4,17 @@
       <ion-col size="{{removeButton ? '10' : '12'}}" (click)="member._id && showButton ? goToDetails(member._id) : null">
         <ion-row>
           <ion-col size="{{removeButton ? '4' : '3'}}" class="ion-text-center">
-            <img
-              [src]="member.picture"
-              height="65"
-              width="65"
-              class="img-rounded"
+            <div
+              class="img-profile-card"
+              [ngStyle]="{'background-image': 'url('+member.picture+'), url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
               *ngIf="member.picture"
             >
-            <img
-              src="/assets/icon/{{member.gender === 1 ? 'mujer' : 'hombre'}}_lista.svg"
-              height="65"
-              class="img-rounded"
+            </div>
+            <div
+              class="img-profile-card"
+              [ngStyle]="{'background-image': 'url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
               *ngIf="!member.picture"
-            >
+            ></div>
           </ion-col>
           <ion-col size="{{removeButton ? '8' : '9'}}">
             <b>{{ member.names || '' }} {{ member.lastNames || '' }}</b>
