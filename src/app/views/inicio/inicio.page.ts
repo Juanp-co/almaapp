@@ -11,15 +11,16 @@ import {StorageService} from '../../services/storage.service';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  opciones = [
-    { titulo: 'Red de padres', imagen: 'red.svg', url: 'padres', show: true },
-    { titulo: 'Grupos fam.', imagen: 'connection.svg', url: 'grupos-familiares', show: true },
-    { titulo: 'Organización', imagen: 'structure.svg', url: 'organizacion', show: true },
-    { titulo: 'Ofrendas', imagen: 'ofrenda.svg', url: 'ofrenda', show: true },
-    { titulo: 'Escuela', imagen: 'escuela.svg', url: 'escuela', show: true },
-    { titulo: 'Cumpleaños', imagen: 'birthday.svg', url: 'cumpleannos', show: true },
-    { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica', show: true }
+  baseMenu: any[] = [
+    { titulo: 'Red de padres', imagen: 'red.svg', url: 'padres' },
+    { titulo: 'Grupos fam.', imagen: 'connection.svg', url: 'grupos-familiares' },
+    { titulo: 'Organización', imagen: 'structure.svg', url: 'organizacion' },
+    { titulo: 'Ofrendas', imagen: 'ofrenda.svg', url: 'ofrenda' },
+    { titulo: 'Escuela', imagen: 'escuela.svg', url: 'escuela' },
+    { titulo: 'Cumpleaños', imagen: 'birthday.svg', url: 'cumpleannos' },
+    { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica' }
   ];
+  opciones: any[] = [];
 
   // ===============
   params: any = {
@@ -61,28 +62,44 @@ export class InicioPage implements OnInit {
       this.logged = true;
       await this.getDataLogin();
     }
+    else this.opciones = this.baseMenu;
   }
 
   async getDataLogin() {
     const data = await this.storageService.get('data');
 
-    if (!data) {
-      const res: any = await this.inicioService.getSessionData();
-      if (res) {
-        await this.storageService.set('data', res);
-        this.userData = res;
-      }
-      else if (res && res.error) {
-        await this.globalSer.errorSession();
-      }
+    if (!data) this.userData = data || null;
+
+    const res: any = await this.inicioService.getSessionData();
+
+    if (res && !res.error) {
+      await this.storageService.set('data', res);
+      this.userData = res;
     }
-    else this.userData = data || null;
+    else if (res && res.error) {
+      await this.globalSer.errorSession();
+    }
 
     if (this.userData) {
+      this.opciones = this.baseMenu;
+
+      if (this.userData.consolidator) {
+        const index2 = this.opciones.findIndex(o => o.titulo === 'Consolidados');
+
+        if (index2 === -1) {
+          this.opciones = [
+            { titulo: 'Consolidados', imagen: 'consolidates.svg', url: 'consolidados' },
+            ...this.opciones.filter(o => !['Red de padres', 'Grupos fam.'].includes(o.titulo))
+          ];
+        }
+      }
+
       if (await this.globalSer.checkRoleToActions([0, 1, 2, 3])) {
-        this.opciones.push({ titulo: 'Documentos', imagen: 'document.svg', url: 'documentos', show: false });
+        const index = this.opciones.findIndex(o => o.titulo === 'Documentos');
+        if (index === -1) this.opciones.push({ titulo: 'Documentos', imagen: 'document.svg', url: 'documentos' });
       }
     }
+    else this.opciones = this.baseMenu;
   }
 
   async getParams() {

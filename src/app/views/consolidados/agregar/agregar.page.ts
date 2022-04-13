@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
+import {GlobalService} from '../../../services/global.service';
+import {PadresService} from '../../padres/padres.service';
 import {
   checkEmail,
   checkNameOrLastName,
@@ -8,17 +10,16 @@ import {
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
-import {PadresService} from '../padres.service';
-import {GlobalService} from '../../../services/global.service';
-import {ModalGruposFamiliaresPage} from '../../modals/modal-grupos-familiares/modal-grupos-familiares.page';
 import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
+import {ModalGruposFamiliaresPage} from '../../modals/modal-grupos-familiares/modal-grupos-familiares.page';
+import {ConsolidadosService} from '../consolidados.service';
 
 @Component({
-  selector: 'app-nuevo-miembro',
-  templateUrl: './nuevo-miembro.page.html',
-  styleUrls: ['./nuevo-miembro.page.scss'],
+  selector: 'app-agregar',
+  templateUrl: './agregar.page.html',
+  styleUrls: ['./agregar.page.scss'],
 })
-export class NuevoMiembroPage implements OnInit {
+export class AgregarPage implements OnInit {
   successRegister = false;
   successData: string|null = null;
   gender = [];
@@ -26,6 +27,7 @@ export class NuevoMiembroPage implements OnInit {
   memberSelected: any = null;
   groupSelected: any = null;
   maxDate: any = null;
+  otherConsolidator = false;
   formData: any = {
     phone: null,
     password: null,
@@ -39,18 +41,17 @@ export class NuevoMiembroPage implements OnInit {
     petition: null,
     attendGroup: false,
     groupId: null,
-    consolidated: false,
-    iAmConsolidator: true,
+    consolidated: true,
     referred: null,
   };
 
   constructor(
     private globalSer: GlobalService,
     private navCtrl: NavController,
-    private padreService: PadresService,
+    private consolidadosService: ConsolidadosService,
   ) {
-    this.civilStatus = padreService.civilStatusList;
-    this.gender = padreService.genderList;
+    this.civilStatus = consolidadosService.civilStatusList;
+    this.gender = consolidadosService.genderList;
     this.maxDate = dayjs().format('YYYY-MM-DD');
   }
 
@@ -59,7 +60,7 @@ export class NuevoMiembroPage implements OnInit {
 
   async registerMember() {
     await this.globalSer.presentLoading('Registrando, por favor espere ...');
-    const res: any = await this.padreService.saveMember({...this.formData});
+    const res: any = await this.consolidadosService.saveMember({...this.formData});
 
     if (res && !res.error) {
       this.successData = res;
@@ -102,6 +103,10 @@ export class NuevoMiembroPage implements OnInit {
     return this.groupSelected ?
       `S: ${this.groupSelected.sector} / SS ${this.groupSelected.subSector} / # ${this.groupSelected.number}`
       : null;
+  }
+
+  setOtherConsolidator() {
+    this.otherConsolidator = !this.otherConsolidator;
   }
 
   setCheckedValue(input) {
@@ -185,7 +190,7 @@ export class NuevoMiembroPage implements OnInit {
   async confirmCancel() {
     await this.globalSer.alertConfirm({
       header: 'Confirme',
-      message: '¿Está seguro qué desea cancelar el registro del nuevo miembro?',
+      message: '¿Está seguro qué desea cancelar el registro?',
       confirmAction: () => this.back()
     });
   }
@@ -198,7 +203,7 @@ export class NuevoMiembroPage implements OnInit {
       return 'Disculpe, pero debe indicar un correo electrónico válido.';
     if (this.formData.attendGroup && !this.formData.groupId)
       return 'Disculpe, pero debe seleccionar al grupo al que asiste el nuevo miembro.';
-    if (this.formData.consolidated && !this.formData.iAmConsolidator && !this.formData.referred)
+    if (this.otherConsolidator && !this.formData.referred)
       return 'Disculpe, pero debe seleccionar al miembro consolidador.';
 
     return null;

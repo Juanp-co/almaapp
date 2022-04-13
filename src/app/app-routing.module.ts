@@ -96,7 +96,11 @@ const routes: Routes = [
   {
     path: 'documentos',
     loadChildren: () => import('./views/documentos/documentos.module').then( m => m.DocumentosPageModule)
+  },  {
+    path: 'consolidados',
+    loadChildren: () => import('./views/consolidados/consolidados.module').then( m => m.ConsolidadosPageModule)
   },
+
 ];
 
 @NgModule({

@@ -67,4 +67,10 @@
       </ion-col>
     </ion-row>
   </ion-col>
+  <ion-col size="12" class="ion-text-center" *ngIf="showBtnConsolidator">
+    <ion-button color="{{member.consolidator ? 'danger' : 'primary'}}" size="small" (click)="confirmConsolidator()">
+      <ion-icon name="lock-{{member.consolidator ? 'closed' : 'open'}}-outline" slot="start"></ion-icon>
+      <ion-text>{{member.consolidator ? 'Quitar' : 'Asignar'}} como consolidador</ion-text>
+    </ion-button>
+  </ion-col>
 </ion-row>

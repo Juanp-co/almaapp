@@ -47,7 +47,7 @@ export class PadresService {
   async saveMember(data: any) {
     const res: any = await this.axios.postData('/user/referrals', data);
 
-    if (res && res.success) return res.data.msg || 'Se ha registrado el nuevo miebro exitosamente.';
+    if (res && res.success) return res.data.msg || 'Se ha registrado el nuevo miembro exitosamente.';
     return this.globalSer.altResponse(res);
   }
 }
