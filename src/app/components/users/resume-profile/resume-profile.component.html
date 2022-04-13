@@ -41,8 +41,8 @@
             <app-elem-item label="Fecha de nac." value="{{member.birthday || 'No indicado'}}"></app-elem-item>
             <app-elem-item label="Sexo" value="{{member.gender || 'No indicado'}}"></app-elem-item>
             <app-elem-item label="Estado civil" value="{{member.civilStatus || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Sexo" value="{{member.names || 'No indicado'}}"></app-elem-item>
             <app-elem-item label="Iglesia" value="{{member.church || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Nivel educativo" value="{{member.educationLevel || 'No indicado'}}"></app-elem-item>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -51,7 +51,6 @@
   <ion-col size="12" size-sm="6" class="ion-no-margin">
     <ion-row class="ion-no-margin ion-no-padding">
       <ion-col size="12" class="ion-no-margin ion-no-padding">
-        <app-elem-item label="Nivel educativo" value="{{member.educationLevel || 'No indicado'}}"></app-elem-item>
         <app-elem-item label="Profesión" value="{{member.profession || 'No indicado'}}"></app-elem-item>
         <app-elem-item label="Tipo de sangre" value="{{member.bloodType || 'No indicado'}}"></app-elem-item>
         <app-elem-item label="Empresa" value="{{member.company ? 'Si' : 'No'}}"></app-elem-item>
