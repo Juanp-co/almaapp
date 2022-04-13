@@ -4,7 +4,7 @@
   </ion-header>
 
   <div *ngIf="member; else noData">
-    <ion-row class="ion-margin-top">
+    <ion-row>
       <ion-col size="12">
         <ion-card>
           <ion-card-header class="ion-no-padding" color="primary">
@@ -20,7 +20,11 @@
           <ion-card-content class="{{showInfo ? '' : 'ion-hide'}}">
             <ion-row>
               <ion-col size="12" class="ion-margin-top">
-                <app-resume-profile [member]="member"></app-resume-profile>
+                <app-resume-profile
+                  [member]="member"
+                  [showBtnConsolidator]="adminAction"
+                  [handleConsolidator]="handleSetAsConsolidator"
+                ></app-resume-profile>
               </ion-col>
             </ion-row>
           </ion-card-content>

@@ -12,6 +12,7 @@ import {
   professions,
   rolesListSingleText
 } from '../../../../Utils/profile.data';
+import {GlobalService} from '../../../services/global.service';
 
 @Component({
   selector: 'app-resume-profile',
@@ -23,10 +24,12 @@ export class ResumeProfileComponent implements OnInit {
   @Input() member: any;
   @Input() picButtons = false;
   @Input() showDocument = false;
+  @Input() showBtnConsolidator = false;
   @Input() handleDeletePic: () => void;
   @Input() handleChangePhoto: () => void;
+  @Input() handleConsolidator: () => void;
 
-  constructor() { }
+  constructor(private globalSer: GlobalService) { }
 
   ngOnInit() {
     if (this.member) {
@@ -63,6 +66,14 @@ export class ResumeProfileComponent implements OnInit {
       }
     }
     return ret;
+  }
+
+  async confirmConsolidator() {
+    await this.globalSer.alertConfirm({
+      header: '¡Confirme!',
+      message: `¿Está seguro qué desea ${this.member.consolidator ? 'quitar' : 'asignar'} a este miembro como consolidador a anónimo?`,
+      confirmAction: () => this.handleConsolidator ? this.handleConsolidator() : null
+    });
   }
 
 }

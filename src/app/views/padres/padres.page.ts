@@ -92,14 +92,12 @@ export class PadresPage implements OnInit {
 
   async showVisits() {
     await this.globalSer.presentLoading();
-    const updateVisits = (data) => {};
     const content: any = {};
     await this.globalSer.dismissLoading();
     await this.globalSer.loadModal(
       ModalVisitsPage,
       content,
-      false,
-      updateVisits
+      false
     );
   }
 

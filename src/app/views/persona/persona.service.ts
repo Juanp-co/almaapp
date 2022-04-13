@@ -32,4 +32,11 @@ export class PersonaService {
     if (res && res.success) return res.data.msg;
     return this.globalSer.altResponse(res);
   }
+
+  async setAsConsolidator(id) {
+    const res: any = await this.axios.putData(`admin/users/${id}/consolidator`);
+
+    if (res && res.success) return res.data.msg;
+    return this.globalSer.altResponse(res);
+  }
 }

@@ -1,0 +1,206 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Nuevo consolidado"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col class="ion-no-margin" size="12" *ngIf="!successRegister">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="medium">
+                <p>
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  Todos los miembros registrados dispondrán de la siguiente contraseña para el acceso: <b><i>alma1234</i></b>.
+                </p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nº de Teléfono (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.phone"
+                  autocomplete="off"
+                  maxlength="13"
+                  (keypress)="validateOnlyNumbers($event)"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+              <ion-text color="medium">
+                <i class="toSmall">Este valor será el usuario de acceso a la plataforma.</i>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.names"
+                  autocomplete="off"
+                  (keyup)="validateOnlyLetters($event)"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Apellido(s) (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.lastNames"
+                  autocomplete="off"
+                  (keyup)="validateOnlyLetters($event)"
+                  class="ion-text-uppercase"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Correo electrónico</ion-label>
+                <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha de nacimiento</ion-label>
+                <ion-datetime
+                  [(ngModel)]="formData.birthday"
+                  displayFormat="DD/MM/YYYY"
+                  min="1910-03-14"
+                  max="{{maxDate}}"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate()"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Sexo</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="gender[formData.gender] || ''"
+                  autocomplete="off"
+                  (click)="showAlertList('gender', 'gender', formData.gender)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Estado civil</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="civilStatus[formData.civilStatus] || ''"
+                  autocomplete="off"
+                  (click)="showAlertList('civilStatus', 'civilStatus', formData.civilStatus)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Barrio o localidad</ion-label>
+                <ion-input [(ngModel)]="formData.locality" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Dirección</ion-label>
+                <ion-input [(ngModel)]="formData.direction" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item lines="none">
+                <ion-label color="medium">¿Asiste a un grupo familiar?</ion-label>
+                <ion-checkbox
+                  slot="start"
+                  [checked]="formData.attendGroup"
+                  (ionChange)="setCheckedValue('attendGroup')"
+                ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6" class="{{ formData.attendGroup ? '' : 'ion-hide' }}">
+              <ion-item>
+                <ion-label position="floating" color="medium">Grupo familiar (*)</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="getGroupSelectedInfo()"
+                  autocomplete="off"
+                  (click)="openGroupsModal()"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Petición (opcional)</ion-label>
+                <ion-input [(ngModel)]="formData.petition" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6" class="ion-no-padding">
+              <ion-row class="ion-no-margin ion-no-padding">
+                <ion-col size="12">
+                  <ion-item lines="none">
+                    <ion-label color="medium">Otro miembro lo consolidó</ion-label>
+                    <ion-checkbox
+                      slot="start"
+                      [checked]="otherConsolidator"
+                      (ionChange)="setOtherConsolidator()"
+                    ></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" *ngIf="otherConsolidator">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Miembro consolidador (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="getMemberSelectedNames()"
+                      autocomplete="off"
+                      (click)="openMembersModal()"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-text color="medium">
+                    <i class="toSmall">Busque y seleccione al miembro consolidador.</i>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="confirmCancel()">
+                <ion-icon name="close-outline" slot="start"></ion-icon>
+                <ion-text>Cancelar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="confirmRegister()">
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                <ion-text>Guardar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" *ngIf="successRegister">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col [size]="12" class="ion-text-center">
+              <ion-img class="pictureLogoAdd ion-margin-top ion-padding-top" [src]="'/assets/icon/check.svg'"></ion-img>
+              <ion-card-title class="ion-margin-top ion-padding-top">
+                <ion-card-title class="ion-margin-top">{{ successData }}</ion-card-title>
+              </ion-card-title>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
+              <ion-button color="primary" (click)="back()">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Finalizar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

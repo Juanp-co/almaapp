@@ -14,6 +14,7 @@ import {StorageService} from '../../services/storage.service';
 export class PersonaPage implements OnInit {
 
   showInfo = true;
+  adminAction = false;
   member: any = null;
   courses: any = {
     totals: 0,
@@ -74,6 +75,29 @@ export class PersonaPage implements OnInit {
     }
   }
 
+  async ionViewDidEnter() {
+    this.adminAction = await this.globalSer.checkRoleToActions([0, 1]);
+  }
+
+  async setAsConsolidator() {
+    await this.globalSer.presentLoading('Cargando. Por favor, espere...');
+    const updated: any = await this.personaService.setAsConsolidator(this.member._id);
+
+    if (updated && !updated.error) {
+      this.member.consolidator = !this.member.consolidator;
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert(
+        '¡Éxito!',
+        updated || 'Se ha actualizado la información del miembro exitosamente.'
+      );
+    }
+    else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
   setShowView() {
     this.showInfo = !this.showInfo;
   }
@@ -95,5 +119,7 @@ export class PersonaPage implements OnInit {
       updateVisits
     );
   }
+
+  handleSetAsConsolidator = (): void => { this.setAsConsolidator(); };
 
 }
