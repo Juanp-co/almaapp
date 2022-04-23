@@ -66,10 +66,28 @@
       </ion-col>
     </ion-row>
   </ion-col>
-  <ion-col size="12" class="ion-text-center" *ngIf="showBtnConsolidator">
-    <ion-button color="{{member.consolidator ? 'danger' : 'primary'}}" size="small" (click)="confirmConsolidator()">
+  <ion-col class="ion-text-center">
+    <ion-button
+      color="light"
+      size="small"
+      expand="full"
+      (click)="callMember()"
+      *ngIf="showButtonCall"
+    >
+      <ion-icon name="call-outline" slot="start"></ion-icon>
+      <ion-text>Llamar</ion-text>
+    </ion-button>
+  </ion-col>
+  <ion-col class="ion-text-center">
+    <ion-button
+      color="{{member.consolidator ? 'danger' : 'primary'}}"
+      size="small"
+      expand="full"
+      (click)="confirmConsolidator()"
+      *ngIf="showBtnConsolidator"
+    >
       <ion-icon name="lock-{{member.consolidator ? 'closed' : 'open'}}-outline" slot="start"></ion-icon>
-      <ion-text>{{member.consolidator ? 'Quitar' : 'Asignar'}} como consolidador</ion-text>
+      <ion-text>{{member.consolidator ? 'Quitar' : ''}} consolidador</ion-text>
     </ion-button>
   </ion-col>
 </ion-row>

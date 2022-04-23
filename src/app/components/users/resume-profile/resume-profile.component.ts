@@ -24,6 +24,7 @@ export class ResumeProfileComponent implements OnInit {
   @Input() member: any;
   @Input() picButtons = false;
   @Input() showDocument = false;
+  @Input() showButtonCall = false;
   @Input() showBtnConsolidator = false;
   @Input() handleDeletePic: () => void;
   @Input() handleChangePhoto: () => void;
@@ -74,6 +75,11 @@ export class ResumeProfileComponent implements OnInit {
       message: `¿Está seguro qué desea ${this.member.consolidator ? 'quitar' : 'asignar'} a este miembro como consolidador a anónimo?`,
       confirmAction: () => this.handleConsolidator ? this.handleConsolidator() : null
     });
+  }
+
+
+  async callMember() {
+    window?.open(`tel:${this.member.phone}`, '_system');
   }
 
 }
