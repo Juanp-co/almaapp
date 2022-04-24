@@ -4,12 +4,11 @@ import {RegistroService} from './registro.service';
 import {GlobalService} from '../../services/global.service';
 import {documentType} from '../../../Utils/profile.data';
 import {
-  checkDocument,
-  checkEmail,
   checkNameOrLastName, checkPassword, checkPhone,
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../Utils/validations.functions';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-registro',
@@ -20,6 +19,8 @@ export class RegistroPage implements OnInit {
 
   documentTypes = documentType;
   referred = false;
+  church: any = null;
+  churches: any[] = [];
   successRegister = false;
   view = 0;
   formData: any = {
@@ -29,15 +30,25 @@ export class RegistroPage implements OnInit {
     names: null,
     lastNames: null,
     referred: null,
+    church: null,
   };
 
   constructor(
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private registroService: RegistroService,
+    private storageService: StorageService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getChurches();
+  }
+
+  async getChurches() {
+    await this.globalSer.presentLoading('Registrando, por favor espere ...');
+    this.churches = await this.registroService.getChurches();
+    await this.storageService.set('churches', this.churches);
+    await this.globalSer.dismissLoading();
   }
 
   async back() {
@@ -66,25 +77,15 @@ export class RegistroPage implements OnInit {
     else this.view = view;
   }
 
-  showInputReferred() {
-    this.referred = !this.referred;
-  }
-
-  getDocumentLabel(value: any) {
-    if (!value) return null;
-    const da = this.documentTypes.find(d => d.val === value);
-    return da ? da.label : null;
-  }
-
-  async showAlertDocumentList(selected: any = null) {
+  async showListChurches() {
     const inputs: any = [];
-    for (const value of this.documentTypes) {
+    for (const [index, value] of this.churches.entries()) {
       inputs.push({
         name: `documentType`,
         type: 'radio',
-        label: value.label,
-        value: value.val,
-        checked: selected !== null && selected === value.val,
+        label: value.name,
+        value: index,
+        checked: this.church?._id === value._id,
       });
     }
 
@@ -92,13 +93,10 @@ export class RegistroPage implements OnInit {
       header: 'Seleccione',
       inputs,
       confirmAction: (selectedValue) => {
-        this.formData.documentType = selectedValue;
+        this.formData.church = this.churches[selectedValue]?._id || null;
+        this.church = this.churches[selectedValue] || null;
       }
     });
-  }
-
-  validateOnlyNumbers(event: any) {
-    onlyNumbersInputValidation(event);
   }
 
   validateOnlyLetters(event: any) {
