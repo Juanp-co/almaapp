@@ -76,7 +76,7 @@ export class PersonaPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    this.adminAction = await this.globalSer.checkRoleToActions([0, 1]);
+    this.adminAction = await this.globalSer.checkRoleToActions([0]);
   }
 
   async setAsConsolidator() {
