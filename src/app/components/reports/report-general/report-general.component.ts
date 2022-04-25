@@ -59,7 +59,6 @@ export class ReportGeneralComponent implements OnInit {
   }
 
   async setDataToReport(data: any) {
-    await this.globalSer.presentLoading();
     this.dataToReport = null;
     this.dataToReport = !data ? null : {
       data1: {
@@ -177,7 +176,6 @@ export class ReportGeneralComponent implements OnInit {
       { label: 'Total de hnos. y niños', value: data.total },
       { label: 'Total de ofrendas', value: this.globalSer.getCurrency(data.offering || 0) },
     ];
-    await this.globalSer.dismissLoading();
   }
 
   getNumberGroup() {
