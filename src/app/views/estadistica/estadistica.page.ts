@@ -60,37 +60,29 @@ export class EstadisticaPage implements OnInit {
   }
 
   async getData() {
-    await this.globalSer.presentLoading();
     this.data = null;
     const data = await this.estadisticaService.getReports(this.queryParams);
 
     if (data && !data.error) {
       this.data = data;
-      await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
-      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else await this.globalSer.dismissLoading();
   }
 
-  async getDataFamiliesGroups(showLoader = false) {
-    if (showLoader) await this.globalSer.presentLoading();
+  async getDataFamiliesGroups() {
     this.data2 = null;
     const data = await this.estadisticaService.getReportsFamiliesGroups(this.queryParamsFg);
 
     if (data && !data.error) {
       this.data2 = data;
-      if (showLoader) await this.globalSer.dismissLoading();
       this.data2Alt = null;
-      await this.setTotalityData(showLoader);
+      await this.setTotalityData();
     }
     else if (data && data.error) {
-      if (showLoader) await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else await this.globalSer.dismissLoading();
   }
 
   setShowFilter() {
@@ -120,7 +112,7 @@ export class EstadisticaPage implements OnInit {
       this.showFilterFg = !this.showFilterFg;
       this.data2 = null;
       this.data2Alt = null;
-      await this.getDataFamiliesGroups(true);
+      await this.getDataFamiliesGroups();
     }
   }
 
@@ -156,7 +148,7 @@ export class EstadisticaPage implements OnInit {
     if (find) {
       this.data2 = null;
       this.data2Alt = null;
-      await this.getDataFamiliesGroups(true);
+      await this.getDataFamiliesGroups();
     }
     else await this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe indicar una fecha inicial');
   }
@@ -180,13 +172,12 @@ export class EstadisticaPage implements OnInit {
       confirmAction: async (value) => {
         this.totalityOpt = value;
         this.data2Alt = null;
-        await this.setTotalityData(true);
+        await this.setTotalityData();
       }
     });
   }
 
-  async setTotalityData(showLoader = false) {
-    if (showLoader) await this.globalSer.presentLoading();
+  async setTotalityData() {
     const data: any[] = [];
     const model = () => ({
       _id: null,
@@ -273,8 +264,6 @@ export class EstadisticaPage implements OnInit {
       });
     }
     this.data2Alt = data;
-
-    if (showLoader) await this.globalSer.dismissLoading();
   }
 
 }
