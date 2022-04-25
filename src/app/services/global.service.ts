@@ -48,7 +48,7 @@ export class GlobalService {
     await alert.present();
   }
 
-  async presentLoading(message: string | null = null )  {
+  async presentLoading(message: string | null = null ) {
     this.loading = await this.loadingCtrl.create({ message: message || 'Cargando...' });
     return this.loading.present();
   }

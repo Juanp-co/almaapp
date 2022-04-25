@@ -1,5 +1,5 @@
 <ion-row class="ion-no-padding ion-margin-start ion-margin-end ion-margin-top" *ngIf="data">
-  <ion-col *ngIf="listGroups && listGroups.length > 0">
+  <ion-col size="6" *ngIf="listGroups && listGroups?.length > 0" class="{{listGroups?.length > 1 ? '' : 'ion-hide'}}">
     <ion-item color="light">
       <ion-label position="floating" color="medium">Grupo seleccionado</ion-label>
       <ion-input
@@ -11,7 +11,7 @@
       ></ion-input>
     </ion-item>
   </ion-col>
-  <ion-col>
+  <ion-col size="6">
     <ion-item color="light">
       <ion-label position="floating" color="medium">Modo visualización</ion-label>
       <ion-input

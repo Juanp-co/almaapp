@@ -1,0 +1,69 @@
+<ion-content color="light">
+  <ion-header>
+    <app-minheader title="Reporte grupo familiar" [modal]="true"></app-minheader>
+  </ion-header>
+
+  <ion-row>
+    <ion-col class="ion-text-end {{ showFilter ? 'ion-hide' : '' }}">
+      <ion-button class="ion-text-center" color="light" (click)="setShowFilter()">
+        <ion-icon name="filter-outline" slot="start"></ion-icon>
+        <ion-text>Filtrar</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col class="{{ !showFilter ? 'ion-hide' : '' }}">
+      <ion-card>
+        <ion-card-content class="ion-no-padding">
+          <ion-row>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha inicio</ion-label>
+                <ion-datetime
+                  [(ngModel)]="queryParams.initDate"
+                  displayFormat="DD/MM/YYYY"
+                  [min]="minInitDate"
+                  [max]="maxInitDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha fin</ion-label>
+                <ion-datetime
+                  [(ngModel)]="queryParams.endDate"
+                  displayFormat="DD/MM/YYYY"
+                  [min]="minEndDate"
+                  [max]="maxEndDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-margin-top ion-text-center">
+            <ion-col size="12" class="ion-justify-content-center">
+              <ion-button class="ion-text-center" color="light" (click)="resetQueryParams()">
+                <ion-icon name="{{queryParams.initDate || queryParams.endDate ? 'trash' : 'close'}}-outline" slot="start"></ion-icon>
+                <ion-text>{{queryParams.initDate || queryParams.endDate ? 'Limpiar' : 'Cerrar'}}</ion-text>
+              </ion-button>
+              <ion-button class="ion-text-center" color="primary" (click)="findData()">
+                <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                <ion-text>Aplicar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="report">
+    <ion-col>
+      <app-report-general [data]="[report]"></app-report-general>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

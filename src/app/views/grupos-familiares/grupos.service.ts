@@ -36,6 +36,12 @@ export class GruposService {
     return this.globalSer.altResponse(res);
   }
 
+  async getReports(id: string, query: any) {
+    const res: any = await this.axios.getData(`/user/families-groups/${id}/reports`, query);
+    if (res?.success)  return res.data?.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
   async updateMembersGroup(id: string, data: any): Promise<any> {
     const res: any = await this.axios.putData(`/admin/families-groups/${id}/members`, data);
 

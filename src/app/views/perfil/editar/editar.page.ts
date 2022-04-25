@@ -67,7 +67,6 @@ export class EditarPage implements OnInit {
         this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
         const index = this.churches.findIndex(c => c._id === this.formData.church);
         this.churchesSelected = index === -1 ? null : index;
-        console.log('this.churches', this.churches);
         if (this.formData.department !== null) this.getCity();
       }
       else await this.errorSession();
