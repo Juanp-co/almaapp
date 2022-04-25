@@ -5,6 +5,7 @@ import {ReportarPage} from '../reportar/reportar.page';
 import {ModalMiembrosPage} from '../../modals/modal-miembros/modal-miembros.page';
 import {GlobalService} from '../../../services/global.service';
 import {StorageService} from '../../../services/storage.service';
+import {ModalEstadisticaPage} from '../modal-estadistica/modal-estadistica.page';
 
 @Component({
   selector: 'app-detalles',
@@ -27,6 +28,7 @@ export class DetallesPage implements OnInit {
     { input: 'master', label: 'Maestro' },
     { input: 'helper', label: 'Auxiliar' },
   ];
+  dataToReport: any;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -36,6 +38,9 @@ export class DetallesPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+  }
+
+  async ionViewWillEnter() {
     this.id = await this.activateRoute.snapshot.paramMap.get('id');
     this.userData = await this.storageService.get('data');
     this.adminRequest = await this.globalSer.checkRoleToActions([0, 1, 2]);
@@ -52,6 +57,7 @@ export class DetallesPage implements OnInit {
 
     if (data && !data.error) {
       this.group = data;
+      this.dataToReport = { number: data.number, sector: data.sector, subSector: data.subSector, _id: data._id };
       this.group.location = [
         {
           type: 'Feature',
@@ -114,6 +120,22 @@ export class DetallesPage implements OnInit {
       content,
       false
     );
+  }
+
+  /*
+    Reportes
+   */
+  async openReportModal() {
+    if (this.showButtonReport) {
+      await this.globalSer.presentLoading();
+
+      await this.globalSer.dismissLoading();
+      await this.globalSer.loadModal(
+        ModalEstadisticaPage,
+        { data: this.dataToReport },
+        false
+      );
+    }
   }
 
   /*

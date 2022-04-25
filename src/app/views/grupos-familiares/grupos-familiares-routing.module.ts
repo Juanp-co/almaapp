@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('./unirse/unirse.module').then( m => m.UnirsePageModule)
   },
   {
+    path: 'modal-estadistica',
+    loadChildren: () => import('./modal-estadistica/modal-estadistica.module').then( m => m.ModalEstadisticaPageModule)
+  },
+  {
     path: ':id',
     loadChildren: () => import('./detalles/detalles.module').then( m => m.DetallesPageModule)
   }
