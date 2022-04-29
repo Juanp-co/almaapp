@@ -76,7 +76,7 @@ export class DetallesEventoPage implements OnInit {
 
     if (data && !data.error) {
       await this.setDataToParams(data);
-      this.showButtonEdit = this.userid === data.user?._id;
+      this.showButtonEdit = this.userid === data.user?._id || await this.globalSer.checkRoleToActions([0, 1]);
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
