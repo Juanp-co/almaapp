@@ -62,7 +62,8 @@
         <app-elem-item label="Cuidad" value="{{ member.city || 'No indicado'}}"></app-elem-item>
         <app-elem-item label="Barrio" value="{{member.locality || 'No indicado'}}"></app-elem-item>
         <app-elem-item label="Dirección" value="{{member.direction || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Mi petición" value="{{member.petition || 'No indicado'}}" [show]="member.petition"></app-elem-item>
+        <app-elem-item label="Petición" value="{{member.petition || 'No indicado'}}" [show]="member.petition"></app-elem-item>
+        <app-elem-item label="Fecha de incorporación" value="{{member.created_at || 'No indicado'}}"></app-elem-item>
       </ion-col>
     </ion-row>
   </ion-col>

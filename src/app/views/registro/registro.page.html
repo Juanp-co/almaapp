@@ -13,7 +13,7 @@
                 <p>Bienvenido al registro. Por favor, complete el formulario.</p>
               </ion-text>
             </ion-col>
-            <ion-col size="12">
+            <ion-col size="12" size-sm="6">
               <ion-item>
                 <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
                 <ion-input
@@ -24,7 +24,7 @@
                 ></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="12">
+            <ion-col size="12" size-sm="6">
               <ion-item>
                 <ion-label position="floating" color="medium">Apellido(s) (*)</ion-label>
                 <ion-input
@@ -35,7 +35,7 @@
                 ></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="12" *ngIf="churches?.length > 1">
+            <ion-col size="12" size-sm="6" *ngIf="churches?.length > 1">
               <ion-item>
                 <ion-label position="floating" color="medium">Iglesia a la que asiste</ion-label>
                 <ion-input
@@ -45,6 +45,21 @@
                   class="ion-text-uppercase"
                   (click)="showListChurches()"
                 ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha de incorporación</ion-label>
+                <ion-datetime
+                  [(ngModel)]="formData.created_at"
+                  displayFormat="DD/MM/YYYY"
+                  min="2010-01-01"
+                  max="{{maxDate}}"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate()"
+                >
+                </ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col size="12" class="ion-margin-top">

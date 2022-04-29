@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import {IResumeProfileModel} from './resume-profile.model';
 import {departments} from '../../../../Utils/locations.data';
 import {
   bloodType,
@@ -30,7 +29,7 @@ export class ResumeProfileComponent implements OnInit {
   @Input() handleChangePhoto: () => void;
   @Input() handleConsolidator: () => void;
 
-  constructor(private globalSer: GlobalService) { }
+  constructor(private globalSer: GlobalService) {}
 
   ngOnInit() {
     if (this.member) {
@@ -44,6 +43,11 @@ export class ResumeProfileComponent implements OnInit {
       this.member.companyType = companyType[this.member.companyType] || null;
       this.member.civilStatus = civilStatus[this.member.civilStatus] || null;
       this.member.gender = gender[this.member.gender] || null;
+      if (this.member.created_at) {
+        this.member.created_at = dayjs(this.member.created_at, 'YYYY-MM-DD HH:mm:ss', true)
+          .locale('es')
+          .format('dddd, DD [de] MMMM [de] YYYY');
+      }
       if (this.member.department !== null) {
         const depto = departments[this.member.department] || null;
         if (depto) {
