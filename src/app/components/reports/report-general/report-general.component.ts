@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import {GlobalService} from '../../../services/global.service';
 
 @Component({
@@ -231,9 +232,14 @@ export class ReportGeneralComponent implements OnInit {
   async showObservation(index: number) {
     const ob = this.observations[index] || null;
     if (ob) {
+      const date = dayjs(ob.date, 'YYYY-MM-DD HH:mm:ss', true)
+        .locale('es')
+        .format('ddd, DD [de] MMM [de] YYYY - H:mm a');
+      const member = ob.member ? `<b>Por:</b> ${ob.member.names} ${ob.member.lastNames}` : null;
+
       await this.globalSer.presentAlert(
         'Observación',
-        `<b>Fecha: </b>${dayjs(ob.date).format('DD-MM-YYYY HH:mm')} <br><br> ${ob.observations}`
+        `<b>Fecha: </b>${date} <br><br> ${member} <br><br> ${ob.observations}`
       );
     }
     else

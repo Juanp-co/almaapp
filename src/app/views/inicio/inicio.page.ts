@@ -20,7 +20,7 @@ export class InicioPage implements OnInit {
     { titulo: 'Cumpleaños', imagen: 'birthday.svg', url: 'cumpleannos' },
     { titulo: 'Reportes', imagen: 'reportes.svg', url: 'estadistica' }
   ];
-  opciones: any[] = [];
+  opciones: any[]|null = null;
 
   // ===============
   params: any = {

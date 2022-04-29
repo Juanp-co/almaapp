@@ -69,7 +69,7 @@
                   max="{{maxDate}}"
                   doneText="Listo"
                   cancelText="Cancelar"
-                  (ionChange)="setDate()"
+                  (ionChange)="setDate('birthday')"
                 >
                 </ion-datetime>
               </ion-item>
@@ -172,6 +172,21 @@
                   </ion-text>
                 </ion-col>
               </ion-row>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha de incorporación</ion-label>
+                <ion-datetime
+                  [(ngModel)]="formData.created_at"
+                  displayFormat="DD/MM/YYYY"
+                  min="2010-01-01"
+                  max="{{maxDate}}"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate('created_at')"
+                >
+                </ion-datetime>
+              </ion-item>
             </ion-col>
             <ion-col size="12" class="ion-margin-top">
               <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>

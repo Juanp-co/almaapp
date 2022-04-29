@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
+import dayjs from 'dayjs';
 import {RegistroService} from './registro.service';
 import {GlobalService} from '../../services/global.service';
-import {documentType} from '../../../Utils/profile.data';
 import {
   checkNameOrLastName, checkPassword, checkPhone,
-  onlyLettersInputValidation,
-  onlyNumbersInputValidation
+  onlyLettersInputValidation
 } from '../../../Utils/validations.functions';
 import {StorageService} from '../../services/storage.service';
 
@@ -17,9 +16,9 @@ import {StorageService} from '../../services/storage.service';
 })
 export class RegistroPage implements OnInit {
 
-  documentTypes = documentType;
   referred = false;
   church: any = null;
+  maxDate: any = null;
   churches: any[] = [];
   successRegister = false;
   view = 0;
@@ -31,6 +30,7 @@ export class RegistroPage implements OnInit {
     lastNames: null,
     referred: null,
     church: null,
+    created_at: null,
   };
 
   constructor(
@@ -38,17 +38,17 @@ export class RegistroPage implements OnInit {
     private navCtrl: NavController,
     private registroService: RegistroService,
     private storageService: StorageService,
-  ) { }
+  ) {
+    this.maxDate = dayjs().format('YYYY-MM-DD');
+  }
 
   async ngOnInit() {
     await this.getChurches();
   }
 
   async getChurches() {
-    await this.globalSer.presentLoading('Registrando, por favor espere ...');
     this.churches = await this.registroService.getChurches();
     await this.storageService.set('churches', this.churches);
-    await this.globalSer.dismissLoading();
   }
 
   async back() {
@@ -101,6 +101,10 @@ export class RegistroPage implements OnInit {
 
   validateOnlyLetters(event: any) {
     onlyLettersInputValidation(event);
+  }
+
+  setDate() {
+    this.formData.created_at = dayjs(this.formData.created_at).format('YYYY-MM-DD');
   }
 
   /*

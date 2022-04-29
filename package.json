@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "npm run build --prod && npx cordova build android --prod",
+    "precommit": "npx ionic cordova build android --prod",
     "app": "ionic cordova build android --release --prod --buildConfig=build.json"
   },
   "private": true,

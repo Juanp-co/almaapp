@@ -42,6 +42,7 @@ export class NuevoMiembroPage implements OnInit {
     consolidated: false,
     iAmConsolidator: true,
     referred: null,
+    created_at: null,
   };
 
   constructor(
@@ -77,9 +78,9 @@ export class NuevoMiembroPage implements OnInit {
     await this.navCtrl.back();
   }
 
-  setDate() {
-    if (this.formData.birthday) {
-      this.formData.birthday = dayjs(this.formData.birthday).format('YYYY-MM-DD');
+  setDate(input) {
+    if (this.formData[input]) {
+      this.formData[input] = dayjs(this.formData[input]).format('YYYY-MM-DD');
     }
   }
 
