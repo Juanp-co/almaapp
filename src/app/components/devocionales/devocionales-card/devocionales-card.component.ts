@@ -37,9 +37,6 @@ export class DevocionalesCardComponent implements OnInit {
       this.model.sortTitle = this.item.title?.length > 20 ? `${this.item.title.substr(0, 20)} ...` : this.item.title;
       this.model.picture = this.item.picture || null;
       this.model.viewed = this.item.viewed || false;
-      this.model.created_at = dayjs(this.item.created_at, 'YYYY-MM-DD HH:mm:ss', true)
-        .locale('es')
-        .format('dddd, DD [de] MMMM [de] YYYY');
     }
   }
 

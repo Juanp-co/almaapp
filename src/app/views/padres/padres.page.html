@@ -71,7 +71,11 @@
     <ion-col *ngIf="!allSons">
       <ion-row *ngIf="totals.own > 0; else noReferrals">
         <ion-col class="ion-no-padding" size="12" size-sm="6" *ngFor='let referred of referrals'>
-          <app-personcard [data]="referred"></app-personcard>
+          <app-personcard
+            [data]="referred"
+            [removeButton]="true"
+            [handleRemoveMembersFamily]="removeMembersFamily"
+          ></app-personcard>
         </ion-col>
       </ion-row>
 
