@@ -70,6 +70,23 @@ export class PadresPage implements OnInit {
     if (users) this.users = [...this.users, ...users];
   }
 
+  async removeMemberAction(id) {
+    await this.globalSer.presentLoading('Quitando hijo espiritual. Por favor, espere...');
+    const res: any = await this.padreService.removeMember(id);
+
+    if (res && !res.error) {
+      this.referrals = this.referrals.filter(r => r._id !== id);
+      this.totals.own -= 1;
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', res || 'Se ha actualizado el listado de miembros exitosamente.');
+    }
+    else if (res && res.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
   async loadData(event: any = null) {
     if (this.users?.length !== this.totals && this.queryParams.page < this.pages) {
       const newPage = this.queryParams.page + 1;
@@ -114,4 +131,16 @@ export class PadresPage implements OnInit {
     if (this.allSons) this.getTotalsUsersAdmin();
     this.allSons = !this.allSons;
   }
+
+  async confirmRemove(id: string|null = null) {
+    if (id) {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea quitar a este hijo espiritual?',
+        confirmAction: () => this.removeMemberAction(id)
+      });
+    }
+  }
+
+  removeMembersFamily = (id): void => { this.confirmRemove(id); };
 }

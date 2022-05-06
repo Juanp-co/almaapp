@@ -42,7 +42,7 @@ export class SubirPage implements OnInit {
     if (data && !data.error) {
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha compartido el documento exitosamente.');
-      this.gotBack();
+      this.goBack();
     }
     else if (data && data.error) {
       await this.globalSer.dismissLoading();
@@ -51,8 +51,8 @@ export class SubirPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  async gotBack() {
-    await this.navCtrl.navigateForward(`/documentos`);
+  async goBack() {
+    await this.navCtrl.back();
   }
 
   openFile(event) {
