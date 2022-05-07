@@ -8,9 +8,7 @@ export class StorageService {
 
   private localStorage: Storage | null = null;
 
-  constructor(
-    private storage: Storage
-  ) {
+  constructor(private storage: Storage) {
     this.init();
   }
 

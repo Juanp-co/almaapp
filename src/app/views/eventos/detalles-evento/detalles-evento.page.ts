@@ -16,7 +16,7 @@ import {StorageService} from '../../../services/storage.service';
 })
 export class DetallesEventoPage implements OnInit {
 
-  eventData: any = {};
+  eventData: any = null;
   eventDataForm: any = {
     _id: null,
     title: null,

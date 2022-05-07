@@ -40,7 +40,6 @@ export class DataService {
       this.resizeOuput(canvas, outputType, callback);
     };
     image.src = dataURL;
-
   }
 
   resizeOuput(canvas, outputType, callback) {
@@ -54,6 +53,5 @@ export class DataService {
         callback(canvas.toDataURL('image/jpeg', 0.8));
         break;
     }
-
   }
 }

@@ -1,8 +1,8 @@
-<ion-content color="light">
-  <ion-header>
-    <app-minheader title="Ofrendas"></app-minheader>
-  </ion-header>
+<ion-header>
+  <app-minheader title="Ofrendas"></app-minheader>
+</ion-header>
 
+<ion-content color="light">
   <div *ngIf="banks && banks.length > 0; else noBanks">
     <ion-list *ngFor='let bank of banks'>
       <ion-card *ngIf="bank && bank.description">

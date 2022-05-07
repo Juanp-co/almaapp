@@ -20,6 +20,7 @@ export class EscuelaPage implements OnInit {
     page: 1,
     limit: 100
   };
+  showAllCourses = false;
 
   constructor(
     private globalSer: GlobalService,
@@ -34,12 +35,16 @@ export class EscuelaPage implements OnInit {
   async ionViewWillEnter() {
     if (!(await this.globalSer.checkSession()))
       this.router.navigate(['/']);
-    else await this.getCoursesList();
+    else {
+      this.showAllCourses = await this.globalSer.checkRoleToActions([0, 1]);
+      this.getCoursesList();
+    }
   }
 
   async getCoursesList() {
-    await this.globalSer.presentLoading();
-    const data: any = await this.escuelaServ.getCourses(this.queryParams);
+    const data: any = this.showAllCourses ?
+      await this.escuelaServ.getCoursesAdmin(this.queryParams)
+      : await this.escuelaServ.getCourses(this.queryParams);
 
     if (data && !data.error) {
       this.courses = data as IEscuela[];
@@ -49,13 +54,10 @@ export class EscuelaPage implements OnInit {
           c.description = `${c.description.substr(0, 50)} ...`;
         }
       });
-      await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
-      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else await this.globalSer.dismissLoading();
   }
 
   // query actions

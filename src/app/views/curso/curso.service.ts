@@ -18,6 +18,12 @@ export class CursoService {
     return this.globalSer.altResponse(res);
   }
 
+  async getCourseAdmin(slug: string) {
+    const res: any = await this.axios.getData(`/admin/courses/${slug}`, { slug: true });
+    if (res && res.success) return res.data;
+    return this.globalSer.altResponse(res);
+  }
+
   /*
     Temary
    */

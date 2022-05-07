@@ -1,15 +1,16 @@
-<ion-content color="light">
-  <ion-header>
-    <app-minheader title="Eventos"></app-minheader>
-  </ion-header>
+<ion-header>
+  <app-minheader title="Eventos"></app-minheader>
+</ion-header>
 
+<ion-content color="light">
   <ion-row>
     <ion-col size="12">
-      <app-events-form></app-events-form>
+      <app-events-form
+        [handleCancel]="goBack"
+      ></app-events-form>
     </ion-col>
     <ion-col size="12">
       <br>
     </ion-col>
   </ion-row>
-
 </ion-content>

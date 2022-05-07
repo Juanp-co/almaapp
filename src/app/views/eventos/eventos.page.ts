@@ -42,18 +42,14 @@ export class EventosPage implements OnInit {
 
   async getEventsList() {
     if (this.showFilter) this.showFilter = false;
-    await this.globalSer.presentLoading();
     const data: any = await this.eventsService.getEvents(this.queryParams);
 
     if (data && !data.error) {
       this.events = data;
-      await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
-      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else await this.globalSer.dismissLoading();
   }
 
   setShowFilter() {
