@@ -1,9 +1,9 @@
-<ion-content color="light">
-  <ion-header class="sticky-menu {{churchSelected !== -1 || sectorSelected ? 'ion-hide' : ''}}">
-    <app-minheader title="Grupos familiares" *ngIf="showGroups"></app-minheader>
-    <app-minheader title="Organización" *ngIf="!showGroups"></app-minheader>
-  </ion-header>
+<ion-header class="sticky-menu {{churchSelected !== -1 || sectorSelected ? 'ion-hide' : ''}}">
+  <app-minheader title="Grupos familiares" *ngIf="showGroups"></app-minheader>
+  <app-minheader title="Organización" *ngIf="!showGroups"></app-minheader>
+</ion-header>
 
+<ion-content color="light">
   <ion-row class="{{ !showGroups ? '' : 'ion-hide' }} ion-no-padding">
 
     <ion-col size="12" *ngIf="churchSelected === -1">

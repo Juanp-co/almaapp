@@ -1,14 +1,12 @@
+<ion-header>
+  <app-minheader title="Visitas pendientes" [modal]="true"></app-minheader>
+</ion-header>
+
 <ion-content color="light">
-
-  <ion-header>
-    <app-minheader title="Visitas pendientes" [modal]="true"></app-minheader>
-  </ion-header>
-
   <ion-row *ngIf="members?.length > 0; else noMembers">
     <ion-col
       size="12"
       size-sm="6"
-      size-md="4"
       *ngFor="let m of members"
     >
       <app-personcard

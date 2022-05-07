@@ -1,10 +1,9 @@
+<ion-header>
+  <app-minheader title="Escuela"></app-minheader>
+</ion-header>
+
 <ion-content color="light">
-  <ion-header>
-    <app-minheader title="Escuela"></app-minheader>
-  </ion-header>
-
   <div *ngIf="courses !== null">
-
     <ion-row *ngIf="courses && courses.length > 0">
       <ion-col size="12" class="ion-margin-start">
         <ion-text color="medium"><h3>Tus niveles</h3></ion-text>

@@ -1,8 +1,8 @@
-<ion-content color="light">
-  <ion-header>
-    <app-minheader title="Invitaciones" [modal]="true"></app-minheader>
-  </ion-header>
+<ion-header>
+  <app-minheader title="Invitaciones" [modal]="true"></app-minheader>
+</ion-header>
 
+<ion-content color="light">
   <ion-row *ngIf="totals > 0; else noInvitations">
     <ion-col size="12" *ngFor="let invitation of invitations">
       <ion-card>

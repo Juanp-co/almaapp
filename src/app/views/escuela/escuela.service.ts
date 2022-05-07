@@ -17,4 +17,10 @@ export class EscuelaService {
     if (res && res.success) return res.data.courses;
     return this.globalSer.altResponse(res);
   }
+
+  async getCoursesAdmin(query = {}) {
+    const res: any = await this.axios.getData('/admin/courses', query);
+    if (res && res.success) return res.data.courses;
+    return this.globalSer.altResponse(res);
+  }
 }

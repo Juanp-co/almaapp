@@ -20,6 +20,7 @@ export class CursoPage implements OnInit, OnDestroy {
   dataCourseUser: any = null;
   slug: string | null = null;
   activeClickTemary = false;
+  adminCourse = false;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -30,17 +31,24 @@ export class CursoPage implements OnInit, OnDestroy {
     private storageService: StorageService,
   ) {}
 
-  async ngOnInit() {
-    // check if exist session
-    if (!(await this.globalSer.checkSession())) this.router.navigate(['/']);
-    else await this.getCourse();
+  ngOnInit() {
+  }
+
+  async ionViewWillEnter() {
+    if (!(await this.globalSer.checkSession()))
+      this.router.navigate(['/']);
+    else {
+      this.adminCourse = await this.globalSer.checkRoleToActions([0, 1]);
+      this.getCourse();
+    }
   }
 
   async getCourse() {
     if (!this.slug) await this.setSlug();
 
-    await this.globalSer.presentLoading();
-    const data: any = await this.coursesService.getCourse(this.slug);
+    const data: any = this.adminCourse ?
+      await this.coursesService.getCourseAdmin(this.slug)
+      : await this.coursesService.getCourse(this.slug);
 
     if (data && !data.error) {
       this.course = data.course as ICursoData;
@@ -50,13 +58,8 @@ export class CursoPage implements OnInit, OnDestroy {
         await this.storageService.set(this.slug, this.dataCourseUser);
         this.activeClickTemary = true;
       }
-      await this.globalSer.dismissLoading();
     }
-    else if (data && data.error) {
-      await this.globalSer.dismissLoading();
-      await this.globalSer.errorSession();
-    }
-    else await this.globalSer.dismissLoading();
+    else if (data && data.error) await this.globalSer.errorSession();
   }
 
   async setSlug() {
@@ -79,7 +82,7 @@ export class CursoPage implements OnInit, OnDestroy {
    */
   async openClassModal(i: number) {
     const open = i === 0 || (this.course.temary[i - 1] && this.course.temary[i - 1].view === 2);
-    if (!open) {
+    if (!open && !this.adminCourse) {
       await this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe visualizar el tema anterior para poder continuar.');
     }
     else {
@@ -103,7 +106,6 @@ export class CursoPage implements OnInit, OnDestroy {
           }
         }
       };
-      await this.globalSer.presentLoading();
       const theme = this.course.temary[i] || null;
 
       if (theme) {
@@ -117,7 +119,6 @@ export class CursoPage implements OnInit, OnDestroy {
             title: theme.title,
             test: theme.quiz
           };
-          await this.globalSer.dismissLoading();
           await this.globalSer.loadModal(
             ModalExamenTemaPage,
             content,
@@ -128,7 +129,6 @@ export class CursoPage implements OnInit, OnDestroy {
         else {
           // send data to update the view history
           this.updateHistorical(this.course.temary[i]._id, '1');
-          await this.globalSer.dismissLoading();
           await this.globalSer.loadModal(
             ModalContenidoTemaPage,
             { content: theme },
@@ -138,7 +138,6 @@ export class CursoPage implements OnInit, OnDestroy {
         }
       }
       else {
-        await this.globalSer.dismissLoading();
         await this.globalSer.presentAlert('Alerta', 'Ha ocurrido un error al momento de cargar el contenido.');
         await this.navCtrl.back();
       }

@@ -119,6 +119,11 @@ b {
 
 .toSmall { font-size: 0.8em !important; }
 
+.w-100 {
+  width: 100vw;
+}
+
+
 /*
 To static top bar
  */
@@ -139,10 +144,12 @@ To static top bar
 }
 
 .banner-event-no-picture {
-  border-radius: 5px 5px 0 0;
-  background-size: contain !important;
+  height: 100vh;
+  max-height: calc(100vw / 2);
+  background-size: cover !important;
   background-repeat: no-repeat;
   background-position: center !important;
+  resize: both;
 }
 
 .img-rounded {

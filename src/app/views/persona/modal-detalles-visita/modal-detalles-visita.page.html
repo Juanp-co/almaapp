@@ -1,10 +1,9 @@
-<ion-content color="light" *ngIf="data">
+<ion-header>
+  <app-minheader title="Detalles visita" [modal]="true"></app-minheader>
+</ion-header>
 
-  <ion-header>
-    <app-minheader title="Detalles visita" [modal]="true"></app-minheader>
-  </ion-header>
-
-  <ion-row>
+<ion-content color="light">
+  <ion-row *ngIf="data">
     <ion-col class="ion-padding-top" size="12">
       <ion-text class="ion-margin-start"><b>Visita realizada por: </b></ion-text>
     </ion-col>

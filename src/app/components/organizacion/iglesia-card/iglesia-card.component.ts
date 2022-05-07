@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {GlobalService} from '../../../services/global.service';
 
 @Component({
   selector: 'app-iglesia-card',
@@ -13,9 +14,20 @@ export class IglesiaCardComponent implements OnInit {
   @Input() extendData = false;
   @Input() handleClick: (index: any) => void;
 
-  constructor() { }
+  church: any;
 
-  ngOnInit() {}
+  constructor() {}
+
+  ngOnInit() {
+    if (this.data) {
+      this.church = Object.assign({}, this.data);
+      if (this.enableClick) {
+        if (this.church.description?.length > 50) {
+          this.church.description = `${this.church.description.substr(0, 50)} ...`;
+        }
+      }
+    }
+  }
 
   handleClickAction() {
     if (this.enableClick) this.handleClick(this.index);

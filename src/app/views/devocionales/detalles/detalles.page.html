@@ -1,23 +1,26 @@
+<ion-header>
+  <app-minheader title="Detalles"></app-minheader>
+</ion-header>
+
 <ion-content color="light">
-  <ion-header>
-    <app-minheader title="Detalles"></app-minheader>
-  </ion-header>
+  <div class="w-100" *ngIf="devotional">
+    <div
+      class="banner-devotional"
+      [ngStyle]="{backgroundImage: 'url(' + devotional.picture + ')'}"
+      *ngIf="devotional.picture"
+    >
+    </div>
+    <div
+      class="banner-devotional"
+      [ngStyle]="{backgroundImage: 'url(assets/cruz.png)'}"
+      *ngIf="!devotional.picture"
+    >
+    </div>
+  </div>
 
   <ion-row *ngIf="devotional">
     <ion-col size="12" class="ion-no-margin ion-no-padding">
-      <ion-card>
-        <div
-          class="banner-devotional"
-          [ngStyle]="{backgroundImage: 'url(' + devotional.picture + ')', height: '250px'}"
-          *ngIf="devotional.picture"
-        >
-        </div>
-        <div
-          class="banner-devotional"
-          [ngStyle]="{backgroundImage: 'url(assets/cruz.png)', height: '250px'}"
-          *ngIf="!devotional.picture"
-        >
-        </div>
+      <ion-card class="ion-no-padding">
         <ion-card-content>
           <ion-row class="ion-no-margin ion-no-padding">
             <ion-col size="12">
@@ -38,22 +41,23 @@
             <ion-col size="12">
               <br>
             </ion-col>
-            <ion-col size="6" class="ion-text-center">
-              <ion-button color="light" (click)="goBack()">
-                <ion-icon name="close-outline" slot="start"></ion-icon>
-                <ion-text>Cerrar</ion-text>
-              </ion-button>
-            </ion-col>
-            <ion-col size="6" class="ion-text-center">
-              <ion-button color="primary" (click)="shareGeneric()">
-                <ion-icon name="share-social-outline" slot="start"></ion-icon>
-                <ion-text>Compartir</ion-text>
-              </ion-button>
-            </ion-col>
           </ion-row>
         </ion-card-content>
       </ion-card>
     </ion-col>
+    <ion-col size="6" class="ion-text-center">
+      <ion-button color="medium" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        <ion-text>Atrás</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col size="6" class="ion-text-center">
+      <ion-button color="primary" (click)="shareGeneric()">
+        <ion-icon name="share-social-outline" slot="start"></ion-icon>
+        <ion-text>Compartir</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col class="ion-margin-bottom"></ion-col>
   </ion-row>
 
 </ion-content>
