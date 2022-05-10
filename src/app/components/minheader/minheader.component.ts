@@ -13,6 +13,7 @@ export class MinheaderComponent implements OnInit {
   @Input() slugValue: string;
   @Input() pathUrl: string;
   @Input() modal = false;
+  @Input() handleBack: (value: any) => void;
   titleHeader: string;
   style: any = {
     'background-image': `linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/cruz.png)`
@@ -32,9 +33,12 @@ export class MinheaderComponent implements OnInit {
   }
 
   async back() {
-    if (this.slugValue) await this.storageService.remove(this.slugValue);
-    if (this.pathUrl) await this.navCtrl.back();
-    else await this.navCtrl.back();
+    if (this.handleBack) this.handleBack(null);
+    else {
+      if (this.slugValue) await this.storageService.remove(this.slugValue);
+      if (this.pathUrl) await this.navCtrl.back();
+      else await this.navCtrl.back();
+    }
   }
 
   async closeModal() {

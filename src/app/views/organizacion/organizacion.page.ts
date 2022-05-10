@@ -115,6 +115,8 @@ export class OrganizacionPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
+  /* actions */
+
   async setViewChurch(index) {
     await this.globalSer.presentLoading();
     const church = this.organization[index];
@@ -143,9 +145,17 @@ export class OrganizacionPage implements OnInit {
    */
   setSubSectorsList(sectorGroup: any = null) {
     if (sectorGroup) {
-      this.subSectors = [
-        ...new Set(this.groupsData?.filter(gd => gd.sector === sectorGroup) || [])
-      ];
+      const subSectors = [];
+      const subSectorsListAdded = [];
+      this.groupsData?.forEach(gd => {
+        if (gd.sector === sectorGroup) {
+          if (!subSectorsListAdded.includes(gd.subSector)) {
+            subSectors.push(gd);
+            subSectorsListAdded.push(gd.subSector);
+          }
+        }
+      });
+      this.subSectors = subSectors || [];
       this.sectorSelected = sectorGroup;
     }
     else {
@@ -209,6 +219,6 @@ export class OrganizacionPage implements OnInit {
   handleClickAction1 = (v: any): void => { this.setSubSectorsList(v); };
   handleClickAction2 = (v: any): void => { this.setViewSubGroupsData(v); };
   handleClickAction3 = (v: any): void => { this.setViewGroupData(v); };
-  handleClickChurch = (index): void => { this.setViewChurch(index); };
+  handleClickChurch = (index = -1): void => { this.setViewChurch(index); };
   handleClickOrganization = (v: any): void => { this.setViewOrganization(v); };
 }

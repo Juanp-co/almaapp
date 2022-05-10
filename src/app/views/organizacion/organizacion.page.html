@@ -1,6 +1,34 @@
-<ion-header class="sticky-menu {{churchSelected !== -1 || sectorSelected ? 'ion-hide' : ''}}">
-  <app-minheader title="Grupos familiares" *ngIf="showGroups"></app-minheader>
-  <app-minheader title="Organización" *ngIf="!showGroups"></app-minheader>
+<ion-header>
+  <app-minheader title="Organización" *ngIf="!showGroups && churchSelected === -1"></app-minheader>
+  <app-minheader
+    title="Detalles de la iglesia"
+    [handleBack]="handleClickChurch"
+    *ngIf="!showGroups && churchSelected > -1 && !viewSelected"
+  ></app-minheader>
+  <app-minheader
+    title="{{viewSelected.label}} ({{counters[viewSelected.key]}})"
+    [handleBack]="handleClickOrganization"
+    *ngIf="!showGroups && churchSelected > -1 && viewSelected"
+  ></app-minheader>
+  <app-minheader
+    title="Grupos familiares"
+    *ngIf="showGroups && !sectorSelected && !subSectorSelected && !showGroupData"
+  ></app-minheader>
+  <app-minheader
+    title="Sector #{{sectorSelected || '0000'}} ({{subSectors?.length || 0}})"
+    [handleBack]="handleClickAction1"
+    *ngIf="!showGroupData && sectorSelected && !subSectorSelected"
+  ></app-minheader>
+  <app-minheader
+    title="S # {{sectorSelected || '0000'}} SS # {{subSectorSelected || '0000'}} ({{subSectorsGroups?.length || 0}})"
+    [handleBack]="handleClickAction2"
+    *ngIf="!showGroupData && sectorSelected && subSectorSelected"
+  ></app-minheader>
+  <app-minheader
+    title="Detalles del grupo"
+    [handleBack]="handleClickAction3"
+    *ngIf="showGroupData"
+  ></app-minheader>
 </ion-header>
 
 <ion-content color="light">
@@ -23,13 +51,6 @@
     <ion-col size="12" class="ion-no-padding" *ngIf="churchSelected !== -1">
 
       <ion-row>
-        <ion-col size="12" class="position-sticky {{!viewSelected ? '' : 'ion-hide'}}">
-          <app-barra-seccion
-            label="Detalles de la iglesia"
-            index="-1"
-            [handleClick2]="handleClickChurch"
-          ></app-barra-seccion>
-        </ion-col>
         <ion-col size="12" class="{{!viewSelected ? '' : 'ion-hide'}}">
           <app-iglesia-card
             [data]="organization[churchSelected].church"
@@ -56,12 +77,6 @@
         </ion-col>
         <ion-col size="12" *ngIf="viewSelected" class="ion-no-margin ion-no-padding">
           <ion-row>
-            <ion-col size="12" class="position-sticky">
-              <app-barra-seccion
-                label="{{viewSelected.label}} ({{counters[viewSelected.key]}})"
-                [handleClick1]="handleClickOrganization"
-              ></app-barra-seccion>
-            </ion-col>
             <ion-col size="12">
               <ion-list>
                 <ion-item *ngFor="let item of viewSelected.list">
@@ -84,30 +99,7 @@
 
   <!-- Grupos familiares -->
   <ion-row class="{{ showGroups ? '' : 'ion-hide' }} ion-align-items-center">
-    <ion-col class="ion-no-margin ion-no-padding">
-      <ion-row>
-        <ion-col size="12" class="{{ !showGroupData && sectorSelected && !subSectorSelected ? '' : 'ion-hide' }} position-sticky">
-          <app-barra-seccion
-            label="Sector #{{sectorSelected || '0000'}} ({{subSectors?.length || 0}})"
-            [handleClick1]="handleClickAction1"
-          ></app-barra-seccion>
-        </ion-col>
-        <ion-col size="12" class="{{ !showGroupData && sectorSelected && subSectorSelected ? '' : 'ion-hide' }} position-sticky">
-          <app-barra-seccion
-            label="S # {{sectorSelected || '0000'}} SS # {{subSectorSelected || '0000'}} ({{subSectorsGroups?.length || 0}})"
-            [handleClick1]="handleClickAction2"
-          ></app-barra-seccion>
-        </ion-col>
-        <ion-col size="12" class="{{ showGroupData ? '' : 'ion-hide' }} position-sticky">
-          <app-barra-seccion
-            label="Detalles del grupo"
-            [handleClick1]="handleClickAction3"
-          ></app-barra-seccion>
-        </ion-col>
-        <ion-col size="12" class="ion-margin-start {{!showGroupData && !sectorSelected && !subSectorSelected ? '' : 'ion-hide'}}">
-          <ion-text color="primary"><h3>Grupos familiares</h3></ion-text>
-        </ion-col>
-      </ion-row>
+    <ion-col class="ion-no-margin ion-no-padding sticky-menu">
       <ion-row class="ion-align-items-center">
         <ion-col size="12" *ngIf="!showGroupData && !sectorSelected && sectors?.length > 0">
           <ion-list>

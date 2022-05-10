@@ -35,6 +35,9 @@ export class AccederPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+  }
+
+  async ionViewWillEnter() {
     const token = await this.storageService.get('token');
     if (token) this.goTo();
     else this.getParams();

@@ -21,10 +21,9 @@
       <div class="scrolling-wrapper">
         <app-devocionales-card *ngFor="let item of devotionals" [item]="item"></app-devocionales-card>
         <div class="card">
-          <ion-card>
-            <div [ngStyle]="{'background-image': 'url(' + '/assets/cruz.png' + ')'}" class="img_header"></div>
+          <ion-card class="shadow-box-item">
+            <div class="img_header" [ngStyle]="{'background-image': 'url(' + '/assets/cruz.png' + ')', height: '95px'}"></div>
             <ion-card-content>
-              <ion-text class="card-title">Ver nuestra lista de devocionales</ion-text>
               <ion-button
                 fill="outline"
                 slot="end"
@@ -41,7 +40,7 @@
       <div class="scrolling-wrapper">
         <app-eventcard2 *ngFor="let ele of events" [data]="ele"></app-eventcard2>
         <div class="card">
-          <ion-card>
+          <ion-card class="shadow-box-item">
             <br>
             <div [ngStyle]="{'background-image': 'url(' + '/assets/icon/calendario.svg' + ')'}" class="img_header4"></div>
             <ion-card-content class="ion-text-center">
@@ -58,7 +57,7 @@
     <ion-col size="12">
       <div class="scrolling-wrapper">
         <div class="card3" *ngFor="let item of opciones; let i=index" (click)="irMenu(i)">
-          <ion-card>
+          <ion-card class="shadow-box-item">
             <div
               [ngStyle]="{'background-image': 'url(assets/icon/' + item.imagen + ')'}"
               class="img_header3"
@@ -69,7 +68,7 @@
           </ion-card>
         </div>
         <div class="card3" (click)="logout()" *ngIf="logged">
-          <ion-card>
+          <ion-card class="shadow-box-item">
             <div [ngStyle]="{'background-image': 'url(assets/icon/logout.svg)'}" class="img_header3"></div>
             <ion-card-content>
               <ion-card-subtitle class="ion-text-center">Salir</ion-card-subtitle>

@@ -1,5 +1,5 @@
 <div class="card" *ngIf="model" (click)="goTo(model._id)">
-  <ion-card>
+  <ion-card class="shadow-box-item">
     <div
       [ngStyle]="{'background-image': 'url(' + (model.picture || 'assets/cruz.png')+ '), url(assets/cruz.png)'}"
       class="img_header"
