@@ -196,7 +196,7 @@ To static top bar
     white-space: normal;
   }
   .img_header{
-    height: 110px !important;
+    height: 110px;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -226,6 +226,12 @@ To static top bar
   .description{
     margin: 5px 0;
   }
+}
+
+.shadow-box-item {
+  border: 1px solid rgba(124,152,138,0.4);
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(124,152,138,1);
+  box-shadow: 0px 0px 10px -3px rgba(124,152,138,1);
 }
 
 .img-profile-card {

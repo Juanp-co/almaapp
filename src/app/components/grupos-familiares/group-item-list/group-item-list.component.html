@@ -8,6 +8,9 @@
     <h3>
       <b>{{label}} #{{simpleValue ? value : value[keyItem]}}</b>
     </h3>
+    <h3 *ngIf="keyItem === 'number'">
+      <i>{{value['direction']}}</i>
+    </h3>
   </ion-label>
   <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
 </ion-item>

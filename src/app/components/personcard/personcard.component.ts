@@ -14,6 +14,7 @@ export class PersoncardComponent implements OnInit {
   @Input() disabledClick = false;
   @Input() removeButton = false;
   @Input() handleRemoveMembersFamily: (id) => void;
+  @Input() handleLinkExternal: (id) => void;
   member: any = null;
   group = false;
   showButton = false;

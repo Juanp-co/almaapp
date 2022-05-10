@@ -87,10 +87,7 @@ export class InicioPage implements OnInit {
         const index2 = this.opciones.findIndex(o => o.titulo === 'Consolidados');
 
         if (index2 === -1) {
-          this.opciones = [
-            { titulo: 'Consolidados', imagen: 'consolidates.svg', url: 'consolidados' },
-            ...this.opciones.filter(o => !['Red de padres', 'Grupos fam.'].includes(o.titulo))
-          ];
+          this.opciones.unshift({ titulo: 'Consolidados', imagen: 'consolidates.svg', url: 'consolidados' });
         }
       }
 
@@ -183,6 +180,7 @@ export class InicioPage implements OnInit {
       header: 'Salir',
       message: '¿Está seguro qué desea finalizar la sesión?',
       confirmAction: async () => {
+        this.opciones = this.baseMenu;
         this.userData = null;
         this.logged = false;
         await this.axiosService.deleteData('/logout');
