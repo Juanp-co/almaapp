@@ -126,10 +126,10 @@ export class PadresPage implements OnInit {
     }, 200);
   }
 
-  setAllSons() {
+  setAllSons(value = true) {
     this.queryParams.search = null;
-    if (this.allSons) this.getTotalsUsersAdmin();
-    this.allSons = !this.allSons;
+    if (!this.allSons) this.getTotalsUsersAdmin();
+    this.allSons = value;
   }
 
   async confirmRemove(id: string|null = null) {

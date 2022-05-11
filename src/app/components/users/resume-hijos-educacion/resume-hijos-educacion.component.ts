@@ -11,6 +11,7 @@ export class ResumeHijosEducacionComponent implements OnInit {
   @Input() isMember = false;
   @Input() coursesData: any = null;
   @Input() groupData: any = null;
+  @Input() referred: any = null;
   @Input() referralsData: any = null;
   @Input() showGroup = false;
   @Input() showRemoveButton = false;

@@ -33,6 +33,14 @@
     <ion-card class="{{ !showCourses && isMember ? '' : 'ion-hide'}}">
       <ion-card-content class="ion-no-padding">
         <ion-row>
+          <ion-col size="12" class="ion-padding" *ngIf="referred">
+            <ion-text color="medium">
+              <b>Padre espiritual</b>
+            </ion-text>
+          </ion-col>
+          <ion-col>
+            <app-personcard [data]="referred"></app-personcard>
+          </ion-col>
           <ion-col size="12" class="ion-padding">
             <ion-text color="medium">
               <b>Hijos espirituales ({{ referrals?.totals }})</b>
@@ -40,8 +48,8 @@
           </ion-col>
           <ion-col size="12" *ngIf="referrals?.totals > 0">
             <ion-row>
-              <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3" *ngFor='let referred of referrals?.list' >
-                <app-personcard [data]="referred" [disabledClick]="true"></app-personcard>
+              <ion-col [size]="12" [sizeSm]="6" [sizeMd]="4" [sizeLg]="3" *ngFor='let r of referrals?.list' >
+                <app-personcard [data]="r" [disabledClick]="true"></app-personcard>
               </ion-col>
             </ion-row>
           </ion-col>

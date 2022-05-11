@@ -28,7 +28,7 @@ export class PersoncardComponent implements OnInit {
     this.member = this.data;
     this.group = this.getGroup;
     if (this.disabledClick) this.showButton = false;
-    else if (this.member && this.member._id) {
+    else if (this.member?._id) {
       this.showButton = await this.checkIdMember(this.member._id);
     }
   }
