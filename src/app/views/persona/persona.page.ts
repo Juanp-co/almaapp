@@ -16,6 +16,7 @@ export class PersonaPage implements OnInit {
   showInfo = true;
   adminAction = false;
   member: any = null;
+  referred: any = null;
   courses: any = {
     totals: 0,
     list: []
@@ -53,6 +54,7 @@ export class PersonaPage implements OnInit {
 
       if (data && !data.error) {
         this.member = data.member || null;
+        this.referred = data.referred || null;
         this.courses.list = data.courses || [];
         this.courses.totals = this.courses?.list?.length || 0;
         this.referrals.list = data.referrals || [];

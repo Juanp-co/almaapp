@@ -24,8 +24,8 @@ export class EventosService {
     return this.globalSer.altResponse(res);
   }
 
-  async deleteEvent(id: string|null = null) {
-    const res: any = await this.axios.deleteData(`/events/${id}`);
+  async deleteEvent(id: string|null = null, superadmin = false) {
+    const res: any = await this.axios.deleteData(`/events/${id}${superadmin ? '?superadmin=true' : ''}`);
     if (res && res.success) return res.data || {};
     return this.globalSer.altResponse(res);
   }

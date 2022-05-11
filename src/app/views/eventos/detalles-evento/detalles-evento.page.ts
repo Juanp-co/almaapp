@@ -88,7 +88,7 @@ export class DetallesEventoPage implements OnInit {
 
   async deleteEvent() {
     await this.globalSer.presentLoading();
-    const data: any = await this.eventsService.deleteEvent(this.id);
+    const data: any = await this.eventsService.deleteEvent(this.id, this.showButtonEdit);
 
     if (data && !data.error) {
       const { msg } = data || {};
