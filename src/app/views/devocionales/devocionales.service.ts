@@ -35,4 +35,16 @@ export class DevocionalesService {
     if (res && res.success) return res.data?.devotional || null;
     return this.globalSer.altResponse(res);
   }
+
+  async updateDevotional(id, formData: any = {}) {
+    const res: any = await this.axios.putData(`/admin/devotionals/${id}?superadmin=true`, formData);
+    if (res && res.success) return res.data?.devotional || null;
+    return this.globalSer.altResponse(res);
+  }
+
+  async deleteDevotional(id) {
+    const res: any = await this.axios.deleteData(`/admin/devotionals/${id}?superadmin=true`);
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
 }

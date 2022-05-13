@@ -44,9 +44,9 @@ export class CrearPage implements OnInit {
     }
   }
 
-  async save() {
+  async save(formData: any = {}) {
     await this.globalSer.presentLoading('Agregando devocional, por favor espere ...');
-    const data: any = await this.devocionalesService.saveDevotionals(this.formData);
+    const data: any = await this.devocionalesService.saveDevotionals(formData);
 
     if (data && !data.error) {
       await this.globalSer.dismissLoading();
@@ -62,46 +62,7 @@ export class CrearPage implements OnInit {
 
   async goBack() { await this.navCtrl.back(); }
 
-  onChangeEditor({ editor }: ChangeEvent) {
-    this.formData.description = editor?.getData();
-  }
-
-  openFile(event) {
-    const files = event.target.files;
-
-    if (typeof files[0] !== 'object') return false;
-    else {
-      this.dataService.resizePhoto(files[0], 900, 'dataURL',  (resizedFile) => {
-        this.formData.picture = resizedFile;
-      });
-    }
-  }
-
-  setFormData(input: string, ev: any) {
-    this.formData[input] = ev.target.value || null;
-  }
-
-  validate() {
-    const { title, description, picture, urlVideo } = this.formData;
-
-    if (!picture) return 'Disculpe, pero debe subir una imagen para la portada del devocional.';
-    if (!title || title?.length < 5) return 'Disculpe, pero debe indicar un título correcto.';
-    if (!description || description?.length < 10) return 'Disculpe, pero debe indicar una descripción correcta.';
-    if (urlVideo && !checkYoutubeUrl(urlVideo)) return 'Disculpe, pero la URL de Youtube es incorrecta.';
-
-    return null;
-  }
-
-  async confirmSave() {
-    const validated = this.validate();
-
-    if (!validated) {
-      await this.globalSer.alertConfirm({
-        message: '¿Está seguro qué desea crear este devocional?',
-        confirmAction: async () => { await this.save(); }
-      });
-    }
-    else await this.globalSer.presentAlert('Confirme', validated);
-  }
+  handleSave = (data: any): void => { this.save(data); };
+  handleCancel = (): void => { this.goBack(); };
 
 }

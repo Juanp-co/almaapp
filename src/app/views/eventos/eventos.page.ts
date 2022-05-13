@@ -20,7 +20,6 @@ export class EventosPage implements OnInit {
     initDate: null,
     endDate: null,
   };
-  logged = false;
   showButtonAdd = false;
 
   constructor(
@@ -35,7 +34,6 @@ export class EventosPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    this.logged = await this.globalSer.isLoggeded();
     this.showButtonAdd = await this.globalSer.checkRoleToActions([0, 1]);
     this.getEventsList();
   }

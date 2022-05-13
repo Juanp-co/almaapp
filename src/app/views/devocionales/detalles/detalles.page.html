@@ -1,9 +1,10 @@
 <ion-header>
-  <app-minheader title="Detalles"></app-minheader>
+  <app-minheader title="Detalles" *ngIf="!edit"></app-minheader>
+  <app-minheader title="Editar devocional" [handleBack]="handleBack" *ngIf="edit"></app-minheader>
 </ion-header>
 
 <ion-content color="light">
-  <div class="w-100" *ngIf="devotional">
+  <div class="w-100" *ngIf="devotional && !edit">
     <div
       class="banner-devotional"
       [ngStyle]="{backgroundImage: 'url(' + devotional.picture + ')'}"
@@ -18,7 +19,7 @@
     </div>
   </div>
 
-  <ion-row *ngIf="devotional">
+  <ion-row *ngIf="devotional && !edit">
     <ion-col size="12" class="ion-no-margin ion-no-padding">
       <ion-card class="ion-no-padding">
         <ion-card-content>
@@ -45,19 +46,36 @@
         </ion-card-content>
       </ion-card>
     </ion-col>
-    <ion-col size="6" class="ion-text-center">
-      <ion-button color="medium" (click)="goBack()">
-        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
-        <ion-text>Atrás</ion-text>
-      </ion-button>
+    <ion-col size="12">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="6" class="ion-text-center" *ngIf="showButtonAdmin">
+          <ion-button color="danger" (click)="confirmDelete()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            <ion-text>Borrar</ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" class="ion-text-center" *ngIf="showButtonAdmin">
+          <ion-button color="primary" (click)="handleEdit()">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            <ion-text>Editar</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-col>
-    <ion-col size="6" class="ion-text-center">
-      <ion-button color="primary" (click)="shareGeneric()">
+    <ion-col size="12" class="ion-text-center">
+      <ion-button color="light" (click)="shareGeneric()">
         <ion-icon name="share-social-outline" slot="start"></ion-icon>
         <ion-text>Compartir</ion-text>
       </ion-button>
     </ion-col>
     <ion-col class="ion-margin-bottom"></ion-col>
   </ion-row>
+
+  <app-devocionales-form
+   [data]="devotional"
+   [handleSave]="handleUpdate"
+   [handleCancel]="goBack"
+   *ngIf="edit"
+  ></app-devocionales-form>
 
 </ion-content>

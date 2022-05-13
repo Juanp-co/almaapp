@@ -1,0 +1,64 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Complete el formulario</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <div class="">
+          <label class="micursor ion-text-center">
+            <div
+              class="{{!formData.file ? 'banner-default' : 'banner-loaded'}}"
+              [ngStyle]="{backgroundImage: 'url('+ (formData.picture || 'assets/photo.png') +')', height: '180px'}"
+            >
+              <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
+            </div>
+          </label>
+          <ion-text><i>Toca para cargar una imagen</i></ion-text>
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label position="floating" color="medium">Título devocional (*)</ion-label>
+          <ion-input
+            [value]="formData.title"
+            (change)="setFormData('title', $event)"
+            name="title"
+            class="ion-text-uppercase"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label position="floating" color="medium">URL video Youtube</ion-label>
+          <ion-input
+            [value]="formData.urlVideo"
+            (change)="setFormData('urlVideo', $event)"
+            name="urlYoutube"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <ckeditor
+          [data]="formData.description"
+          [editor]="Editor"
+          [config]="configEditor"
+          (change)="onChangeEditor($event)"
+        ></ckeditor>
+      </ion-col>
+      <ion-col size="12" size-sm="12" class="ion-margin-top">
+        <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+      </ion-col>
+      <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+        <ion-button color="medium" (click)="handleClickCancel()">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          <ion-text>Cancelar</ion-text>
+        </ion-button>
+        <ion-button color="primary" (click)="confirmAction()">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          <ion-text>Guardar</ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
