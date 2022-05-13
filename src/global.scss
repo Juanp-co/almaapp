@@ -152,6 +152,14 @@ To static top bar
   resize: both;
 }
 
+.banner-no-picture {
+  height: 250px;
+  background-size: contain !important;
+  background-repeat: no-repeat;
+  background-position: center !important;
+  resize: both;
+}
+
 .img-rounded {
   border-radius: 50%;
 }

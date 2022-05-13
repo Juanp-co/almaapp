@@ -22,6 +22,8 @@ export class DetallesPage implements OnInit {
   id: string|null = null;
   devotional: any = null;
   options: any = null;
+  showButtonAdmin = false;
+  edit = false;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -48,6 +50,10 @@ export class DetallesPage implements OnInit {
     }
   }
 
+  async ionViewDidEnter() {
+    this.showButtonAdmin = await this.globalSer.checkRoleToActions([0, 1]);
+  }
+
   async getDevotionalData() {
     await this.globalSer.presentLoading();
     const data: any = await this.devocionalesService.getDevotionalsDetails(this.id);
@@ -64,17 +70,7 @@ export class DetallesPage implements OnInit {
         await this.storageService.set('devotionals_ids', list);
       }
 
-      const message = this.devotional.description ? HtmlToText(this.devotional.description) : null;
-
-      this.options = {
-        subject: this.devotional?.title, // fi. for email
-        message: '*' + this.devotional?.title + '*\n\n' + message + '\n\n_Vía: CCADV - APP_',
-        url: `co.ccadv.app://devocionales/${this.devotional?._id}`,
-        chooserTitle: 'Selecciona una aplicación para compartir', // Android only, you can override the default share sheet title
-        appPackageName: 'co.ccadv.app', // Android only, you can provide id of the App you want to share with
-        files: [this.devotional.picture || undefined], // an array of filenames either locally or remotely
-        // iPadCoordinates: '0,0,0,0' // IOS only iPadCoordinates for where the popover should be point.  Format with x,y,width,height,
-      };
+      this.parseDataToShare(this.devotional);
 
       await this.globalSer.dismissLoading();
     }
@@ -85,12 +81,82 @@ export class DetallesPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
+  async updateDevotional(formData: any = {}) {
+    await this.globalSer.presentLoading();
+    const data: any = await this.devocionalesService.updateDevotional(this.id, formData);
+
+    if (data && !data.error) {
+      this.devotional = { ...this.devotional, ...data };
+      this.parseDataToShare(this.devotional);
+      this.edit = false;
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el devocional exitosamente.');
+    }
+    else if (data && data.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async deleteDevotional() {
+    await this.globalSer.presentLoading();
+    const data: any = await this.devocionalesService.deleteDevotional(this.id);
+
+    if (data && !data.error) {
+      const { msg } = data || {};
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert(
+        '¡Éxito!',
+        msg || 'Se ha eliminado el devocional exitosamente.'
+      );
+      await this.goBack();
+    }
+    else if (data && data.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
   goBack() {
-    this.navCtrl.back();
+    if (this.edit) this.edit = false;
+    else this.navCtrl.back();
+  }
+
+  handleEdit() {
+    this.edit = !this.edit;
+  }
+
+  parseDataToShare(data) {
+    if (data) {
+      const message = data.description ? HtmlToText(data.description) : null;
+
+      this.options = {
+        subject: data?.title, // fi. for email
+        message: '*' + data?.title + '*\n\n' + message + '\n\n_Vía: CCADV - APP_',
+        url: `co.ccadv.app://devocionales/${data?._id}`,
+        chooserTitle: 'Selecciona una aplicación para compartir', // Android only, you can override the default share sheet title
+        appPackageName: 'co.ccadv.app', // Android only, you can provide id of the App you want to share with
+        files: [data.picture || undefined], // an array of filenames either locally or remotely
+        // iPadCoordinates: '0,0,0,0' // IOS only iPadCoordinates for where the popover should be point.  Format with x,y,width,height,
+      };
+    }
   }
 
   shareGeneric() {
     this.socialSharing.share(this.options.message, this.options.subject, this.options.files[0] || null, null);
   }
+
+  async confirmDelete() {
+    await this.globalSer.alertConfirm({
+      message: '¿Está seguro qué desea eliminar este devocional?',
+      confirmAction: () => { this.deleteDevotional(); }
+    });
+  }
+
+  handleBack = (): void => { this.goBack(); };
+  handleUpdate = (data: any): void => { this.updateDevotional(data); };
+
 
 }

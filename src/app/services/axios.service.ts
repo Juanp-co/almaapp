@@ -13,7 +13,9 @@ export class AxiosService {
   constructor(private storageService: StorageService) {
     this.axios = Axios.create({
       baseURL: environment.urlApi,
-      withCredentials: false
+      withCredentials: false,
+      maxContentLength: 100000000,
+      maxBodyLength: 1000000000
     });
     this.setToken();
   }

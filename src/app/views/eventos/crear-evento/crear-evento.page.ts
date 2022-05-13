@@ -18,7 +18,6 @@ export class CrearEventoPage implements OnInit {
     if (!(await this.globalSer.isLoggeded())) this.navCtrl.back();
   }
 
-
   async goBack() { await this.navCtrl.back(); }
 
 }

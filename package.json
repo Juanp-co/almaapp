@@ -37,6 +37,7 @@
     "cordova-base64-to-gallery": "^4.1.3",
     "cordova-plugin-android-permissions": "^1.1.2",
     "dayjs": "^1.10.4",
+    "ionic": "^5.4.16",
     "js-cookie": "^2.2.1",
     "mapbox-gl": "^2.4.1",
     "rxjs": "~6.6.0",
