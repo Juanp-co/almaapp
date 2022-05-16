@@ -18,6 +18,10 @@ export class PadresPage implements OnInit {
   loadAdminData = false;
   allSons = false;
   pages = 0;
+  optTypes = [
+    { label: 'Todos', value: undefined },
+    { label: 'Consolidados', value: true },
+  ];
   totals: any = {
     own: 0,
     all: 0
@@ -27,7 +31,8 @@ export class PadresPage implements OnInit {
     page: 1,
     input: 'names',
     value: 1,
-    search: null
+    search: null,
+    consolidates: undefined,
   };
 
   constructor(
@@ -140,6 +145,29 @@ export class PadresPage implements OnInit {
         confirmAction: () => this.removeMemberAction(id)
       });
     }
+  }
+
+  async showOptList() {
+    const inputs: any = [];
+    for (const v of this.optTypes) {
+      inputs.push({
+        name: `value-${v.value}`,
+        type: 'radio',
+        label: v.label,
+        value: v.value,
+        checked: this.queryParams.consolidates === v.value,
+      });
+    }
+
+    const updateData = (selectedValue: any) => {
+      this.queryParams.consolidates = selectedValue;
+      this.getTotalsUsersAdmin();
+    };
+
+    await this.globalSer.alertWithList({
+      inputs,
+      confirmAction: updateData
+    });
   }
 
   removeMembersFamily = (id): void => { this.confirmRemove(id); };
