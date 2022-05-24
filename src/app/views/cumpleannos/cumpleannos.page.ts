@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import {CumpleannosService} from './cumpleannos.service';
-import {StorageService} from '../../services/storage.service';
 import {GlobalService} from '../../services/global.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class CumpleannosPage implements OnInit {
   constructor(
     private cumpleannosService: CumpleannosService,
     private globalSer: GlobalService,
-    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
@@ -34,19 +32,8 @@ export class CumpleannosPage implements OnInit {
 
   async getBirthdays() {
     await this.globalSer.presentLoading();
-    const dataBirthdays = await this.storageService.get('birthdays');
-
-    if (!dataBirthdays) {
-      const list = await this.cumpleannosService.getBirthdays();
-      this.birthdays = await this.parseBirthdays(list);
-    }
-    else {
-      if (dataBirthdays.lastChecked !== this.today) {
-        const list = await this.cumpleannosService.getBirthdays();
-        this.birthdays = await this.parseBirthdays(list);
-      }
-      else this.birthdays = dataBirthdays;
-    }
+    const list = await this.cumpleannosService.getBirthdays();
+    this.birthdays = await this.parseBirthdays(list);
     await this.globalSer.dismissLoading();
   }
 
@@ -90,8 +77,6 @@ export class CumpleannosPage implements OnInit {
     // order for dates
     dataBirthdays.next = dataBirthdays.next.sort(sortAscForDate);
     dataBirthdays.previous = dataBirthdays.previous.sort(sortDescForDate);
-
-    await this.storageService.set('birthdays', dataBirthdays);
 
     return dataBirthdays;
   }
