@@ -120,6 +120,10 @@ export class PerfilPage implements OnInit {
     await this.router.navigate(['perfil/editar']);
   }
 
+  async goToDelete() {
+    await this.router.navigate(['perfil/eliminar']);
+  }
+
   async showCreateFamilyModal() {
     const content: any = {
       group: this.group.data

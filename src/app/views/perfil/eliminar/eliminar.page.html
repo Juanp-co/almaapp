@@ -1,0 +1,44 @@
+<ion-header>
+  <app-minheader title="Eliminar cuenta"></app-minheader>
+</ion-header>
+
+<ion-content color="light">
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text color="medium">
+            <p>
+              Puede eliminar su cuenta cuando desee. Todos los datos que han sido registrados en nuestros servidores
+              serán eliminados de forma permanente, eso incluye: datos de su cuenta, progreso en cursos, familias registradas,
+              entre otros registros.
+            </p>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text color="medium" class="ion-margin-top">
+            <strong>NOTA: Una vez realizada la solicitud, esta no podrá revertirse.</strong>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text color="medium" class="ion-margin-top">
+            <p>
+              Debe ingresar su contraseña para poder confirmar su solicitud.
+            </p>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Indique su contraseña (*)</ion-label>
+            <ion-input [(ngModel)]="formData.password" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button expand="block" color="danger" (click)="confirmAction()">
+            Eliminar cuenta
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -43,6 +43,12 @@ export class PerfilService {
     return this.globalSer.altResponse(res);
   }
 
+  async deleteAccount(data: any = {}) {
+    const res: any = await this.axios.postData(`/user`, data);
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
+
   /* family group remove */
   async getTotalsInvitations() {
     const res: any = await this.axios.getData(`/user/group/invitations/totals`);
