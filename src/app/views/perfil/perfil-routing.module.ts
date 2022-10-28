@@ -15,7 +15,11 @@ const routes: Routes = [
   {
     path: 'modal-password',
     loadChildren: () => import('./modal-password/modal-password.module').then( m => m.ModalPasswordPageModule)
+  },  {
+    path: 'eliminar',
+    loadChildren: () => import('./eliminar/eliminar.module').then( m => m.EliminarPageModule)
   }
+
 ];
 
 @NgModule({
